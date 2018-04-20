@@ -1,0 +1,129 @@
+# Copyright (C) 2018 SOF Utilities
+# This file is distributed under the same license as the SOF Utilities package.
+msgid ""
+msgstr ""
+"Project-Id-Version: SOF Utilities 0.2.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sof-utilities\n"
+"POT-Creation-Date: 2018-04-17 09:31:09+00:00\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"PO-Revision-Date: 2018-04-17 10:07+0000\n"
+"Last-Translator: Site Admin <needle@haystack.co.uk>\n"
+"Language-Team: Deutsch\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Loco https://localise.biz/"
+
+#: assets/widgets/sof-docs-widget.php:44
+msgid ""
+"Displays the most recent Docs that the visitor can read. Used on SOF Member "
+"Homepage."
+msgstr ""
+
+#: assets/widgets/sof-docs-widget.php:49
+msgctxt "widget name"
+msgid "(BuddyPress Docs) Recent SOF Docs"
+msgstr ""
+
+#: assets/widgets/sof-docs-widget.php:80
+msgid "Recent Documents"
+msgstr "Neueste Dokumente"
+
+#: assets/widgets/sof-docs-widget.php:170
+msgid "Title:"
+msgstr "Titel:"
+
+#: assets/widgets/sof-docs-widget.php:173
+msgid "Number of docs to show:"
+msgstr "Anzahl der Dokumente zu zeigen:"
+
+#: assets/widgets/sof-docs-widget.php:177
+msgid "Display post date?"
+msgstr ""
+
+#: includes/sof-membership.php:97
+msgid "Could not add user to group"
+msgstr ""
+
+#: includes/sof-membership.php:135
+msgid "Could not remove user from group"
+msgstr ""
+
+#: includes/sof-metaboxes.php:87
+msgid "Title Visibility"
+msgstr "Titel Sichtbarkeit"
+
+#: includes/sof-metaboxes.php:114
+msgid "Make title hidden"
+msgstr "Mach den Titel versteckt"
+
+#: includes/sof-mirror.php:185
+msgid "Read this post in English"
+msgstr ""
+
+#: includes/sof-mirror.php:234
+msgid "Read this post in German"
+msgstr "Auf Deutsch lesen"
+
+#: includes/sof-mirror.php:269
+msgid "German version"
+msgstr ""
+
+#: includes/sof-mirror.php:306
+msgid "This post has a German version."
+msgstr ""
+
+#: includes/sof-mirror.php:318
+msgid "Edit German version"
+msgstr ""
+
+#: includes/sof-mirror.php:341
+msgid "English version"
+msgstr ""
+
+#: includes/sof-mirror.php:378
+msgid "This post has an English version."
+msgstr "Dieser Beitrag hat eine Englische Übersetzung"
+
+#: includes/sof-mirror.php:402
+msgid "Edit English version"
+msgstr ""
+
+#: includes/sof-mirror.php:413
+msgid ""
+"You will be able to create an English version of this post on The Ball 2018 "
+"when you have added it to the \"Daily Ballblog\" category. You do not have "
+"to publish this post first - it can still be in draft mode."
+msgstr ""
+
+#: includes/sof-mirror.php:422
+msgid ""
+"You can now create a copy of this post on The Ball 2018. When you have done "
+"so, you can translate it into English. It is best to make a copy when this "
+"post is finished and published."
+msgstr ""
+
+#: includes/sof-mirror.php:425
+msgid "Create an English version"
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "SOF Utilities"
+msgstr "SOF Werkzeuge"
+
+#. Plugin URI of the plugin/theme
+msgid "http://spiritoffootball.com"
+msgstr ""
+
+#. Description of the plugin/theme
+msgid "Network-wide Utilities for the SOF sites"
+msgstr ""
+
+#. Author of the plugin/theme
+msgid "Christian Wach"
+msgstr ""
+
+#. Author URI of the plugin/theme
+msgid "http://haystack.co.uk"
+msgstr ""
