@@ -107,7 +107,7 @@ class Spirit_Of_Football_Mirror {
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes_sofev' ) );
 
 		// intercept save event
-		add_action( 'save_post', array( $this, 'save_post' ), 20, 3 );
+		add_action( 'save_post', array( $this, 'save_post' ), 50, 3 );
 
 		// add link to content
 		add_filter( 'the_content', array( $this, 'prepend_link' ), 50, 3 );
@@ -561,15 +561,74 @@ class Spirit_Of_Football_Mirror {
 			'menu_order' => 0,
 		);
 
+
+		// if Geo Mashup is active
+		if ( class_exists( 'GeoMashupDB' ) ) {
+
+			// get location
+			$location = GeoMashupDB::get_post_location( $post->ID );
+
+			/*
+			$e = new Exception;
+			$trace = $e->getTraceAsString();
+			error_log( print_r( array(
+				'method' => __METHOD__,
+				'post_id' => $post->ID,
+				'location' => $location,
+				'backtrace' => $trace,
+			), true ) );
+			*/
+
+		}
+
 		// switch to The Ball 2018
 		switch_to_blog( $this->site_id_en );
 
 		// insert post in target site
 		$new_id = wp_insert_post( $new_post );
 
-		// save reverse correspondence if successful
+		// if successful
 		if ( ! is_wp_error( $new_id ) ) {
+
+			// save reverse correspondence
 			$this->save_meta( $new_id, $this->post_meta_key_de, (string) $post->ID );
+
+			// if Geo Mashup is active
+			if ( class_exists( 'GeoMashupDB' ) ) {
+
+				// convert new location to array
+				$new_location = (array) $location;
+
+				// unset redundant data to create new location
+				unset( $new_location['id'] );
+				unset( $new_location['object_id'] );
+				unset( $new_location['label'] );
+				unset( $new_location['post_author'] );
+
+				// grab geo date
+				$geo_date = $new_location['geo_date'];
+				unset( $new_location['geo_date'] );
+
+				// store location for new post
+				$success = GeoMashupDB::set_object_location( 'post', $new_id, $new_location, null, $geo_date );
+
+				// log the problem if there is one
+				if ( is_wp_error( $success ) ) {
+					$e = new Exception;
+					$trace = $e->getTraceAsString();
+					error_log( print_r( array(
+						'method' => __METHOD__,
+						'post_id' => $post->ID,
+						'new_id' => $new_id,
+						'location' => $location,
+						'new_location' => $new_location,
+						'error' => $success->get_error_message(),
+						'backtrace' => $trace,
+					), true ) );
+				}
+
+			}
+
 		}
 
 		// switch back
