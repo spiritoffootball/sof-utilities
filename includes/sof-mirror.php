@@ -593,8 +593,8 @@ class Spirit_Of_Football_Mirror {
 			// save reverse correspondence
 			$this->save_meta( $new_id, $this->post_meta_key_de, (string) $post->ID );
 
-			// if Geo Mashup is active
-			if ( class_exists( 'GeoMashupDB' ) ) {
+			// if Geo Mashup is active and we have a location
+			if ( class_exists( 'GeoMashupDB' ) AND isset( $location ) ) {
 
 				// convert new location to array
 				$new_location = (array) $location;
