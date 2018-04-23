@@ -600,14 +600,17 @@ class Spirit_Of_Football_Mirror {
 				$new_location = (array) $location;
 
 				// unset redundant data to create new location
-				unset( $new_location['id'] );
-				unset( $new_location['object_id'] );
-				unset( $new_location['label'] );
-				unset( $new_location['post_author'] );
+				if ( isset( $new_location['id'] ) ) unset( $new_location['id'] );
+				if ( isset( $new_location['object_id'] ) ) unset( $new_location['object_id'] );
+				if ( isset( $new_location['label'] ) ) unset( $new_location['label'] );
+				if ( isset( $new_location['post_author'] ) ) unset( $new_location['post_author'] );
 
 				// grab geo date
-				$geo_date = $new_location['geo_date'];
-				unset( $new_location['geo_date'] );
+				$geo_date = null;
+				if ( isset( $new_location['geo_date'] ) ) {
+					$geo_date = $new_location['geo_date'];
+					unset( $new_location['geo_date'] );
+				}
 
 				// store location for new post
 				$success = GeoMashupDB::set_object_location( 'post', $new_id, $new_location, null, $geo_date );
