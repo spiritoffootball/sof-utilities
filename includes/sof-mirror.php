@@ -315,7 +315,12 @@ class Spirit_Of_Football_Mirror {
 		$existing_id = get_post_meta( $post->ID, $this->post_meta_key_de, true );
 
 		// bail if there isn't one
-		if ( empty( $existing_id ) ) return;
+		if ( empty( $existing_id ) ) {
+
+			// helpful text
+			echo '<p>' . __( 'This post does not have a German version.', 'sof-utilities' ) . '</p>' . "\n";
+
+		}
 
 		// -----------------------------------------------------------------
 		// Show link to German post
