@@ -55,9 +55,11 @@ class Spirit_Of_Football_Widgets {
 
 		// include widgets
 		require_once SOF_UTILITIES_PATH . 'assets/widgets/sof-docs-widget.php';
+		require_once SOF_UTILITIES_PATH . 'assets/widgets/sof-journey-teaser-widget.php';
 
 		// register widgets
 		register_widget( 'SOF_Docs_Widget_Recent_Docs' );
+		register_widget( 'SOF_Widget_Journey_Teaser' );
 
 	}
 
