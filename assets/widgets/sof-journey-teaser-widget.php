@@ -154,7 +154,7 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 
 					<?php the_excerpt(); ?>
 
-					<p><a class="button" href="<?php the_permalink() ?>"><?php _e( 'Find Out More', 'sof-utilities' ); ?></a></p>
+					<p><a class="button" href="<?php the_permalink() ?>"><?php _e( 'Read More', 'sof-utilities' ); ?></a> <a class="button" href="/2018/blog/"><?php _e( 'Go to the blog', 'sof-utilities' ); ?></a></p>
 
 				</div><!-- /latest_ball_post -->
 
