@@ -45,6 +45,15 @@ if ( ! defined( 'SOF_UTILITIES_PATH' ) ) {
 class Spirit_Of_Football_Utilities {
 
 	/**
+	 * BuddyPress object.
+	 *
+	 * @since 0.1
+	 * @access public
+	 * @var object $buddypress The BuddyPress object.
+	 */
+	public $buddypress;
+
+	/**
 	 * Custom Post Types object.
 	 *
 	 * @since 0.1
@@ -127,6 +136,9 @@ class Spirit_Of_Football_Utilities {
 	 */
 	public function include_files() {
 
+		// include BuddyPress class
+		include_once SOF_UTILITIES_PATH . 'includes/sof-buddypress.php';
+
 		// include CPT class
 		include_once SOF_UTILITIES_PATH . 'includes/sof-cpts.php';
 
@@ -158,6 +170,9 @@ class Spirit_Of_Football_Utilities {
 	 * @since 0.1
 	 */
 	public function setup_globals() {
+
+		// init BuddyPress object
+		$this->buddypress = new Spirit_Of_Football_BuddyPress;
 
 		// init CPT object
 		$this->cpts = new Spirit_Of_Football_CPTs;
@@ -195,6 +210,7 @@ class Spirit_Of_Football_Utilities {
 		add_action( 'plugins_loaded', array( $this, 'translation' ) );
 
 		// hooks that always need to be present
+		$this->buddypress->register_hooks();
 		$this->cpts->register_hooks();
 		$this->metaboxes->register_hooks();
 		$this->menus->register_hooks();
