@@ -40,6 +40,9 @@ class Spirit_Of_Football_BuddyPress {
 		// redirect to calling page after login
 		add_filter( 'login_redirect', array( $this, 'login_redirect' ), 20, 3 );
 
+		// add link to password recovery page
+		add_action( 'bp_login_widget_form', array( $this, 'login_password_link' ), 20 );
+
 	}
 
 
@@ -94,6 +97,25 @@ class Spirit_Of_Football_BuddyPress {
 
 		// return to request URL
 		return $redirect_to;
+
+	}
+
+
+
+	/**
+	 * Add a link to the password recovery page to the BuddyPress login widget.
+	 *
+	 * @since 0.2
+	 */
+	public function login_password_link() {
+
+		// get current URL
+		$url = wp_lostpassword_url();
+
+		// add link to password recovery page
+		echo '<span class="bp-login-widget-password-link">';
+		echo '<a href="' . $url . '">' . __( 'Lost your password?' ) . '</a>';
+		echo '</span>';
 
 	}
 
