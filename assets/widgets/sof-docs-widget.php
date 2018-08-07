@@ -123,6 +123,8 @@ class SOF_Docs_Widget_Recent_Docs extends WP_Widget {
 
 		endif;
 
+		wp_reset_postdata();
+
 		// Restore the main doc_query; obliterate our secondary loop arguments.
 		$bp->bp_docs->doc_query = $temp_doc_query;
 
