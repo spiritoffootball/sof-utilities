@@ -1,0 +1,14 @@
+/**
+ * CiviCRM style overrides for Spirit of Football Germany.
+ *
+ * Implements some miscellaneous fixes.
+ *
+ * @package WordPress
+ * @subpackage Spirit_Of_Football_Utilities
+ */
+
+/* German words cause menu to wrap - lessen width */
+.crm-container .crm-tab-button a, .crm-container .ui-tabs .ui-tabs-nav li a
+{
+	padding: 8px 6px;
+}

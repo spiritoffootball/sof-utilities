@@ -54,6 +54,15 @@ class Spirit_Of_Football_Utilities {
 	public $buddypress;
 
 	/**
+	 * CiviCRM object.
+	 *
+	 * @since 0.1
+	 * @access public
+	 * @var object $civicrm The CiviCRM object.
+	 */
+	public $civicrm;
+
+	/**
 	 * Custom Post Types object.
 	 *
 	 * @since 0.1
@@ -139,6 +148,9 @@ class Spirit_Of_Football_Utilities {
 		// include BuddyPress class
 		include_once SOF_UTILITIES_PATH . 'includes/sof-buddypress.php';
 
+		// include CiviCRM class
+		include_once SOF_UTILITIES_PATH . 'includes/sof-civicrm.php';
+
 		// include CPT class
 		include_once SOF_UTILITIES_PATH . 'includes/sof-cpts.php';
 
@@ -173,6 +185,9 @@ class Spirit_Of_Football_Utilities {
 
 		// init BuddyPress object
 		$this->buddypress = new Spirit_Of_Football_BuddyPress;
+
+		// init CiviCRM object
+		$this->civicrm = new Spirit_Of_Football_CiviCRM;
 
 		// init CPT object
 		$this->cpts = new Spirit_Of_Football_CPTs;
@@ -211,6 +226,7 @@ class Spirit_Of_Football_Utilities {
 
 		// hooks that always need to be present
 		$this->buddypress->register_hooks();
+		$this->civicrm->register_hooks();
 		$this->cpts->register_hooks();
 		$this->metaboxes->register_hooks();
 		$this->menus->register_hooks();
