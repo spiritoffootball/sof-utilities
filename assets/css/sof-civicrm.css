@@ -12,3 +12,14 @@
 {
 	padding: 8px 6px;
 }
+
+/* Squeeze menu items together a bit */
+body #civicrm-menu li.menumain
+{
+	padding: 0 8px;
+}
+
+body #root-menu-div div.menu-item
+{
+	padding-left: 8px;
+}
