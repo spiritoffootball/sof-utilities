@@ -45,6 +45,15 @@ if ( ! defined( 'SOF_UTILITIES_PATH' ) ) {
 class Spirit_Of_Football_Utilities {
 
 	/**
+	 * Pseudo-maintenance mode.
+	 *
+	 * @since 0.3
+	 * @access private
+	 * @var bool $maintenance_mode True sets WordPress into pseudo-maintenance mode.
+	 */
+	private $maintenance_mode = false;
+
+	/**
 	 * BuddyPress object.
 	 *
 	 * @since 0.1
@@ -235,6 +244,11 @@ class Spirit_Of_Football_Utilities {
 		$this->shortcodes->register_hooks();
 		$this->widgets->register_hooks();
 
+		// maintenance mode
+		if ( $this->maintenance_mode ) {
+			add_action( 'init', array( $this, 'maintenance_mode' ) );
+		}
+
 	}
 
 
@@ -290,6 +304,28 @@ class Spirit_Of_Football_Utilities {
 				dirname( plugin_basename( SOF_UTILITIES_FILE ) ) . '/languages/'
 
 			);
+
+		}
+
+	}
+
+
+
+	/**
+	 * Puts WordPress into pseudo-maintenance mode.
+	 *
+	 * @since 0.3
+	 */
+	public function maintenance_mode() {
+
+		// Allow back-end and network admins access.
+		if ( ! is_admin() AND ! current_user_can( 'manage_network_plugins' ) ) {
+
+			// Invoke maintenance.
+			if ( file_exists( WP_CONTENT_DIR . '/maintenance.php' ) ) {
+				require_once( WP_CONTENT_DIR . '/maintenance.php' );
+				die();
+			}
 
 		}
 
