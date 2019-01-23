@@ -1,14 +1,14 @@
-# Copyright (C) 2018 SOF Utilities
+# Copyright (C) 2019 SOF Utilities
 # This file is distributed under the same license as the SOF Utilities package.
 msgid ""
 msgstr ""
-"Project-Id-Version: SOF Utilities 0.2.1\n"
+"Project-Id-Version: SOF Utilities 0.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sof-utilities\n"
-"POT-Creation-Date: 2018-04-17 09:31:09+00:00\n"
+"POT-Creation-Date: 2019-01-23 18:02:57+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
@@ -25,16 +25,50 @@ msgstr ""
 msgid "Recent Documents"
 msgstr ""
 
-#: assets/widgets/sof-docs-widget.php:170
+#: assets/widgets/sof-docs-widget.php:172
+#: assets/widgets/sof-journey-teaser-widget.php:212
 msgid "Title:"
 msgstr ""
 
-#: assets/widgets/sof-docs-widget.php:173
+#: assets/widgets/sof-docs-widget.php:175
 msgid "Number of docs to show:"
 msgstr ""
 
-#: assets/widgets/sof-docs-widget.php:177
+#: assets/widgets/sof-docs-widget.php:179
 msgid "Display post date?"
+msgstr ""
+
+#: assets/widgets/sof-journey-teaser-widget.php:43
+msgid "Displays a \"Journey Teaser\" to guide visitors to the current blog."
+msgstr ""
+
+#: assets/widgets/sof-journey-teaser-widget.php:48
+msgctxt "widget name"
+msgid "Journey Teaser"
+msgstr ""
+
+#: assets/widgets/sof-journey-teaser-widget.php:157
+msgid "Read More"
+msgstr ""
+
+#: assets/widgets/sof-journey-teaser-widget.php:157
+msgid "Go to the blog"
+msgstr ""
+
+#: assets/widgets/sof-journey-teaser-widget.php:192
+msgid "Follow the Journey"
+msgstr ""
+
+#: assets/widgets/sof-journey-teaser-widget.php:217
+msgid "Latest Ball Journey Site"
+msgstr ""
+
+#: assets/widgets/sof-journey-teaser-widget.php:219
+msgid "None"
+msgstr ""
+
+#: includes/sof-buddypress.php:117
+msgid "Lost your password?"
 msgstr ""
 
 #: includes/sof-membership.php:97
@@ -53,47 +87,51 @@ msgstr ""
 msgid "Make title hidden"
 msgstr ""
 
-#: includes/sof-mirror.php:185
+#: includes/sof-mirror.php:194
 msgid "Read this post in English"
 msgstr ""
 
-#: includes/sof-mirror.php:234
+#: includes/sof-mirror.php:251
 msgid "Read this post in German"
 msgstr ""
 
-#: includes/sof-mirror.php:269
+#: includes/sof-mirror.php:288
 msgid "German version"
 msgstr ""
 
-#: includes/sof-mirror.php:306
+#: includes/sof-mirror.php:321
+msgid "This post does not have a German version."
+msgstr ""
+
+#: includes/sof-mirror.php:330
 msgid "This post has a German version."
 msgstr ""
 
-#: includes/sof-mirror.php:318
+#: includes/sof-mirror.php:342
 msgid "Edit German version"
 msgstr ""
 
-#: includes/sof-mirror.php:341
+#: includes/sof-mirror.php:365
 msgid "English version"
 msgstr ""
 
-#: includes/sof-mirror.php:378
+#: includes/sof-mirror.php:402
 msgid "This post has an English version."
 msgstr ""
 
-#: includes/sof-mirror.php:402
+#: includes/sof-mirror.php:426
 msgid "Edit English version"
 msgstr ""
 
-#: includes/sof-mirror.php:413
+#: includes/sof-mirror.php:437
 msgid "You will be able to create an English version of this post on The Ball 2018 when you have added it to the \"Daily Ballblog\" category. You do not have to publish this post first - it can still be in draft mode."
 msgstr ""
 
-#: includes/sof-mirror.php:422
+#: includes/sof-mirror.php:446
 msgid "You can now create a copy of this post on The Ball 2018. When you have done so, you can translate it into English. It is best to make a copy when this post is finished and published."
 msgstr ""
 
-#: includes/sof-mirror.php:425
+#: includes/sof-mirror.php:449
 msgid "Create an English version"
 msgstr ""
 #. Plugin Name of the plugin/theme
@@ -105,7 +143,7 @@ msgid "http://spiritoffootball.com"
 msgstr ""
 
 #. Description of the plugin/theme
-msgid "Network-wide Utilities for the SOF sites"
+msgid "Network-wide Utilities for the SOF sites."
 msgstr ""
 
 #. Author of the plugin/theme
