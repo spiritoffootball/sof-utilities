@@ -34,6 +34,9 @@ class Spirit_Of_Football_Menus {
 	 */
 	public function register_hooks() {
 
+		// Remove Multi-network Menu from admin bar for everyone.
+		add_action( 'wp_before_admin_bar_render', array( $this, 'wpmn_remove_menu' ), 2000 );
+
 		// include only on SOF eV for now...
 		if ( 'sofev' != sof_get_site() ) return;
 
@@ -52,6 +55,26 @@ class Spirit_Of_Football_Menus {
 
 
 	// #########################################################################
+
+
+
+	/**
+	 * Remove Multi-network admin bar.
+	 *
+	 * @since 0.3
+	 */
+	public function wpmn_remove_menu() {
+
+		// Bail if plugin not present.
+		if ( ! function_exists( 'wpmn' ) ) return;
+
+		// Access menu object.
+		global $wp_admin_bar;
+
+		// Remove the WordPress Multi-network menu.
+		$wp_admin_bar->remove_menu( 'my-networks' );
+
+	}
 
 
 
