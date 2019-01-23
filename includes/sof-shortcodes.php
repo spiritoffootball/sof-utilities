@@ -21,7 +21,7 @@ class Spirit_Of_Football_Shortcodes {
 	 */
 	public function __construct() {
 
-		// nothing
+		// Nothing.
 
 	}
 
@@ -34,7 +34,7 @@ class Spirit_Of_Football_Shortcodes {
 	 */
 	public function register_hooks() {
 
-		// register shortcodes
+		// Register shortcodes.
 		//add_shortcode( 'quote', array( $this, 'quote_shortcode' ) );
 
 	}
@@ -47,7 +47,7 @@ class Spirit_Of_Football_Shortcodes {
 
 
 
-} // class Spirit_Of_Football_Shortcodes ends
+} // Class ends.
 
 
 

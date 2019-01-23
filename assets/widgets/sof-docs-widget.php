@@ -13,7 +13,7 @@
 
 
 
-// Exit if accessed directly
+// Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -183,7 +183,7 @@ class SOF_Docs_Widget_Recent_Docs extends WP_Widget {
 
 
 
-}
+} // Class ends.
 
 
 

@@ -12,7 +12,7 @@
 
 
 
-// Exit if accessed directly
+// Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
@@ -75,16 +75,16 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 		), true ) );
 		*/
 
-		// get target site
+		// Get target site.
 		$target_site_id = ! empty( $instance['target_site'] ) ? $instance['target_site'] : '';
 
-		// sanity check
+		// Sanity check.
 		if ( empty( $target_site_id ) ) return;
 
-		// switch to the site to get posts
+		// Switch to the site to get posts.
 		switch_to_blog( $target_site_id );
 
-		// define args for query
+		// Define args for query.
 		$query_args = array(
 			'post_type' => 'post',
 			'no_found_rows' => true,
@@ -92,19 +92,19 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 			'posts_per_page' => 1,
 		);
 
-		// do query
+		// Do query.
 		$posts = new WP_Query( $query_args );
 
-		// did we get any results?
+		// Did we get any results?
 		if ( $posts->have_posts() ) :
 
-			// get filtered title
+			// Get filtered title.
 			$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
 
-			// show widget prefix
+			// Show widget prefix.
 			echo ( isset( $args['before_widget'] ) ? $args['before_widget'] : '' );
 
-			// show title if there is one
+			// Show title if there is one.
 			if ( ! empty( $title ) ) {
 				echo ( isset( $args['before_title'] ) ? $args['before_title'] : '' );
 				echo $title;
@@ -117,11 +117,11 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 
 					<?php
 
-					// init
+					// Init.
 					$has_feature_image = false;
 					$feature_image_class = '';
 
-					// do we have a feature image?
+					// Do we have a feature image?
 					if ( has_post_thumbnail() ) {
 						$has_feature_image = true;
 						$feature_image_class = ' has_feature_image';
@@ -135,7 +135,7 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 
 							<?php
 
-							// show feature image when we have one
+							// Show feature image when we have one.
 							if ( $has_feature_image ) {
 								echo get_the_post_thumbnail( get_the_ID(), 'medium-640' );
 							}
@@ -160,16 +160,16 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 
 			<?php endwhile;
 
-			// show widget suffix
+			// Show widget suffix.
 			echo ( isset( $args['after_widget'] ) ? $args['after_widget'] : '' );
 
-			// reset the post globals as this query will have stomped on it
+			// Reset the post globals as this query will have stomped on it.
 			wp_reset_postdata();
 
-			// unswitch the site
+			// Unswitch the site.
 			restore_current_blog();
 
-		// end check for posts
+		// End check for posts.
 		endif;
 
 	}
@@ -185,17 +185,17 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 	 */
 	public function form( $instance ) {
 
-		// get title
+		// Get title.
 		if ( isset( $instance['title'] ) ) {
 			$title = $instance['title'];
 		} else {
 			$title = __( 'Follow the Journey', 'commentpress-sof-de' );
 		}
 
-		// get target site
+		// Get target site.
 		$target_site = ! empty( $instance['target_site'] ) ? $instance['target_site'] : '';
 
-		// init query args
+		// Init query args.
 		$site_args = array(
 			'archived' => 0,
 			'spam' => 0,
@@ -203,7 +203,7 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 			'public' => 1,
 		);
 
-		// get sites
+		// Get sites.
 		$sites = get_sites( $site_args );
 
 		?>
@@ -242,7 +242,7 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 	 */
 	public function update( $new_instance, $old_instance ) {
 
-		// never lose a value
+		// Never lose a value.
 		$instance = wp_parse_args( $new_instance, $old_instance );
 
 		// --<
@@ -252,7 +252,7 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 
 
 
-}
+} // Class ends.
 
 
 

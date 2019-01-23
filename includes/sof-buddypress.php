@@ -21,7 +21,7 @@ class Spirit_Of_Football_BuddyPress {
 	 */
 	public function __construct() {
 
-		// nothing
+		// Nothing.
 
 	}
 
@@ -34,13 +34,13 @@ class Spirit_Of_Football_BuddyPress {
 	 */
 	public function register_hooks() {
 
-		// include only on SOF eV for now...
+		// Include only on SOF eV for now.
 		if ( 'sofev' != sof_get_site() ) return;
 
-		// redirect to calling page after login
+		// Redirect to calling page after login.
 		add_filter( 'login_redirect', array( $this, 'login_redirect' ), 20, 3 );
 
-		// add link to password recovery page
+		// Add link to password recovery page.
 		add_action( 'bp_login_widget_form', array( $this, 'login_password_link' ), 20 );
 
 	}
@@ -63,39 +63,39 @@ class Spirit_Of_Football_BuddyPress {
 	 */
 	public function login_redirect( $redirect_to, $request, $user ) {
 
-		// bail if no user
+		// Bail if no user.
 		if ( ! $user instanceof WP_User ) return $redirect_to;
 
 		/*
-		// bail if super admin
+		// Bail if super admin.
 		if ( is_super_admin( $user->ID ) ) return $redirect_to;
 
-		// bail if not main site and user is site administrator
+		// Bail if not main site and user is site administrator.
 		if ( ! is_main_site() AND user_can( $user, 'manage_options' ) ) return $redirect_to;
 
-		// is our hidden input set?
+		// Is our hidden input set?
 		if ( isset( $_REQUEST['pcp-current-page'] ) AND ! empty( $_REQUEST['pcp-current-page'] ) ) {
 			$redirect_to = $_REQUEST['pcp-current-page'];
 		}
 		*/
 
-		// is this user held in moderation queue?
+		// Is this user held in moderation queue?
 		if (
 			function_exists( 'bp_registration_get_moderation_status' ) AND
 			bp_registration_get_moderation_status( $user->ID )
 		) {
 
-			// redirect to home page
+			// Redirect to home page.
 			$redirect_to = home_url( '/' );
 
 		} else {
 
-			// redirect to member home
+			// Redirect to member home.
 			$redirect_to = trailingslashit( bp_core_get_user_domain( $user->ID ) );
 
 		}
 
-		// return to request URL
+		// Return to request URL.
 		return $redirect_to;
 
 	}
@@ -109,10 +109,10 @@ class Spirit_Of_Football_BuddyPress {
 	 */
 	public function login_password_link() {
 
-		// get current URL
+		// Get current URL.
 		$url = wp_lostpassword_url();
 
-		// add link to password recovery page
+		// Add link to password recovery page.
 		echo '<span class="bp-login-widget-password-link">';
 		echo '<a href="' . $url . '">' . __( 'Lost your password?' ) . '</a>';
 		echo '</span>';
@@ -121,7 +121,7 @@ class Spirit_Of_Football_BuddyPress {
 
 
 
-} // class Spirit_Of_Football_BuddyPress ends
+} // Class ends.
 
 
 

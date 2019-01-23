@@ -21,7 +21,7 @@ class Spirit_Of_Football_Widgets {
 	 */
 	public function __construct() {
 
-		// nothing
+		// Nothing.
 
 	}
 
@@ -34,7 +34,7 @@ class Spirit_Of_Football_Widgets {
 	 */
 	public function register_hooks() {
 
-		// register widget
+		// Register widgets.
 		add_action( 'widgets_init', array( $this, 'register_widgets' ) );
 
 	}
@@ -53,11 +53,11 @@ class Spirit_Of_Football_Widgets {
 	 */
 	public function register_widgets() {
 
-		// include widgets
+		// Include widgets.
 		require_once SOF_UTILITIES_PATH . 'assets/widgets/sof-docs-widget.php';
 		require_once SOF_UTILITIES_PATH . 'assets/widgets/sof-journey-teaser-widget.php';
 
-		// register widgets
+		// Register widgets.
 		register_widget( 'SOF_Docs_Widget_Recent_Docs' );
 		register_widget( 'SOF_Widget_Journey_Teaser' );
 
@@ -65,7 +65,7 @@ class Spirit_Of_Football_Widgets {
 
 
 
-} // class ends
+} // Class ends.
 
 
 

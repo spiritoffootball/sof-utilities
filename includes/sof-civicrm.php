@@ -21,7 +21,7 @@ class Spirit_Of_Football_CiviCRM {
 	 */
 	public function __construct() {
 
-		// nothing
+		// Nothing.
 
 	}
 
@@ -34,7 +34,7 @@ class Spirit_Of_Football_CiviCRM {
 	 */
 	public function register_hooks() {
 
-		// maybe add our style overrides
+		// Maybe add our style overrides.
 		add_action( 'civicrm_admin_utilities_admin_overridden', array( $this, 'enqueue_admin_css' ), 10 );
 
 	}
@@ -52,20 +52,20 @@ class Spirit_Of_Football_CiviCRM {
 	 */
 	public function enqueue_admin_css() {
 
-		// add stylesheet
+		// Add stylesheet.
 		wp_enqueue_style(
 			'sof_utilities_civicrm_admin',
 			plugins_url( 'assets/css/sof-civicrm.css', SOF_UTILITIES_FILE ),
 			array( 'civicrm_admin_utilities_admin_override' ),
-			CIVICRM_ADMIN_UTILITIES_VERSION, // version
-			'all' // media
+			CIVICRM_ADMIN_UTILITIES_VERSION, // Version.
+			'all' // Media.
 		);
 
 	}
 
 
 
-} // class Spirit_Of_Football_CiviCRM ends
+} // Class ends.
 
 
 

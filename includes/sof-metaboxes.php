@@ -21,7 +21,7 @@ class Spirit_Of_Football_Metaboxes {
 	 */
 	public function __construct() {
 
-		// nothing
+		// Nothing.
 
 	}
 
@@ -34,13 +34,13 @@ class Spirit_Of_Football_Metaboxes {
 	 */
 	public function register_hooks() {
 
-		// exclude from SOF eV for now...
+		// Exclude from SOF eV for now.
 		if ( 'sofev' == sof_get_site() ) return;
 
-		// add meta boxes
+		// Add meta boxes.
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 
-		// intercept save
+		// Intercept save.
 		add_action( 'save_post', array( $this, 'save_post' ), 1, 2 );
 
 	}
@@ -81,7 +81,7 @@ class Spirit_Of_Football_Metaboxes {
 	 */
 	public function add_meta_boxes() {
 
-		// add our meta box
+		// Add our meta box.
 		add_meta_box(
 			'sof_page_options',
 			__( 'Title Visibility', 'sof-utilities' ),
@@ -103,29 +103,29 @@ class Spirit_Of_Football_Metaboxes {
 	 */
 	public function title_visibility_box( $post ) {
 
-		// Use nonce for verification
+		// Use nonce for verification.
 		wp_nonce_field( 'sof_page_settings', 'sof_nonce' );
 
 		// ---------------------------------------------------------------------
 		// Set "Title Visibility" Status
 		// ---------------------------------------------------------------------
 
-		// show a title
+		// Show a title.
 		echo '<p><strong><label for="show_heading">' . __( 'Make title hidden', 'sof-utilities' ) . '</label></strong>';
 
-		// set key
+		// Set key
 		$db_key = 'show_heading';
 
-		// default to "not checked"
+		// Default to "not checked".
 		$checked = '';
 
-		// override if the custom field has a value and it's the checked value
+		// Override if the custom field has a value and it's the checked value.
 		$existing = get_post_meta( $post->ID, $db_key, true );
 		if ( false !== $existing AND $existing == '1' ) {
 			$checked = ' checked="checked"';
 		}
 
-		// select
+		// Select.
 		echo '
 		<input id="show_heading" name="show_heading" value="1" type="checkbox" ' . $checked . '/>
 		</p>
@@ -145,9 +145,9 @@ class Spirit_Of_Football_Metaboxes {
 	 */
 	public function save_post( $post_id, $post ) {
 
-		// we don't use post_id because we're not interested in revisions
+		// We don't use post_id because we're not interested in revisions.
 
-		// store our page meta data
+		// Store our page meta data.
 		$result = $this->_save_page_meta( $post );
 
 	}
@@ -167,23 +167,23 @@ class Spirit_Of_Football_Metaboxes {
 	 */
 	private function _save_page_meta( $post_obj ) {
 
-		// if no post, kick out
+		// If no post, kick out.
 		if ( ! $post_obj ) return;
 
-		// authenticate
+		// Authenticate.
 		$_nonce = isset( $_POST['sof_nonce'] ) ? $_POST['sof_nonce'] : '';
 		if ( ! wp_verify_nonce( $_nonce, 'sof_page_settings' ) ) { return; }
 
-		// is this an auto save routine?
+		// Is this an auto save routine?
 		if ( defined('DOING_AUTOSAVE') AND DOING_AUTOSAVE ) { return; }
 
-		// Check permissions
+		// Check permissions.
 		if ( ! current_user_can( 'edit_page', $post_obj->ID ) ) { return; }
 
-		// check for revision
+		// Check for revision.
 		if ( $post_obj->post_type == 'revision' ) {
 
-			// get parent
+			// Get parent.
 			if ( $post_obj->post_parent != 0 ) {
 				$post = get_post( $post_obj->post_parent );
 			} else {
@@ -195,21 +195,21 @@ class Spirit_Of_Football_Metaboxes {
 		}
 
 		// ---------------------------------------------------------------------
-		// okay, we're through...
+		// Okay, we're through...
 		// ---------------------------------------------------------------------
 
 		global $wpdb;
 
-		// if default page type...
+		// If default page type.
 		if ( $post->post_type == 'page' ) {
 
-			// set key
+			// Set key.
 			$key = 'show_heading';
 
-			// find the data
+			// Find the data.
 			$_data = ( isset( $_POST[$key] ) ) ? esc_sql( $_POST[$key] ) : '0';
 
-			// Attached Quote
+			// Attached Quote.
 			$this->_save_meta( $post, 'show_heading', $_data );
 
 		}
@@ -230,16 +230,16 @@ class Spirit_Of_Football_Metaboxes {
 	 */
 	private function _save_meta( $post, $key, $data = '' ) {
 
-		// if the custom field already has a value...
+		// If the custom field already has a value.
 		$existing = get_post_meta( $post->ID, $key, true );
 		if ( false !== $existing ) {
 
-			// update the data
+			// Update the data.
 			update_post_meta( $post->ID, $key, $data );
 
 		} else {
 
-			// add the data
+			// Add the data.
 			add_post_meta( $post->ID, $key, $data, true );
 
 		}
@@ -251,7 +251,7 @@ class Spirit_Of_Football_Metaboxes {
 
 
 
-} // class Spirit_Of_Football_Metaboxes ends
+} // Class ends.
 
 
 

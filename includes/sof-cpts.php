@@ -21,7 +21,7 @@ class Spirit_Of_Football_CPTs {
 	 */
 	public function __construct() {
 
-		// nothing
+		// Nothing.
 
 	}
 
@@ -34,7 +34,7 @@ class Spirit_Of_Football_CPTs {
 	 */
 	public function register_hooks() {
 
-		// always create post types
+		// Always create post types.
 		//add_action( 'init', array( $this, 'create_post_types' ) );
 
 	}
@@ -49,10 +49,10 @@ class Spirit_Of_Football_CPTs {
 	 */
 	public function activate() {
 
-		// pass through
+		// Pass through.
 		$this->create_post_types();
 
-		// go ahead and flush
+		// Go ahead and flush.
 		flush_rewrite_rules();
 
 	}
@@ -66,7 +66,7 @@ class Spirit_Of_Football_CPTs {
 	 */
 	public function deactivate() {
 
-		// flush rules to reset
+		// Flush rules to reset.
 		flush_rewrite_rules();
 
 	}
@@ -88,7 +88,7 @@ class Spirit_Of_Football_CPTs {
 
 
 
-} // class Spirit_Of_Football_CPTs ends
+} // Class ends.
 
 
 

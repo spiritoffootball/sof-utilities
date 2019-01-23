@@ -2,7 +2,7 @@
 --------------------------------------------------------------------------------
 Plugin Name: SOF Utilities
 Plugin URI: http://spiritoffootball.com
-Description: Network-wide Utilities for the SOF sites
+Description: Network-wide Utilities for the SOF sites.
 Author: Christian Wach
 Version: 0.3
 Author URI: http://haystack.co.uk
@@ -12,20 +12,20 @@ Text Domain: sof-utilities
 
 
 
-// set our version here
+// Set our version here.
 define( 'SOF_UTILITIES_VERSION', '0.3' );
 
-// store reference to this file
+// Store reference to this file.
 if ( ! defined( 'SOF_UTILITIES_FILE' ) ) {
 	define( 'SOF_UTILITIES_FILE', __FILE__ );
 }
 
-// store URL to this plugin's directory
+// Store URL to this plugin's directory.
 if ( ! defined( 'SOF_UTILITIES_URL' ) ) {
 	define( 'SOF_UTILITIES_URL', plugin_dir_url( SOF_UTILITIES_FILE ) );
 }
 
-// store PATH to this plugin's directory
+// Store PATH to this plugin's directory.
 if ( ! defined( 'SOF_UTILITIES_PATH' ) ) {
 	define( 'SOF_UTILITIES_PATH', plugin_dir_path( SOF_UTILITIES_FILE ) );
 }
@@ -134,13 +134,13 @@ class Spirit_Of_Football_Utilities {
 	 */
 	public function __construct() {
 
-		// include files
+		// Include files.
 		$this->include_files();
 
-		// setup globals
+		// Setup globals.
 		$this->setup_globals();
 
-		// register hooks
+		// Register hooks.
 		$this->register_hooks();
 
 	}
@@ -154,31 +154,31 @@ class Spirit_Of_Football_Utilities {
 	 */
 	public function include_files() {
 
-		// include BuddyPress class
+		// Include BuddyPress class.
 		include_once SOF_UTILITIES_PATH . 'includes/sof-buddypress.php';
 
-		// include CiviCRM class
+		// Include CiviCRM class.
 		include_once SOF_UTILITIES_PATH . 'includes/sof-civicrm.php';
 
-		// include CPT class
+		// Include CPT class.
 		include_once SOF_UTILITIES_PATH . 'includes/sof-cpts.php';
 
-		// include Metaboxes class
+		// Include Metaboxes class.
 		include_once SOF_UTILITIES_PATH . 'includes/sof-metaboxes.php';
 
-		// include Menus class
+		// Include Menus class.
 		include_once SOF_UTILITIES_PATH . 'includes/sof-menus.php';
 
-		// include Membership class
+		// Include Membership class.
 		include_once SOF_UTILITIES_PATH . 'includes/sof-membership.php';
 
-		// include Mirror class
+		// Include Mirror class.
 		include_once SOF_UTILITIES_PATH . 'includes/sof-mirror.php';
 
-		// include Shortcodes class
+		// Include Shortcodes class.
 		include_once SOF_UTILITIES_PATH . 'includes/sof-shortcodes.php';
 
-		// include Widgets class
+		// Include Widgets class.
 		include_once SOF_UTILITIES_PATH . 'includes/sof-widgets.php';
 
 	}
@@ -192,31 +192,31 @@ class Spirit_Of_Football_Utilities {
 	 */
 	public function setup_globals() {
 
-		// init BuddyPress object
+		// Init BuddyPress object.
 		$this->buddypress = new Spirit_Of_Football_BuddyPress;
 
-		// init CiviCRM object
+		// Init CiviCRM object.
 		$this->civicrm = new Spirit_Of_Football_CiviCRM;
 
-		// init CPT object
+		// Init CPT object.
 		$this->cpts = new Spirit_Of_Football_CPTs;
 
-		// init Metaboxes object
+		// Init Metaboxes object.
 		$this->metaboxes = new Spirit_Of_Football_Metaboxes;
 
-		// init Menus object
+		// Init Menus object.
 		$this->menus = new Spirit_Of_Football_Menus;
 
-		// init Membership object
+		// Init Membership object.
 		$this->membership = new Spirit_Of_Football_Membership;
 
-		// init Mirror object
+		// Init Mirror object.
 		$this->mirror = new Spirit_Of_Football_Mirror;
 
-		// init Shortcodes object
+		// Init Shortcodes object.
 		$this->shortcodes = new Spirit_Of_Football_Shortcodes;
 
-		// init Widgets object
+		// Init Widgets object.
 		$this->widgets = new Spirit_Of_Football_Widgets;
 
 	}
@@ -230,10 +230,10 @@ class Spirit_Of_Football_Utilities {
 	 */
 	public function register_hooks() {
 
-		// use translation
+		// Use translation.
 		add_action( 'plugins_loaded', array( $this, 'translation' ) );
 
-		// hooks that always need to be present
+		// Hooks that always need to be present.
 		$this->buddypress->register_hooks();
 		$this->civicrm->register_hooks();
 		$this->cpts->register_hooks();
@@ -244,7 +244,7 @@ class Spirit_Of_Football_Utilities {
 		$this->shortcodes->register_hooks();
 		$this->widgets->register_hooks();
 
-		// maintenance mode
+		// Maintenance mode.
 		if ( $this->maintenance_mode ) {
 			add_action( 'init', array( $this, 'maintenance_mode' ) );
 		}
@@ -260,7 +260,7 @@ class Spirit_Of_Football_Utilities {
 	 */
 	public function activate() {
 
-		// pass through
+		// Pass through.
 		$this->cpts->activate();
 
 	}
@@ -274,7 +274,7 @@ class Spirit_Of_Football_Utilities {
 	 */
 	public function deactivate() {
 
-		// pass through
+		// Pass through.
 		$this->cpts->deactivate();
 
 	}
@@ -282,30 +282,18 @@ class Spirit_Of_Football_Utilities {
 
 
 	/**
-	 * Loads translation, if present.
+	 * Load translations if present.
 	 *
 	 * @since 0.1
 	 */
-	function translation() {
+	public function translation() {
 
-		// only use, if we have it...
-		if ( function_exists( 'load_plugin_textdomain' ) ) {
-
-			// not used, as there are no translations as yet
-			load_plugin_textdomain(
-
-				// unique name
-				'sof-utilities',
-
-				// deprecated argument
-				false,
-
-				// relative path to directory containing translation files
-				dirname( plugin_basename( SOF_UTILITIES_FILE ) ) . '/languages/'
-
-			);
-
-		}
+		// Load translations.
+		load_plugin_textdomain(
+			'sof-utilities', // Unique name.
+			false, // Deprecated argument.
+			dirname( plugin_basename( SOF_UTILITIES_FILE ) ) . '/languages/' // Relative path to directory
+		);
 
 	}
 
@@ -333,18 +321,18 @@ class Spirit_Of_Football_Utilities {
 
 
 
-} // class Spirit_Of_Football_Utilities ends
+} // Class ends.
 
 
 
-// Instantiate the class
+// Instantiate the class.
 global $sof_utilities_plugin;
 $sof_utilities_plugin = new Spirit_Of_Football_Utilities();
 
-// activation
+// Activation.
 register_activation_hook( __FILE__, array( $sof_utilities_plugin, 'activate' ) );
 
-// deactivation
+// Deactivation.
 register_deactivation_hook( __FILE__, array( $sof_utilities_plugin, 'deactivate' ) );
 
 
