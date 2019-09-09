@@ -154,12 +154,17 @@ class Spirit_Of_Football_Membership {
 	 */
 	public function permissions_pl( $granted, $post_id = null ) {
 
+		// Always deny if not logged in.
+		if ( ! is_user_logged_in() ) return false;
+
 		// Get current user.
 		$current_user = wp_get_current_user();
 
 		// Allow if user is a member of our membership group.
 		if ( groups_is_user_member( $current_user->ID, $this->group_id ) ) {
 			$granted = true;
+		} else {
+			$granted = false;
 		}
 
 		// --<
