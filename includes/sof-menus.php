@@ -154,6 +154,40 @@ class Spirit_Of_Football_Menus {
 	 */
 	public function sofcic_admin_bar_tweaks() {
 
+		// Bail if no BuddyPress.
+		if ( ! function_exists( 'bp_core_get_user_domain' ) ) {
+			return;
+		}
+
+		// Access object.
+		global $wp_admin_bar;
+
+		// Bail if not logged in.
+		if ( ! is_user_logged_in() ) return;
+
+		// Get user object.
+		$user = wp_get_current_user();
+
+		// Get member type.
+		//$member_type = bp_get_member_type( $user->ID );
+
+		// Remove the WordPress logo menu.
+		$wp_admin_bar->remove_menu( 'wp-logo' );
+
+		// Target BuddyPress dropdown parent.
+		$args = array(
+			'id' => 'my-account',
+			'href' => trailingslashit( bp_loggedin_user_domain() ),
+		);
+		$wp_admin_bar->add_node( $args );
+
+		// Target BuddyPress dropdown user info.
+		$args = array(
+			'id' => 'user-info',
+			'href' => trailingslashit( bp_loggedin_user_domain() ),
+		);
+		$wp_admin_bar->add_node( $args );
+
 	}
 
 
