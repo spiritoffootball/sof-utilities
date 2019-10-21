@@ -129,6 +129,52 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 
 					?>
 
+					<style>
+					.cp-homepage-widgets .post_header_inner,
+					#activity_sidebar.sidebar_container .post_header_inner {
+						position: relative;
+						line-height: 1;
+					}
+					.cp-homepage-widgets .post_header.has_feature_image img,
+					#activity_sidebar.sidebar_container .post_header.has_feature_image img {
+						width: 100%;
+						height: auto;
+						line-height: 1;
+					}
+					.cp-homepage-widgets .post_header.has_feature_image img {
+						min-height: 200px;
+					}
+					#activity_sidebar.sidebar_container .post_header.has_feature_image img {
+						min-height: 150px;
+					}
+					.cp-homepage-widgets .post_header.has_feature_image .post_header_text,
+					#activity_sidebar.sidebar_container .post_header.has_feature_image .post_header_text {
+						position: absolute;
+						bottom: 2px;
+						width: 100%;
+						padding: 0;
+						background: #000;
+						background: rgba( 0, 0, 0, 0.46);
+						text-shadow: 0 0 3px #0A0933;
+					}
+					.cp-homepage-widgets .post_header_inner h2,
+					#activity_sidebar.sidebar_container .post_header_inner h2 {
+						margin: 0;
+						padding: 0.4em;
+						line-height: 1.3;
+   					}
+					.cp-homepage-widgets .post_header_inner h2 a,
+					#activity_sidebar.sidebar_container .post_header_inner h2 a {
+						color: #fff;
+						text-decoration: none;
+   					}
+   					.cp-homepage-widgets .post_excerpt, .post_explore,
+   					#activity_sidebar.sidebar_container .post_excerpt, .post_explore {
+   						padding: 0 15px;
+   						line-height: 1.5;
+   					}
+					</style>
+
 					<div class="post_header<?php echo $feature_image_class; ?>">
 
 						<div class="post_header_inner">
@@ -152,9 +198,13 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 
 					</div><!-- /post_header -->
 
-					<?php the_excerpt(); ?>
+					<div class="post_excerpt">
+						<?php the_excerpt(); ?>
+					</div><!-- /post_excerpt -->
 
-					<p><a class="button" href="<?php the_permalink() ?>"><?php _e( 'Read More', 'sof-utilities' ); ?></a> <a class="button" href="/2018/blog/"><?php _e( 'Go to the blog', 'sof-utilities' ); ?></a></p>
+					<div class="post_explore">
+						<p><a class="button" href="<?php the_permalink() ?>"><?php _e( 'Read More', 'sof-utilities' ); ?></a> <a class="button" href="<?php echo get_site_url( null, '/blog/' ); ?>"><?php _e( 'Go to the blog', 'sof-utilities' ); ?></a></p>
+					</div><!-- /post_excerpt -->
 
 				</div><!-- /latest_ball_post -->
 
