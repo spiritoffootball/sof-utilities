@@ -34,14 +34,22 @@ class Spirit_Of_Football_BuddyPress {
 	 */
 	public function register_hooks() {
 
-		// Include only on SOF eV for now.
-		if ( 'sofev' != sof_get_site() ) return;
+		// Check if SOF CIC can handle this.
+		$sofcic = false;
+		if ( 'sofcic' != sof_get_site() AND function_exists( 'bp_core_get_user_domain' ) ) {
+			$sofcic = true;
+		}
 
-		// Redirect to calling page after login.
-		add_filter( 'login_redirect', array( $this, 'login_redirect' ), 20, 3 );
+		// Include only on SOF eV and maybe on SOF CIC.
+		if ( 'sofev' == sof_get_site() OR $sofcic === true ) {
 
-		// Add link to password recovery page.
-		add_action( 'bp_login_widget_form', array( $this, 'login_password_link' ), 20 );
+			// Redirect to calling page after login.
+			add_filter( 'login_redirect', array( $this, 'login_redirect' ), 20, 3 );
+
+			// Add link to password recovery page.
+			add_action( 'bp_login_widget_form', array( $this, 'login_password_link' ), 20 );
+
+		}
 
 	}
 
