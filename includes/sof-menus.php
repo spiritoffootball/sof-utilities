@@ -37,11 +37,30 @@ class Spirit_Of_Football_Menus {
 		// Remove Multi-network Menu from admin bar for everyone.
 		add_action( 'wp_before_admin_bar_render', array( $this, 'wpmn_remove_menu' ), 2000 );
 
-		// Include only on SOF eV for now.
-		if ( 'sofev' != sof_get_site() ) return;
+		// Maybe register SOF CIC hooks.
+		$this->sofcic_register_hooks();
+
+		// Maybe register SOF eV hooks.
+		$this->sofev_register_hooks();
+
+	}
+
+
+
+	/**
+	 * Register WordPress hooks on the SOF CIC site.
+	 *
+	 * @since 0.1
+	 */
+	public function sofcic_register_hooks() {
+
+		// Include only on SOF CIC.
+		if ( 'sofcic' != sof_get_site() ) {
+			return;
+		}
 
 		// Filter menu based on membership.
-		add_action( 'wp_nav_menu_objects', array( $this, 'filter_menu' ), 20, 2 );
+		add_action( 'wp_nav_menu_objects', array( $this, 'sofcic_filter_menu' ), 20, 2 );
 
 		/*
 		 * Amends the BuddyPress dropdown in the WordPress admin bar.
@@ -49,7 +68,34 @@ class Spirit_Of_Football_Menus {
 		 * The top-level items point to "Profile -> Edit" by default, but this
 		 * seems kind of unintuitive, so point them to Member Home instead.
 		 */
-		add_action( 'wp_before_admin_bar_render', array( $this, 'admin_bar_tweaks' ), 1000 );
+		add_action( 'wp_before_admin_bar_render', array( $this, 'sofcic_admin_bar_tweaks' ), 1000 );
+
+	}
+
+
+
+	/**
+	 * Register WordPress hooks on the SOF eV site.
+	 *
+	 * @since 0.1
+	 */
+	public function sofev_register_hooks() {
+
+		// Include only on SOF eV.
+		if ( 'sofev' != sof_get_site() ) {
+			return;
+		}
+
+		// Filter menu based on membership.
+		add_action( 'wp_nav_menu_objects', array( $this, 'sofev_filter_menu' ), 20, 2 );
+
+		/*
+		 * Amends the BuddyPress dropdown in the WordPress admin bar.
+		 *
+		 * The top-level items point to "Profile -> Edit" by default, but this
+		 * seems kind of unintuitive, so point them to Member Home instead.
+		 */
+		add_action( 'wp_before_admin_bar_render', array( $this, 'sofev_admin_bar_tweaks' ), 1000 );
 
 	}
 
@@ -79,6 +125,43 @@ class Spirit_Of_Football_Menus {
 
 
 
+	// #########################################################################
+
+
+
+	/**
+	 * Filter the main menu on the SOF CIC root site.
+	 *
+	 * @since 0.3
+	 *
+	 * @param array $sorted_menu_items The menu items, sorted by each menu item's menu order.
+	 * @param array $args Array of wp_nav_menu() arguments.
+	 * @return $sorted_menu_items The filtered menu items.
+	 */
+	public function sofcic_filter_menu( $sorted_menu_items, $args ) {
+
+		// --<
+		return $sorted_menu_items;
+
+	}
+
+
+
+	/**
+	 * Tweak the BuddyPress dropdown in the WordPress admin bar.
+	 *
+	 * @since 0.3
+	 */
+	public function sofcic_admin_bar_tweaks() {
+
+	}
+
+
+
+	// #########################################################################
+
+
+
 	/**
 	 * Filter the main menu on the root site.
 	 *
@@ -88,7 +171,7 @@ class Spirit_Of_Football_Menus {
 	 * @param array $args Array of wp_nav_menu() arguments.
 	 * @return $sorted_menu_items The filtered menu items.
 	 */
-	public function filter_menu( $sorted_menu_items, $args ) {
+	public function sofev_filter_menu( $sorted_menu_items, $args ) {
 
 		// Only on front end.
 		if( is_admin() ) return $sorted_menu_items;
@@ -119,49 +202,11 @@ class Spirit_Of_Football_Menus {
 
 
 	/**
-	 * Filter the main menu on the root site.
-	 *
-	 * @since 0.1
-	 *
-	 * @param array $sorted_menu_items The menu items, sorted by each menu item's menu order.
-	 * @param str $type The type of menu item we're looking for.
-	 * @param array $url_snippet The slug we're looking for in the menu item's target URL.
-	 */
-	private function remove_item( &$sorted_menu_items, $type, $url_snippet ) {
-
-		// Loop through them and get the menu item's key.
-		foreach( $sorted_menu_items AS $key => $item ) {
-
-			// Is it the item we're looking for?
-			if ( $item->type == $type AND false !== strpos( $item->url, $url_snippet ) ) {
-
-				// Store found key.
-				$found = $key;
-				break;
-
-			}
-
-		}
-
-		// Remove it if we find it.
-		if ( isset( $found ) ) {
-			unset( $sorted_menu_items[$found] );
-		}
-
-	}
-
-
-
-	// #########################################################################
-
-
-
-	/**
 	 * Tweak the BuddyPress dropdown in the WordPress admin bar.
 	 *
 	 * @since 0.2.1
 	 */
-	public function admin_bar_tweaks() {
+	public function sofev_admin_bar_tweaks() {
 
 		// Access object.
 		global $wp_admin_bar;
@@ -240,6 +285,44 @@ class Spirit_Of_Football_Menus {
 
 			}
 
+		}
+
+	}
+
+
+
+	// #########################################################################
+
+
+
+	/**
+	 * Filter the main menu on the root site.
+	 *
+	 * @since 0.1
+	 *
+	 * @param array $sorted_menu_items The menu items, sorted by each menu item's menu order.
+	 * @param str $type The type of menu item we're looking for.
+	 * @param array $url_snippet The slug we're looking for in the menu item's target URL.
+	 */
+	private function remove_item( &$sorted_menu_items, $type, $url_snippet ) {
+
+		// Loop through them and get the menu item's key.
+		foreach( $sorted_menu_items AS $key => $item ) {
+
+			// Is it the item we're looking for?
+			if ( $item->type == $type AND false !== strpos( $item->url, $url_snippet ) ) {
+
+				// Store found key.
+				$found = $key;
+				break;
+
+			}
+
+		}
+
+		// Remove it if we find it.
+		if ( isset( $found ) ) {
+			unset( $sorted_menu_items[$found] );
 		}
 
 	}
