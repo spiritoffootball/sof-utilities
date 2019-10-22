@@ -105,6 +105,9 @@ class Spirit_Of_Football_Shortcodes {
 				// Add gravatar.
 				$team .= '<div class="author_avatar">' . get_avatar( $user_data->user_email, $size='200' ) . '</div>' . "\n";
 
+				// Open text wrapper.
+				$team .= '<div class="sof_team_member_desc">' . "\n";
+
 				// Show description.
 				$team .= '<p>' . esc_html( nl2br( $user_data->description ) ) . '</p>' . "\n";
 
@@ -115,6 +118,9 @@ class Spirit_Of_Football_Shortcodes {
 								__( 'Edit this profile', 'spiritoffootball' ) .
 							 '</a></p>' . "\n";
 				}
+
+				// Close sof_team_desc.
+				$team .= '</div>' . "\n";
 
 				// Close sof_team_member.
 				$team .= '</div>' . "\n";
