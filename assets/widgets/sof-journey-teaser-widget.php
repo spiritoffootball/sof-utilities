@@ -160,7 +160,7 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 					.cp-homepage-widgets .post_header_inner h2,
 					#activity_sidebar.sidebar_container .post_header_inner h2 {
 						margin: 0;
-						padding: 0.4em;
+						padding: 0.4em 0.8em;
 						line-height: 1.3;
    					}
 					.cp-homepage-widgets .post_header_inner h2 a,
