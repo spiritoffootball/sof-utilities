@@ -140,6 +140,30 @@ class Spirit_Of_Football_Menus {
 	 */
 	public function sofcic_filter_menu( $sorted_menu_items, $args ) {
 
+		// Only on front end.
+		if( is_admin() ) return $sorted_menu_items;
+
+		// Only on main blog.
+		if( ! is_main_site() ) return $sorted_menu_items;
+
+		// Only on when CommentPress is enabled.
+		if( ! defined( 'COMMENTPRESS_SOF_DE_VERSION' ) ) return $sorted_menu_items;
+
+		// Allow network admins.
+		if ( is_super_admin() ) return $sorted_menu_items;
+
+		// Allow members.
+		//if ( current_user_can_for_blog( bp_get_root_blog_id(), 'restrict_content' ) ) return $sorted_menu_items;
+
+		// Allow logged-in folks.
+		if ( is_user_logged_in() ) return $sorted_menu_items;
+
+		// Remove items from array.
+		$this->remove_item( $sorted_menu_items, 'post_type', '/activity/' );
+		$this->remove_item( $sorted_menu_items, 'post_type', '/activity/' );
+		$this->remove_item( $sorted_menu_items, 'post_type', '/members/' );
+		$this->remove_item( $sorted_menu_items, 'post_type', '/groups/' );
+
 		// --<
 		return $sorted_menu_items;
 
