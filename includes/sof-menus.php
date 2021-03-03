@@ -43,6 +43,9 @@ class Spirit_Of_Football_Menus {
 		// Maybe register SOF eV hooks.
 		$this->sofev_register_hooks();
 
+		// Maybe register SOF Brasil hooks.
+		$this->sofbr_register_hooks();
+
 	}
 
 
@@ -96,6 +99,33 @@ class Spirit_Of_Football_Menus {
 		 * seems kind of unintuitive, so point them to Member Home instead.
 		 */
 		add_action( 'wp_before_admin_bar_render', array( $this, 'sofev_admin_bar_tweaks' ), 1000 );
+
+	}
+
+
+
+	/**
+	 * Register WordPress hooks on the SOF Brasil site.
+	 *
+	 * @since 0.1
+	 */
+	public function sofbr_register_hooks() {
+
+		// Include only on SOF Brasil.
+		if ( 'sofbr' != sof_get_site() ) {
+			return;
+		}
+
+		// Filter menu based on membership.
+		add_action( 'wp_nav_menu_objects', array( $this, 'sofbr_filter_menu' ), 20, 2 );
+
+		/*
+		 * Amends the BuddyPress dropdown in the WordPress admin bar.
+		 *
+		 * The top-level items point to "Profile -> Edit" by default, but this
+		 * seems kind of unintuitive, so point them to Member Home instead.
+		 */
+		add_action( 'wp_before_admin_bar_render', array( $this, 'sofbr_admin_bar_tweaks' ), 1000 );
 
 	}
 
@@ -344,6 +374,93 @@ class Spirit_Of_Football_Menus {
 			}
 
 		}
+
+	}
+
+
+
+	// #########################################################################
+
+
+
+	/**
+	 * Filter the main menu on the SOF Brasil site.
+	 *
+	 * @since 0.3
+	 *
+	 * @param array $sorted_menu_items The menu items, sorted by each menu item's menu order.
+	 * @param array $args Array of wp_nav_menu() arguments.
+	 * @return $sorted_menu_items The filtered menu items.
+	 */
+	public function sofbr_filter_menu( $sorted_menu_items, $args ) {
+
+		// Only on front end.
+		if( is_admin() ) return $sorted_menu_items;
+
+		// Only on main blog.
+		if( ! is_main_site() ) return $sorted_menu_items;
+
+		// Allow network admins.
+		if ( is_super_admin() ) return $sorted_menu_items;
+
+		// Allow members.
+		//if ( current_user_can_for_blog( bp_get_root_blog_id(), 'restrict_content' ) ) return $sorted_menu_items;
+
+		// Allow logged-in folks.
+		if ( is_user_logged_in() ) return $sorted_menu_items;
+
+		// --<
+		return $sorted_menu_items;
+
+	}
+
+
+
+	/**
+	 * Tweak the BuddyPress dropdown in the WordPress admin bar.
+	 *
+	 * @since 0.3
+	 */
+	public function sofbr_admin_bar_tweaks() {
+
+		// Access object.
+		global $wp_admin_bar;
+
+		// Bail if not logged in.
+		if ( ! is_user_logged_in() ) return;
+
+		// Get user object.
+		$user = wp_get_current_user();
+
+		// Get member type.
+		//$member_type = bp_get_member_type( $user->ID );
+
+		// Remove the WordPress logo menu.
+		$wp_admin_bar->remove_menu( 'wp-logo' );
+
+		// Remove the WordPress "My Sites" menu for all but network admins.
+		if ( ! is_super_admin() ) {
+			$wp_admin_bar->remove_menu( 'my-sites' );
+		}
+
+		// Bail if no BuddyPress.
+		if ( ! function_exists( 'bp_core_get_user_domain' ) ) {
+			return;
+		}
+
+		// Target BuddyPress dropdown parent.
+		$args = array(
+			'id' => 'my-account',
+			'href' => trailingslashit( bp_loggedin_user_domain() ),
+		);
+		$wp_admin_bar->add_node( $args );
+
+		// Target BuddyPress dropdown user info.
+		$args = array(
+			'id' => 'user-info',
+			'href' => trailingslashit( bp_loggedin_user_domain() ),
+		);
+		$wp_admin_bar->add_node( $args );
 
 	}
 
