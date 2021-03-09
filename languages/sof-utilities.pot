@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: SOF Utilities 0.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sof-utilities\n"
-"POT-Creation-Date: 2021-03-03 12:26:40+00:00\n"
+"POT-Creation-Date: 2021-03-09 13:33:31+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -28,6 +28,7 @@ msgid "Recent Documents"
 msgstr ""
 
 #: assets/widgets/sof-docs-widget.php:168
+#: assets/widgets/sof-featured-page-widget.php:291
 #: assets/widgets/sof-journey-teaser-widget.php:260
 msgid "Title:"
 msgstr ""
@@ -40,6 +41,73 @@ msgstr ""
 msgid "Display post date?"
 msgstr ""
 
+#: assets/widgets/sof-featured-page-widget.php:47
+msgid "Do not show a Link"
+msgstr ""
+
+#: assets/widgets/sof-featured-page-widget.php:48
+#: assets/widgets/sof-journey-teaser-widget.php:204
+msgid "Read More"
+msgstr ""
+
+#: assets/widgets/sof-featured-page-widget.php:49
+msgid "Find Out More"
+msgstr ""
+
+#: assets/widgets/sof-featured-page-widget.php:50
+msgid "Continue Reading"
+msgstr ""
+
+#: assets/widgets/sof-featured-page-widget.php:56
+msgid "Display a page title, excerpt and featured image."
+msgstr ""
+
+#: assets/widgets/sof-featured-page-widget.php:61
+msgctxt "widget name"
+msgid "SOF Page Widget"
+msgstr ""
+
+#: assets/widgets/sof-featured-page-widget.php:201
+#: assets/widgets/sof-featured-page-widget.php:215
+msgid "Permanent Link to: "
+msgstr ""
+
+#: assets/widgets/sof-featured-page-widget.php:296
+msgid "Page:"
+msgstr ""
+
+#: assets/widgets/sof-featured-page-widget.php:299
+msgid "Choose a page"
+msgstr ""
+
+#: assets/widgets/sof-featured-page-widget.php:306
+msgid "Feature Image size:"
+msgstr ""
+
+#: assets/widgets/sof-featured-page-widget.php:308
+msgid "Do not use a Feature Image"
+msgstr ""
+
+#: assets/widgets/sof-featured-page-widget.php:310
+msgid "%1$dx%2$d"
+msgstr ""
+
+#: assets/widgets/sof-featured-page-widget.php:316
+msgid "Show Page Title:"
+msgstr ""
+
+#: assets/widgets/sof-featured-page-widget.php:318
+msgid "Yes"
+msgstr ""
+
+#: assets/widgets/sof-featured-page-widget.php:319
+msgid "No"
+msgstr ""
+
+#: assets/widgets/sof-featured-page-widget.php:324
+msgid "Link text:"
+msgstr ""
+
 #: assets/widgets/sof-journey-teaser-widget.php:39
 msgid "Displays a \"Journey Teaser\" to guide visitors to the current blog."
 msgstr ""
@@ -47,10 +115,6 @@ msgstr ""
 #: assets/widgets/sof-journey-teaser-widget.php:44
 msgctxt "widget name"
 msgid "Journey Teaser"
-msgstr ""
-
-#: assets/widgets/sof-journey-teaser-widget.php:204
-msgid "Read More"
 msgstr ""
 
 #: assets/widgets/sof-journey-teaser-widget.php:204
