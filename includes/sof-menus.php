@@ -1,4 +1,17 @@
 <?php
+/**
+ * Menus Class.
+ *
+ * Handles SOF-specific Menu modifications.
+ *
+ * @package Spirit_Of_Football_Utilities
+ * @since 0.1
+ */
+
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
+
 
 /**
  * SOF Menus Class.
@@ -12,16 +25,45 @@
  */
 class Spirit_Of_Football_Menus {
 
+	/**
+	 * Plugin (calling) object.
+	 *
+	 * @since 0.3
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
 
 
 	/**
 	 * Constructor.
 	 *
-	 * @since 0.1
+	 * @since 0.2.3
+	 *
+	 * @param object $plugin The plugin object.
 	 */
-	public function __construct() {
+	public function __construct( $plugin ) {
 
-		// Nothing.
+		// Store reference to plugin.
+		$this->plugin = $plugin;
+
+		// Init when this plugin is loaded.
+		add_action( 'sof_utilities/loaded', [ $this, 'initialise' ] );
+
+	}
+
+
+
+	/**
+	 * Initialise this object.
+	 *
+	 * @since 0.3
+	 */
+	public function initialise() {
+
+		// Register hooks.
+		$this->register_hooks();
 
 	}
 
@@ -35,7 +77,7 @@ class Spirit_Of_Football_Menus {
 	public function register_hooks() {
 
 		// Remove Multi-network Menu from admin bar for everyone.
-		add_action( 'wp_before_admin_bar_render', array( $this, 'wpmn_remove_menu' ), 2000 );
+		add_action( 'wp_before_admin_bar_render', [ $this, 'wpmn_remove_menu' ], 2000 );
 
 		// Maybe register SOF CIC hooks.
 		$this->sofcic_register_hooks();
@@ -63,7 +105,7 @@ class Spirit_Of_Football_Menus {
 		}
 
 		// Filter menu based on membership.
-		add_action( 'wp_nav_menu_objects', array( $this, 'sofcic_filter_menu' ), 20, 2 );
+		add_action( 'wp_nav_menu_objects', [ $this, 'sofcic_filter_menu' ], 20, 2 );
 
 		/*
 		 * Amends the BuddyPress dropdown in the WordPress admin bar.
@@ -71,7 +113,7 @@ class Spirit_Of_Football_Menus {
 		 * The top-level items point to "Profile -> Edit" by default, but this
 		 * seems kind of unintuitive, so point them to Member Home instead.
 		 */
-		add_action( 'wp_before_admin_bar_render', array( $this, 'sofcic_admin_bar_tweaks' ), 1000 );
+		add_action( 'wp_before_admin_bar_render', [ $this, 'sofcic_admin_bar_tweaks' ], 1000 );
 
 	}
 
@@ -90,7 +132,7 @@ class Spirit_Of_Football_Menus {
 		}
 
 		// Filter menu based on membership.
-		add_action( 'wp_nav_menu_objects', array( $this, 'sofev_filter_menu' ), 20, 2 );
+		add_action( 'wp_nav_menu_objects', [ $this, 'sofev_filter_menu' ], 20, 2 );
 
 		/*
 		 * Amends the BuddyPress dropdown in the WordPress admin bar.
@@ -98,7 +140,7 @@ class Spirit_Of_Football_Menus {
 		 * The top-level items point to "Profile -> Edit" by default, but this
 		 * seems kind of unintuitive, so point them to Member Home instead.
 		 */
-		add_action( 'wp_before_admin_bar_render', array( $this, 'sofev_admin_bar_tweaks' ), 1000 );
+		add_action( 'wp_before_admin_bar_render', [ $this, 'sofev_admin_bar_tweaks' ], 1000 );
 
 	}
 
@@ -117,7 +159,7 @@ class Spirit_Of_Football_Menus {
 		}
 
 		// Filter menu based on membership.
-		add_action( 'wp_nav_menu_objects', array( $this, 'sofbr_filter_menu' ), 20, 2 );
+		add_action( 'wp_nav_menu_objects', [ $this, 'sofbr_filter_menu' ], 20, 2 );
 
 		/*
 		 * Amends the BuddyPress dropdown in the WordPress admin bar.
@@ -125,7 +167,7 @@ class Spirit_Of_Football_Menus {
 		 * The top-level items point to "Profile -> Edit" by default, but this
 		 * seems kind of unintuitive, so point them to Member Home instead.
 		 */
-		add_action( 'wp_before_admin_bar_render', array( $this, 'sofbr_admin_bar_tweaks' ), 1000 );
+		add_action( 'wp_before_admin_bar_render', [ $this, 'sofbr_admin_bar_tweaks' ], 1000 );
 
 	}
 
@@ -143,7 +185,9 @@ class Spirit_Of_Football_Menus {
 	public function wpmn_remove_menu() {
 
 		// Bail if plugin not present.
-		if ( ! function_exists( 'wpmn' ) ) return;
+		if ( ! function_exists( 'wpmn' ) ) {
+			return;
+		}
 
 		// Access menu object.
 		global $wp_admin_bar;
@@ -171,22 +215,36 @@ class Spirit_Of_Football_Menus {
 	public function sofcic_filter_menu( $sorted_menu_items, $args ) {
 
 		// Only on front end.
-		if( is_admin() ) return $sorted_menu_items;
+		if ( is_admin() ) {
+			return $sorted_menu_items;
+		}
 
 		// Only on main blog.
-		if( ! is_main_site() ) return $sorted_menu_items;
+		if ( ! is_main_site() ) {
+			return $sorted_menu_items;
+		}
 
 		// Only on when CommentPress is enabled.
-		if( ! defined( 'COMMENTPRESS_SOF_DE_VERSION' ) ) return $sorted_menu_items;
+		if ( ! defined( 'COMMENTPRESS_SOF_DE_VERSION' ) ) {
+			return $sorted_menu_items;
+		}
 
 		// Allow network admins.
-		if ( is_super_admin() ) return $sorted_menu_items;
+		if ( is_super_admin() ) {
+			return $sorted_menu_items;
+		}
 
+		/*
 		// Allow members.
-		//if ( current_user_can_for_blog( bp_get_root_blog_id(), 'restrict_content' ) ) return $sorted_menu_items;
+		if ( current_user_can_for_blog( bp_get_root_blog_id(), 'restrict_content' ) ) {
+			return $sorted_menu_items;
+		}
+		*/
 
 		// Allow logged-in folks.
-		if ( is_user_logged_in() ) return $sorted_menu_items;
+		if ( is_user_logged_in() ) {
+			return $sorted_menu_items;
+		}
 
 		// Remove items from array.
 		$this->remove_item( $sorted_menu_items, 'post_type', '/activity/' );
@@ -217,7 +275,9 @@ class Spirit_Of_Football_Menus {
 		global $wp_admin_bar;
 
 		// Bail if not logged in.
-		if ( ! is_user_logged_in() ) return;
+		if ( ! is_user_logged_in() ) {
+			return;
+		}
 
 		// Get user object.
 		$user = wp_get_current_user();
@@ -229,17 +289,17 @@ class Spirit_Of_Football_Menus {
 		$wp_admin_bar->remove_menu( 'wp-logo' );
 
 		// Target BuddyPress dropdown parent.
-		$args = array(
+		$args = [
 			'id' => 'my-account',
 			'href' => trailingslashit( bp_loggedin_user_domain() ),
-		);
+		];
 		$wp_admin_bar->add_node( $args );
 
 		// Target BuddyPress dropdown user info.
-		$args = array(
+		$args = [
 			'id' => 'user-info',
 			'href' => trailingslashit( bp_loggedin_user_domain() ),
-		);
+		];
 		$wp_admin_bar->add_node( $args );
 
 	}
@@ -262,19 +322,31 @@ class Spirit_Of_Football_Menus {
 	public function sofev_filter_menu( $sorted_menu_items, $args ) {
 
 		// Only on front end.
-		if( is_admin() ) return $sorted_menu_items;
+		if( is_admin() ) {
+			return $sorted_menu_items;
+		}
 
 		// Only on main blog.
-		if( ! is_main_site() ) return $sorted_menu_items;
+		if( ! is_main_site() ) {
+			return $sorted_menu_items;
+		}
 
 		// Allow network admins.
-		if ( is_super_admin() ) return $sorted_menu_items;
+		if ( is_super_admin() ) {
+			return $sorted_menu_items;
+		}
 
+		/*
 		// Allow members.
-		//if ( current_user_can_for_blog( bp_get_root_blog_id(), 'restrict_content' ) ) return $sorted_menu_items;
+		if ( current_user_can_for_blog( bp_get_root_blog_id(), 'restrict_content' ) ) {
+			return $sorted_menu_items;
+		}
+		*/
 
 		// Allow logged-in folks.
-		if ( is_user_logged_in() ) return $sorted_menu_items;
+		if ( is_user_logged_in() ) {
+			return $sorted_menu_items;
+		}
 
 		// Remove items from array.
 		$this->remove_item( $sorted_menu_items, 'post_type', '/gruppen/' );
@@ -300,7 +372,9 @@ class Spirit_Of_Football_Menus {
 		global $wp_admin_bar;
 
 		// Bail if not logged in.
-		if ( ! is_user_logged_in() ) return;
+		if ( ! is_user_logged_in() ) {
+			return;
+		}
 
 		// Get user object.
 		$user = wp_get_current_user();
@@ -312,17 +386,17 @@ class Spirit_Of_Football_Menus {
 		$wp_admin_bar->remove_menu( 'wp-logo' );
 
 		// Target BuddyPress dropdown parent.
-		$args = array(
+		$args = [
 			'id' => 'my-account',
 			'href' => trailingslashit( bp_loggedin_user_domain() ),
-		);
+		];
 		$wp_admin_bar->add_node( $args );
 
 		// Target BuddyPress dropdown user info.
-		$args = array(
+		$args = [
 			'id' => 'user-info',
 			'href' => trailingslashit( bp_loggedin_user_domain() ),
-		);
+		];
 		$wp_admin_bar->add_node( $args );
 
 		// Target community and network members.
@@ -334,27 +408,27 @@ class Spirit_Of_Football_Menus {
 
 				///*
 				// Target "My Sites".
-				$args = array(
+				$args = [
 					'id' => 'my-sites',
 					'href' => esc_url( home_url( '/' ) ),
-				);
+				];
 				$wp_admin_bar->add_node( $args );
 
 				// Target "Main Site Name".
-				$args = array(
+				$args = [
 					'id' => 'blog-1',
 					'href' => esc_url( home_url( '/' ) ),
-				);
+				];
 				$wp_admin_bar->add_node( $args );
 
 				// Remove "Dashboard" from "My Sites -> Main Site".
 				$wp_admin_bar->remove_node( 'blog-12-d' );
 
 				// Target "Site Name".
-				$args = array(
+				$args = [
 					'id' => 'site-name',
 					'href' => esc_url( home_url( '/' ) ),
-				);
+				];
 				$wp_admin_bar->add_node( $args );
 				//*/
 
@@ -395,19 +469,31 @@ class Spirit_Of_Football_Menus {
 	public function sofbr_filter_menu( $sorted_menu_items, $args ) {
 
 		// Only on front end.
-		if( is_admin() ) return $sorted_menu_items;
+		if ( is_admin() ) {
+			return $sorted_menu_items;
+		}
 
 		// Only on main blog.
-		if( ! is_main_site() ) return $sorted_menu_items;
+		if ( ! is_main_site() ) {
+			return $sorted_menu_items;
+		}
 
 		// Allow network admins.
-		if ( is_super_admin() ) return $sorted_menu_items;
+		if ( is_super_admin() ) {
+			return $sorted_menu_items;
+		}
 
+		/*
 		// Allow members.
-		//if ( current_user_can_for_blog( bp_get_root_blog_id(), 'restrict_content' ) ) return $sorted_menu_items;
+		if ( current_user_can_for_blog( bp_get_root_blog_id(), 'restrict_content' ) ) {
+			return $sorted_menu_items;
+		}
+		*/
 
 		// Allow logged-in folks.
-		if ( is_user_logged_in() ) return $sorted_menu_items;
+		if ( is_user_logged_in() ) {
+			return $sorted_menu_items;
+		}
 
 		// --<
 		return $sorted_menu_items;
@@ -427,7 +513,9 @@ class Spirit_Of_Football_Menus {
 		global $wp_admin_bar;
 
 		// Bail if not logged in.
-		if ( ! is_user_logged_in() ) return;
+		if ( ! is_user_logged_in() ) {
+			return;
+		}
 
 		// Get user object.
 		$user = wp_get_current_user();
@@ -449,17 +537,17 @@ class Spirit_Of_Football_Menus {
 		}
 
 		// Target BuddyPress dropdown parent.
-		$args = array(
+		$args = [
 			'id' => 'my-account',
 			'href' => trailingslashit( bp_loggedin_user_domain() ),
-		);
+		];
 		$wp_admin_bar->add_node( $args );
 
 		// Target BuddyPress dropdown user info.
-		$args = array(
+		$args = [
 			'id' => 'user-info',
 			'href' => trailingslashit( bp_loggedin_user_domain() ),
-		);
+		];
 		$wp_admin_bar->add_node( $args );
 
 	}

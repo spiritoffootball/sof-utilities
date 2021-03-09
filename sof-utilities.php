@@ -134,6 +134,29 @@ class Spirit_Of_Football_Utilities {
 	 */
 	public function __construct() {
 
+		// Initialise once plugins are loaded.
+		add_action( 'plugins_loaded', [ $this, 'initialise' ] );
+
+	}
+
+
+
+	/**
+	 * Initialise.
+	 *
+	 * @since 0.1
+	 */
+	public function initialise() {
+
+		// Only do this once.
+		static $done;
+		if ( isset( $done ) AND $done === true ) {
+			return;
+		}
+
+		// Init translation.
+		$this->translation();
+
 		// Include files.
 		$this->include_files();
 
@@ -142,6 +165,16 @@ class Spirit_Of_Football_Utilities {
 
 		// Register hooks.
 		$this->register_hooks();
+
+		/**
+		 * Broadcast that this plugin is now loaded.
+		 *
+		 * @since 0.3
+		 */
+		do_action( 'sof_utilities/loaded' );
+
+		// We're done.
+		$done = true;
 
 	}
 
@@ -154,31 +187,15 @@ class Spirit_Of_Football_Utilities {
 	 */
 	public function include_files() {
 
-		// Include BuddyPress class.
+		// Include class files.
 		include_once SOF_UTILITIES_PATH . 'includes/sof-buddypress.php';
-
-		// Include CiviCRM class.
 		include_once SOF_UTILITIES_PATH . 'includes/sof-civicrm.php';
-
-		// Include CPT class.
 		include_once SOF_UTILITIES_PATH . 'includes/sof-cpts.php';
-
-		// Include Metaboxes class.
 		include_once SOF_UTILITIES_PATH . 'includes/sof-metaboxes.php';
-
-		// Include Menus class.
 		include_once SOF_UTILITIES_PATH . 'includes/sof-menus.php';
-
-		// Include Membership class.
 		include_once SOF_UTILITIES_PATH . 'includes/sof-membership.php';
-
-		// Include Mirror class.
 		include_once SOF_UTILITIES_PATH . 'includes/sof-mirror.php';
-
-		// Include Shortcodes class.
 		include_once SOF_UTILITIES_PATH . 'includes/sof-shortcodes.php';
-
-		// Include Widgets class.
 		include_once SOF_UTILITIES_PATH . 'includes/sof-widgets.php';
 
 	}
@@ -192,32 +209,16 @@ class Spirit_Of_Football_Utilities {
 	 */
 	public function setup_globals() {
 
-		// Init BuddyPress object.
-		$this->buddypress = new Spirit_Of_Football_BuddyPress;
-
-		// Init CiviCRM object.
-		$this->civicrm = new Spirit_Of_Football_CiviCRM;
-
-		// Init CPT object.
-		$this->cpts = new Spirit_Of_Football_CPTs;
-
-		// Init Metaboxes object.
-		$this->metaboxes = new Spirit_Of_Football_Metaboxes;
-
-		// Init Menus object.
-		$this->menus = new Spirit_Of_Football_Menus;
-
-		// Init Membership object.
-		$this->membership = new Spirit_Of_Football_Membership;
-
-		// Init Mirror object.
-		$this->mirror = new Spirit_Of_Football_Mirror;
-
-		// Init Shortcodes object.
-		$this->shortcodes = new Spirit_Of_Football_Shortcodes;
-
-		// Init Widgets object.
-		$this->widgets = new Spirit_Of_Football_Widgets;
+		// Init objects.
+		$this->buddypress = new Spirit_Of_Football_BuddyPress( $this );
+		$this->civicrm = new Spirit_Of_Football_CiviCRM( $this );
+		$this->cpts = new Spirit_Of_Football_CPTs( $this );
+		$this->metaboxes = new Spirit_Of_Football_Metaboxes( $this );
+		$this->menus = new Spirit_Of_Football_Menus( $this );
+		$this->membership = new Spirit_Of_Football_Membership( $this );
+		$this->mirror = new Spirit_Of_Football_Mirror( $this );
+		$this->shortcodes = new Spirit_Of_Football_Shortcodes( $this );
+		$this->widgets = new Spirit_Of_Football_Widgets( $this );
 
 	}
 
@@ -230,23 +231,9 @@ class Spirit_Of_Football_Utilities {
 	 */
 	public function register_hooks() {
 
-		// Use translation.
-		add_action( 'plugins_loaded', array( $this, 'translation' ) );
-
-		// Hooks that always need to be present.
-		$this->buddypress->register_hooks();
-		$this->civicrm->register_hooks();
-		$this->cpts->register_hooks();
-		$this->metaboxes->register_hooks();
-		$this->menus->register_hooks();
-		$this->membership->register_hooks();
-		$this->mirror->register_hooks();
-		$this->shortcodes->register_hooks();
-		$this->widgets->register_hooks();
-
 		// Maintenance mode.
 		if ( $this->maintenance_mode ) {
-			add_action( 'init', array( $this, 'maintenance_mode' ) );
+			add_action( 'init', [ $this, 'maintenance_mode' ] );
 		}
 
 	}
@@ -292,7 +279,7 @@ class Spirit_Of_Football_Utilities {
 		load_plugin_textdomain(
 			'sof-utilities', // Unique name.
 			false, // Deprecated argument.
-			dirname( plugin_basename( SOF_UTILITIES_FILE ) ) . '/languages/' // Relative path to directory
+			dirname( plugin_basename( SOF_UTILITIES_FILE ) ) . '/languages/' // Relative path to directory.
 		);
 
 	}
@@ -325,15 +312,38 @@ class Spirit_Of_Football_Utilities {
 
 
 
-// Instantiate the class.
-global $sof_utilities_plugin;
-$sof_utilities_plugin = new Spirit_Of_Football_Utilities();
+/**
+ * Utility to get a reference to this plugin.
+ *
+ * @since 0.3
+ *
+ * @return CiviCRM_ACF_Integration $civicrm_acf_integration The plugin reference.
+ */
+function spirit_of_football_utilities() {
+
+	// Store instance in static variable.
+	static $plugin = false;
+
+	// Maybe return instance.
+	if ( false === $plugin ) {
+		$plugin = new Spirit_Of_Football_Utilities();
+	}
+
+	// --<
+	return $plugin;
+
+}
+
+
+
+// Initialise plugin now.
+spirit_of_football_utilities();
 
 // Activation.
-register_activation_hook( __FILE__, array( $sof_utilities_plugin, 'activate' ) );
+register_activation_hook( __FILE__, [ spirit_of_football_utilities(), 'activate' ] );
 
 // Deactivation.
-register_deactivation_hook( __FILE__, array( $sof_utilities_plugin, 'deactivate' ) );
+register_deactivation_hook( __FILE__, [ spirit_of_football_utilities(), 'deactivate' ] );
 
 
 

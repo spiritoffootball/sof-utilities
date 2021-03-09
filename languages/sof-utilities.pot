@@ -1,139 +1,152 @@
-# Copyright (C) 2019 SOF Utilities
+# Copyright (C) 2021 SOF Utilities
 # This file is distributed under the same license as the SOF Utilities package.
 msgid ""
 msgstr ""
 "Project-Id-Version: SOF Utilities 0.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sof-utilities\n"
-"POT-Creation-Date: 2019-01-23 18:02:57+00:00\n"
+"POT-Creation-Date: 2021-03-03 12:26:40+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2019-MO-DA HO:MI+ZONE\n"
+"PO-Revision-Date: 2021-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 
-#: assets/widgets/sof-docs-widget.php:44
-msgid "Displays the most recent Docs that the visitor can read. Used on SOF Member Homepage."
+#: assets/widgets/sof-docs-widget.php:40
+msgid ""
+"Displays the most recent Docs that the visitor can read. Used on SOF Member "
+"Homepage."
 msgstr ""
 
-#: assets/widgets/sof-docs-widget.php:49
+#: assets/widgets/sof-docs-widget.php:45
 msgctxt "widget name"
 msgid "(BuddyPress Docs) Recent SOF Docs"
 msgstr ""
 
-#: assets/widgets/sof-docs-widget.php:80
+#: assets/widgets/sof-docs-widget.php:76
 msgid "Recent Documents"
 msgstr ""
 
-#: assets/widgets/sof-docs-widget.php:172
-#: assets/widgets/sof-journey-teaser-widget.php:212
+#: assets/widgets/sof-docs-widget.php:168
+#: assets/widgets/sof-journey-teaser-widget.php:260
 msgid "Title:"
 msgstr ""
 
-#: assets/widgets/sof-docs-widget.php:175
+#: assets/widgets/sof-docs-widget.php:171
 msgid "Number of docs to show:"
 msgstr ""
 
-#: assets/widgets/sof-docs-widget.php:179
+#: assets/widgets/sof-docs-widget.php:175
 msgid "Display post date?"
 msgstr ""
 
-#: assets/widgets/sof-journey-teaser-widget.php:43
+#: assets/widgets/sof-journey-teaser-widget.php:39
 msgid "Displays a \"Journey Teaser\" to guide visitors to the current blog."
 msgstr ""
 
-#: assets/widgets/sof-journey-teaser-widget.php:48
+#: assets/widgets/sof-journey-teaser-widget.php:44
 msgctxt "widget name"
 msgid "Journey Teaser"
 msgstr ""
 
-#: assets/widgets/sof-journey-teaser-widget.php:157
+#: assets/widgets/sof-journey-teaser-widget.php:204
 msgid "Read More"
 msgstr ""
 
-#: assets/widgets/sof-journey-teaser-widget.php:157
+#: assets/widgets/sof-journey-teaser-widget.php:204
 msgid "Go to the blog"
 msgstr ""
 
-#: assets/widgets/sof-journey-teaser-widget.php:192
+#: assets/widgets/sof-journey-teaser-widget.php:240
 msgid "Follow the Journey"
 msgstr ""
 
-#: assets/widgets/sof-journey-teaser-widget.php:217
+#: assets/widgets/sof-journey-teaser-widget.php:265
 msgid "Latest Ball Journey Site"
 msgstr ""
 
-#: assets/widgets/sof-journey-teaser-widget.php:219
+#: assets/widgets/sof-journey-teaser-widget.php:267
 msgid "None"
 msgstr ""
 
-#: includes/sof-buddypress.php:117
+#: includes/sof-buddypress.php:173
 msgid "Lost your password?"
 msgstr ""
 
-#: includes/sof-membership.php:97
+#: includes/sof-membership.php:148
 msgid "Could not add user to group"
 msgstr ""
 
-#: includes/sof-membership.php:135
+#: includes/sof-membership.php:193
 msgid "Could not remove user from group"
 msgstr ""
 
-#: includes/sof-metaboxes.php:87
+#: includes/sof-metaboxes.php:131
 msgid "Title Visibility"
 msgstr ""
 
-#: includes/sof-metaboxes.php:114
+#: includes/sof-metaboxes.php:158
 msgid "Make title hidden"
 msgstr ""
 
-#: includes/sof-mirror.php:194
+#: includes/sof-mirror.php:244
 msgid "Read this post in English"
 msgstr ""
 
-#: includes/sof-mirror.php:251
+#: includes/sof-mirror.php:305
 msgid "Read this post in German"
 msgstr ""
 
-#: includes/sof-mirror.php:288
+#: includes/sof-mirror.php:342
 msgid "German version"
 msgstr ""
 
-#: includes/sof-mirror.php:321
+#: includes/sof-mirror.php:375
 msgid "This post does not have a German version."
 msgstr ""
 
-#: includes/sof-mirror.php:330
+#: includes/sof-mirror.php:384
 msgid "This post has a German version."
 msgstr ""
 
-#: includes/sof-mirror.php:342
+#: includes/sof-mirror.php:396
 msgid "Edit German version"
 msgstr ""
 
-#: includes/sof-mirror.php:365
+#: includes/sof-mirror.php:419
 msgid "English version"
 msgstr ""
 
-#: includes/sof-mirror.php:402
+#: includes/sof-mirror.php:456
 msgid "This post has an English version."
 msgstr ""
 
-#: includes/sof-mirror.php:426
+#: includes/sof-mirror.php:480
 msgid "Edit English version"
 msgstr ""
 
-#: includes/sof-mirror.php:437
-msgid "You will be able to create an English version of this post on The Ball 2018 when you have added it to the \"Daily Ballblog\" category. You do not have to publish this post first - it can still be in draft mode."
+#: includes/sof-mirror.php:491
+msgid ""
+"You will be able to create an English version of this post on The Ball 2018 "
+"when you have added it to the \"Daily Ballblog\" category. You do not have "
+"to publish this post first - it can still be in draft mode."
 msgstr ""
 
-#: includes/sof-mirror.php:446
-msgid "You can now create a copy of this post on The Ball 2018. When you have done so, you can translate it into English. It is best to make a copy when this post is finished and published."
+#: includes/sof-mirror.php:500
+msgid ""
+"You can now create a copy of this post on The Ball 2018. When you have done "
+"so, you can translate it into English. It is best to make a copy when this "
+"post is finished and published."
 msgstr ""
 
-#: includes/sof-mirror.php:449
+#: includes/sof-mirror.php:503
 msgid "Create an English version"
 msgstr ""
+
+#: includes/sof-shortcodes.php:160
+msgid "Edit this profile"
+msgstr ""
+
 #. Plugin Name of the plugin/theme
 msgid "SOF Utilities"
 msgstr ""

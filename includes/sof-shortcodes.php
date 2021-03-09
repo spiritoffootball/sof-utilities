@@ -1,4 +1,17 @@
 <?php
+/**
+ * Shortcodes Class.
+ *
+ * Handles SOF-specific Shortcodes.
+ *
+ * @package Spirit_Of_Football_Utilities
+ * @since 0.1
+ */
+
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
+
 
 /**
  * SOF Custom Shortcodes Class.
@@ -12,16 +25,45 @@
  */
 class Spirit_Of_Football_Shortcodes {
 
+	/**
+	 * Plugin (calling) object.
+	 *
+	 * @since 0.3
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
 
 
 	/**
 	 * Constructor.
 	 *
-	 * @since 0.2
+	 * @since 0.2.3
+	 *
+	 * @param object $plugin The plugin object.
 	 */
-	public function __construct() {
+	public function __construct( $plugin ) {
 
-		// Nothing.
+		// Store reference to plugin.
+		$this->plugin = $plugin;
+
+		// Init when this plugin is loaded.
+		add_action( 'sof_utilities/loaded', [ $this, 'initialise' ] );
+
+	}
+
+
+
+	/**
+	 * Initialise this object.
+	 *
+	 * @since 0.3
+	 */
+	public function initialise() {
+
+		// Register hooks.
+		$this->register_hooks();
 
 	}
 
@@ -35,7 +77,7 @@ class Spirit_Of_Football_Shortcodes {
 	public function register_hooks() {
 
 		// Register shortcodes.
-		add_shortcode( 'team', array( $this, 'team_render' ) );
+		add_shortcode( 'team', [ $this, 'team_render' ] );
 
 	}
 
@@ -60,9 +102,9 @@ class Spirit_Of_Football_Shortcodes {
 		$team = '';
 
 		// Init defaults.
-		$defaults = array(
+		$defaults = [
 			'include' => '7, 3, 2, 8, 4, 5', // Default set of team members.
-		);
+		];
 
 		// Parse attributes.
 		$shortcode_atts = shortcode_atts( $defaults, $attr, 'team' );
@@ -76,10 +118,10 @@ class Spirit_Of_Football_Shortcodes {
 		});
 
 		// Define args (users in order)
-		$args = array(
+		$args = [
 			'include' => $include_users,
 			'orderby' => 'include',
-		);
+		];
 
 		// Get the users by ID.
 		$users = get_users( $args );

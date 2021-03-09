@@ -1,4 +1,17 @@
 <?php
+/**
+ * Membership Class.
+ *
+ * Handles SOF-specific Membership modifications.
+ *
+ * @package Spirit_Of_Football_Utilities
+ * @since 0.2
+ */
+
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
+
 
 /**
  * SOF Membership Class.
@@ -11,6 +24,15 @@
  * @subpackage SOF
  */
 class Spirit_Of_Football_Membership {
+
+	/**
+	 * Plugin (calling) object.
+	 *
+	 * @since 0.3
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
 
 	/**
 	 * Membership Group ID (group called "Teamer")
@@ -26,11 +48,31 @@ class Spirit_Of_Football_Membership {
 	/**
 	 * Constructor.
 	 *
-	 * @since 0.2
+	 * @since 0.2.3
+	 *
+	 * @param object $plugin The plugin object.
 	 */
-	public function __construct() {
+	public function __construct( $plugin ) {
 
-		// Nothing.
+		// Store reference to plugin.
+		$this->plugin = $plugin;
+
+		// Init when this plugin is loaded.
+		add_action( 'sof_utilities/loaded', [ $this, 'initialise' ] );
+
+	}
+
+
+
+	/**
+	 * Initialise this object.
+	 *
+	 * @since 0.3
+	 */
+	public function initialise() {
+
+		// Register hooks.
+		$this->register_hooks();
 
 	}
 
@@ -44,16 +86,18 @@ class Spirit_Of_Football_Membership {
 	public function register_hooks() {
 
 		// Include only on SOF eV for now.
-		if ( 'sofev' != sof_get_site() ) return;
+		if ( 'sofev' != sof_get_site() ) {
+			return;
+		}
 
 		// Hook into "add capability".
-		add_action( 'civi_wp_member_sync_add_cap', array( $this, 'cap_add' ), 20, 2 );
+		add_action( 'civi_wp_member_sync_add_cap', [ $this, 'cap_add' ], 20, 2 );
 
 		// Hook into "remove capability".
-		add_action( 'civi_wp_member_sync_remove_cap', array( $this, 'cap_remove' ), 20, 2 );
+		add_action( 'civi_wp_member_sync_remove_cap', [ $this, 'cap_remove' ], 20, 2 );
 
 		// Filter access to custom elements on events.
-		add_filter( 'civicrm_eo_pl_access', array( $this, 'permissions_pl' ), 11, 2 );
+		add_filter( 'civicrm_eo_pl_access', [ $this, 'permissions_pl' ], 11, 2 );
 
 	}
 
@@ -75,30 +119,37 @@ class Spirit_Of_Football_Membership {
 	public function cap_add( $user, $capability ) {
 
 		// Kick out if we don't receive a valid user.
-		if ( ! ( $user instanceof WP_User ) ) return;
+		if ( ! ( $user instanceof WP_User ) ) {
+			return;
+		}
 
 		// Bail if not the "Mitglied" capability.
-		if ( $capability != 'civimember_1' ) return;
+		if ( $capability != 'civimember_1' ) {
+			return;
+		}
 
 		// Check existing membership.
 		$is_member = groups_is_user_member( $user->ID, $this->group_id );
 
 		// Skip creation if user is already a member.
-		if ( $is_member ) return true;
+		if ( $is_member ) {
+			return;
+		}
 
 		// Use BuddyPress function.
 		$success = groups_join_group( $this->group_id, $user->ID );
 
 		// Log an error on failure.
 		if ( $success === false ) {
-
-			error_log( print_r( array(
+			$e = new Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
 				'method' => __METHOD__,
 				'procedure' => __( 'Could not add user to group', 'sof-utilities' ),
 				'user' => $user,
 				'group_id' => $this->group_id,
-			), true ) );
-
+				'backtrace' => $trace,
+			], true ) );
 		}
 
 	}
@@ -116,27 +167,34 @@ class Spirit_Of_Football_Membership {
 	public function cap_remove( $user, $capability ) {
 
 		// Kick out if we don't receive a valid user.
-		if ( ! ( $user instanceof WP_User ) ) return;
+		if ( ! ( $user instanceof WP_User ) ) {
+			return;
+		}
 
 		// Bail if not the "Mitglied" capability.
-		if ( $capability != 'civimember_1' ) return;
+		if ( $capability != 'civimember_1' ) {
+			return;
+		}
 
 		// Bail if user is not a member.
-		if ( ! groups_is_user_member( $user->ID, $this->group_id ) ) return false;
+		if ( ! groups_is_user_member( $user->ID, $this->group_id ) ) {
+			return false;
+		}
 
 		// Use BuddyPress function.
 		$success = groups_leave_group( $this->group_id, $user->ID );
 
 		// Log an error on failure.
 		if ( $success === false ) {
-
-			error_log( print_r( array(
+			$e = new Exception();
+			$trace = $e->getTraceAsString();
+			error_log( print_r( [
 				'method' => __METHOD__,
 				'procedure' => __( 'Could not remove user from group', 'sof-utilities' ),
 				'user' => $user,
 				'group_id' => $this->group_id,
-			), true ) );
-
+				'backtrace' => $trace,
+			], true ) );
 		}
 
 	}
@@ -155,7 +213,9 @@ class Spirit_Of_Football_Membership {
 	public function permissions_pl( $granted, $post_id = null ) {
 
 		// Always deny if not logged in.
-		if ( ! is_user_logged_in() ) return false;
+		if ( ! is_user_logged_in() ) {
+			return false;
+		}
 
 		// Get current user.
 		$current_user = wp_get_current_user();

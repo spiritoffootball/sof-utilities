@@ -1,4 +1,17 @@
 <?php
+/**
+ * Custom Post Types Class.
+ *
+ * Handles SOF-specific Custom Post Types.
+ *
+ * @package Spirit_Of_Football_Utilities
+ * @since 0.1
+ */
+
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
+
 
 /**
  * SOF Custom Post Types Class.
@@ -12,16 +25,45 @@
  */
 class Spirit_Of_Football_CPTs {
 
+	/**
+	 * Plugin (calling) object.
+	 *
+	 * @since 0.3
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
 
 
 	/**
 	 * Constructor.
 	 *
-	 * @since 0.1
+	 * @since 0.2.3
+	 *
+	 * @param object $plugin The plugin object.
 	 */
-	public function __construct() {
+	public function __construct( $plugin ) {
 
-		// Nothing.
+		// Store reference to plugin.
+		$this->plugin = $plugin;
+
+		// Init when this plugin is loaded.
+		add_action( 'sof_utilities/loaded', [ $this, 'initialise' ] );
+
+	}
+
+
+
+	/**
+	 * Initialise this object.
+	 *
+	 * @since 0.3
+	 */
+	public function initialise() {
+
+		// Register hooks.
+		$this->register_hooks();
 
 	}
 
@@ -35,7 +77,7 @@ class Spirit_Of_Football_CPTs {
 	public function register_hooks() {
 
 		// Always create post types.
-		//add_action( 'init', array( $this, 'create_post_types' ) );
+		//add_action( 'init', [ $this, 'create_post_types' ] );
 
 	}
 

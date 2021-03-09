@@ -10,12 +10,8 @@
  * @subpackage SOF
  */
 
-
-
 // Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+defined( 'ABSPATH' ) || exit;
 
 
 
@@ -38,10 +34,10 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 	public function __construct() {
 
 		// Use the class `widget_recent_entries` to inherit WP Recent Posts widget styling.
-		$widget_ops = array(
+		$widget_ops = [
 			'classname' => 'widget_journey_teaser',
 			'description' => __( 'Displays a "Journey Teaser" to guide visitors to the current blog.', 'sof-utilities' ),
-		);
+		];
 
 		parent::__construct(
 			'widget_journey_teaser',
@@ -54,43 +50,45 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 
 
 	/**
-	 * Outputs the content for the current Recent Docs widget instance.
+	 * Outputs the content for the current Journey Teaser widget instance.
 	 *
 	 * @since 0.2.2
 	 *
 	 * @param array $args     Display arguments including 'before_title', 'after_title',
 	 *                        'before_widget', and 'after_widget'.
-	 * @param array $instance Settings for the current Recent Docs widget instance.
+	 * @param array $instance Settings for the current Journey Teaser widget instance.
 	 */
 	public function widget( $args, $instance ) {
 
 		/*
-		$e = new Exception;
+		$e = new Exception();
 		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
+		error_log( print_r( [
 			'method' => __METHOD__,
 			'args' => $args,
 			'instance' => $instance,
 			//'backtrace' => $trace,
-		), true ) );
+		], true ) );
 		*/
 
 		// Get target site.
 		$target_site_id = ! empty( $instance['target_site'] ) ? $instance['target_site'] : '';
 
 		// Sanity check.
-		if ( empty( $target_site_id ) ) return;
+		if ( empty( $target_site_id ) ) {
+			return;
+		}
 
 		// Switch to the site to get posts.
 		switch_to_blog( $target_site_id );
 
 		// Define args for query.
-		$query_args = array(
+		$query_args = [
 			'post_type' => 'post',
 			'no_found_rows' => true,
 			'post_status' => 'publish',
 			'posts_per_page' => 1,
-		);
+		];
 
 		// Do query.
 		$posts = new WP_Query( $query_args );
@@ -227,7 +225,7 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 
 
 	/**
-	 * Outputs the settings form for the Recent Docs widget.
+	 * Outputs the settings form for the Journey Teaser widget.
 	 *
 	 * @since 0.2.2
 	 *
@@ -239,19 +237,19 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 		if ( isset( $instance['title'] ) ) {
 			$title = $instance['title'];
 		} else {
-			$title = __( 'Follow the Journey', 'commentpress-sof-de' );
+			$title = __( 'Follow the Journey', 'sof-utilities' );
 		}
 
 		// Get target site.
 		$target_site = ! empty( $instance['target_site'] ) ? $instance['target_site'] : '';
 
 		// Init query args.
-		$site_args = array(
+		$site_args = [
 			'archived' => 0,
 			'spam' => 0,
 			'deleted' => 0,
 			'public' => 1,
-		);
+		];
 
 		// Get sites.
 		$sites = get_sites( $site_args );

@@ -1,4 +1,17 @@
 <?php
+/**
+ * BuddyPress Class.
+ *
+ * Handles general BuddyPress modifications.
+ *
+ * @package Spirit_Of_Football_Utilities
+ * @since 0.2.3
+ */
+
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
+
 
 /**
  * SOF BuddyPress Class.
@@ -12,16 +25,45 @@
  */
 class Spirit_Of_Football_BuddyPress {
 
+	/**
+	 * Plugin (calling) object.
+	 *
+	 * @since 0.3
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
 
 
 	/**
 	 * Constructor.
 	 *
 	 * @since 0.2.3
+	 *
+	 * @param object $plugin The plugin object.
 	 */
-	public function __construct() {
+	public function __construct( $plugin ) {
 
-		// Nothing.
+		// Store reference to plugin.
+		$this->plugin = $plugin;
+
+		// Init when this plugin is loaded.
+		add_action( 'sof_utilities/loaded', [ $this, 'initialise' ] );
+
+	}
+
+
+
+	/**
+	 * Initialise this object.
+	 *
+	 * @since 0.3
+	 */
+	public function initialise() {
+
+		// Register hooks.
+		$this->register_hooks();
 
 	}
 
@@ -44,10 +86,10 @@ class Spirit_Of_Football_BuddyPress {
 		if ( 'sofev' == sof_get_site() OR $sofcic === true ) {
 
 			// Redirect to calling page after login.
-			add_filter( 'login_redirect', array( $this, 'login_redirect' ), 20, 3 );
+			add_filter( 'login_redirect', [ $this, 'login_redirect' ], 20, 3 );
 
 			// Add link to password recovery page.
-			add_action( 'bp_login_widget_form', array( $this, 'login_password_link' ), 20 );
+			add_action( 'bp_login_widget_form', [ $this, 'login_password_link' ], 20 );
 
 		}
 
@@ -72,14 +114,20 @@ class Spirit_Of_Football_BuddyPress {
 	public function login_redirect( $redirect_to, $request, $user ) {
 
 		// Bail if no user.
-		if ( ! $user instanceof WP_User ) return $redirect_to;
+		if ( ! $user instanceof WP_User ) {
+			return $redirect_to;
+		}
 
 		/*
 		// Bail if super admin.
-		if ( is_super_admin( $user->ID ) ) return $redirect_to;
+		if ( is_super_admin( $user->ID ) ) {
+			return $redirect_to;
+		}
 
 		// Bail if not main site and user is site administrator.
-		if ( ! is_main_site() AND user_can( $user, 'manage_options' ) ) return $redirect_to;
+		if ( ! is_main_site() AND user_can( $user, 'manage_options' ) ) {
+			return $redirect_to;
+		}
 
 		// Is our hidden input set?
 		if ( isset( $_REQUEST['pcp-current-page'] ) AND ! empty( $_REQUEST['pcp-current-page'] ) ) {

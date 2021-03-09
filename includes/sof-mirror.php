@@ -1,4 +1,17 @@
 <?php
+/**
+ * Mirror Content Class.
+ *
+ * Handles mirroring of content between The Ball 2018 and SOF Germany 2018 blog.
+ *
+ * @package Spirit_Of_Football_Utilities
+ * @since 0.2.1
+ */
+
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
+
 
 /**
  * SOF Mirror Content Class.
@@ -16,6 +29,15 @@
  * @subpackage SOF
  */
 class Spirit_Of_Football_Mirror {
+
+	/**
+	 * Plugin (calling) object.
+	 *
+	 * @since 0.3
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
 
 	/**
 	 * English Site ID.
@@ -69,11 +91,31 @@ class Spirit_Of_Football_Mirror {
 	/**
 	 * Constructor.
 	 *
-	 * @since 0.2.1
+	 * @since 0.2.3
+	 *
+	 * @param object $plugin The plugin object.
 	 */
-	public function __construct() {
+	public function __construct( $plugin ) {
 
-		// Nothing.
+		// Store reference to plugin.
+		$this->plugin = $plugin;
+
+		// Init when this plugin is loaded.
+		add_action( 'sof_utilities/loaded', [ $this, 'initialise' ] );
+
+	}
+
+
+
+	/**
+	 * Initialise this object.
+	 *
+	 * @since 0.3
+	 */
+	public function initialise() {
+
+		// Register hooks.
+		$this->register_hooks();
 
 	}
 
@@ -90,10 +132,10 @@ class Spirit_Of_Football_Mirror {
 		if ( $this->site_id_en == get_current_blog_id() ) {
 
 			// Add meta boxes.
-			add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes_theball' ) );
+			add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes_theball' ] );
 
 			// Add link to content.
-			add_filter( 'the_content', array( $this, 'prepend_link' ), 50, 3 );
+			add_filter( 'the_content', [ $this, 'prepend_link' ], 50, 3 );
 
 			// Bail now.
 			return;
@@ -101,16 +143,18 @@ class Spirit_Of_Football_Mirror {
 		}
 
 		// Only proceed on SOF eV.
-		if ( $this->site_id_de != get_current_blog_id() ) return;
+		if ( $this->site_id_de != get_current_blog_id() ) {
+			return;
+		}
 
 		// Add meta boxes.
-		add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes_sofev' ) );
+		add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes_sofev' ] );
 
 		// Intercept save event.
-		add_action( 'save_post', array( $this, 'save_post' ), 50, 3 );
+		add_action( 'save_post', [ $this, 'save_post' ], 50, 3 );
 
 		// Add link to content.
-		add_filter( 'the_content', array( $this, 'prepend_link' ), 50, 3 );
+		add_filter( 'the_content', [ $this, 'prepend_link' ], 50, 3 );
 
 	}
 
@@ -134,7 +178,9 @@ class Spirit_Of_Football_Mirror {
 		global $post;
 
 		// Skip if we're doing the 'get_the_excerpt' filter.
-		if ( doing_action( 'get_the_excerpt' ) ) return $content;
+		if ( doing_action( 'get_the_excerpt' ) ) {
+			return $content;
+		}
 
 		// If on German site.
 		if ( $this->site_id_de == get_current_blog_id() ) {
@@ -172,13 +218,17 @@ class Spirit_Of_Football_Mirror {
 	public function get_link_en( $post_id ) {
 
 		// Bail if not on German site.
-		if ( $this->site_id_de != get_current_blog_id() ) return;
+		if ( $this->site_id_de != get_current_blog_id() ) {
+			return;
+		}
 
 		// Have we got a mirrored post?
 		$english_id = get_post_meta( $post_id, $this->post_meta_key_en, true );
 
 		// Bail if there isn't one.
-		if ( empty( $english_id ) ) return;
+		if ( empty( $english_id ) ) {
+			return;
+		}
 
 		// Switch to English site.
 		switch_to_blog( $this->site_id_en );
@@ -200,15 +250,15 @@ class Spirit_Of_Football_Mirror {
 		restore_current_blog();
 
 		/*
-		$e = new Exception;
+		$e = new Exception();
 		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
+		error_log( print_r( [
 			'method' => __METHOD__,
 			'post_id' => $post_id,
 			'english_id' => $english_id,
 			'link' => $link,
 			'backtrace' => $trace,
-		), true ) );
+		], true ) );
 		*/
 
 		// Show link.
@@ -229,13 +279,17 @@ class Spirit_Of_Football_Mirror {
 	public function get_link_de( $post_id ) {
 
 		// Bail if not on English site.
-		if ( $this->site_id_en != get_current_blog_id() ) return false;
+		if ( $this->site_id_en != get_current_blog_id() ) {
+			return false;
+		}
 
 		// Have we got a mirrored post?
 		$german_id = get_post_meta( $post_id, $this->post_meta_key_de, true );
 
 		// Bail if there isn't one.
-		if ( empty( $german_id ) ) return false;
+		if ( empty( $german_id ) ) {
+			return false;
+		}
 
 		// Switch to German site.
 		switch_to_blog( $this->site_id_de );
@@ -257,15 +311,15 @@ class Spirit_Of_Football_Mirror {
 		restore_current_blog();
 
 		/*
-		$e = new Exception;
+		$e = new Exception();
 		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
+		error_log( print_r( [
 			'method' => __METHOD__,
 			'post_id' => $post_id,
 			'german_id' => $german_id,
 			'link' => $link,
 			'backtrace' => $trace,
-		), true ) );
+		], true ) );
 		*/
 
 		// --<
@@ -286,7 +340,7 @@ class Spirit_Of_Football_Mirror {
 		add_meta_box(
 			'theball2018_post_options',
 			__( 'German version', 'sof-utilities' ),
-			array( $this, 'german_version_box' ),
+			[ $this, 'german_version_box' ],
 			'post',
 			'side',
 			'high'
@@ -363,7 +417,7 @@ class Spirit_Of_Football_Mirror {
 		add_meta_box(
 			'sofev2018_post_options',
 			__( 'English version', 'sof-utilities' ),
-			array( $this, 'english_version_box' ),
+			[ $this, 'english_version_box' ],
 			'post',
 			'side',
 			'high'
@@ -408,15 +462,15 @@ class Spirit_Of_Football_Mirror {
 			$edit_link = get_edit_post_link( $existing_id );
 
 			/*
-			$e = new Exception;
+			$e = new Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( array(
+			error_log( print_r( [
 				'method' => __METHOD__,
 				'post' => $post,
 				'existing_id' => $existing_id,
 				'edit_link' => $edit_link,
 				'backtrace' => $trace,
-			), true ) );
+			], true ) );
 			*/
 
 			// Switch back.
@@ -476,16 +530,24 @@ class Spirit_Of_Football_Mirror {
 	public function save_post( $post_id, $post, $update ) {
 
 		// Bail if not a valid post.
-		if ( ! $post instanceOf WP_Post ) return;
+		if ( ! $post instanceOf WP_Post ) {
+			return;
+		}
 
 		// Bail if not a post.
-		if ( $post->post_type != 'post' ) return;
+		if ( $post->post_type != 'post' ) {
+			return;
+		}
 
 		// Bail if this is an auto save routine.
-		if ( defined( 'DOING_AUTOSAVE' ) AND DOING_AUTOSAVE ) return;
+		if ( defined( 'DOING_AUTOSAVE' ) AND DOING_AUTOSAVE ) {
+			return;
+		}
 
 		// Check permissions.
-		if ( ! current_user_can( 'edit_posts', $post->ID ) ) return;
+		if ( ! current_user_can( 'edit_posts', $post->ID ) ) {
+			return;
+		}
 
 		// If this is a revision, get the real post ID and post object.
 		if ( $parent_id = wp_is_post_revision( $post_id ) ) {
@@ -495,26 +557,32 @@ class Spirit_Of_Football_Mirror {
 
 		// Authenticate.
 		$nonce = isset( $_POST['sofev2018_nonce'] ) ? $_POST['sofev2018_nonce'] : '';
-		if ( ! wp_verify_nonce( $nonce, 'sofev2018_post_settings' ) ) return;
+		if ( ! wp_verify_nonce( $nonce, 'sofev2018_post_settings' ) ) {
+			return;
+		}
 
 		// Bail if our checkbox has not been checked.
 		$active = isset( $_POST['sofev2018_create_en'] ) ? absint( $_POST['sofev2018_create_en'] ) : '0';
-		if ( $active !== 1 ) return;
+		if ( $active !== 1 ) {
+			return;
+		}
 
 		// Bail if the post does not have the relevant term.
-		if ( ! has_term( $this->term_id, 'category', $post_id ) ) return;
+		if ( ! has_term( $this->term_id, 'category', $post_id ) ) {
+			return;
+		}
 
 		/*
-		$e = new Exception;
+		$e = new Exception();
 		$trace = $e->getTraceAsString();
-		error_log( print_r( array(
+		error_log( print_r( [
 			'method' => __METHOD__,
 			'post_id' => $post_id,
 			'post' => $post,
 			'update' => $update,
 			'has-term' => $has_term ? 'y' : 'n',
 			'backtrace' => $trace,
-		), true ) );
+		], true ) );
 		*/
 
 		// Mirror content.
@@ -538,7 +606,9 @@ class Spirit_Of_Football_Mirror {
 		$existing_id = get_post_meta( $post->ID, $this->post_meta_key_en, true );
 
 		// Bail if we have - for now.
-		if ( absint( $existing_id ) > 0 ) return;
+		if ( absint( $existing_id ) > 0 ) {
+			return;
+		}
 
 		// Parse gallery shortcodes and add pointer to SOF eV.
 		$content = str_replace(
@@ -548,7 +618,7 @@ class Spirit_Of_Football_Mirror {
 		);
 
 		// Copy relevant data to fresh array.
-		$new_post = array(
+		$new_post = [
 			'post_type' => $post->post_type,
 			'post_status' => 'draft',
 			'post_date' => $post->post_date,
@@ -564,7 +634,7 @@ class Spirit_Of_Football_Mirror {
 			'post_content_filtered' => '', // Quick fix for Windows.
 			'post_parent' => 0,
 			'menu_order' => 0,
-		);
+		];
 
 
 		// If Geo Mashup is active.
@@ -574,14 +644,14 @@ class Spirit_Of_Football_Mirror {
 			$location = GeoMashupDB::get_post_location( $post->ID );
 
 			/*
-			$e = new Exception;
+			$e = new Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( array(
+			error_log( print_r( [
 				'method' => __METHOD__,
 				'post_id' => $post->ID,
 				'location' => $location,
 				'backtrace' => $trace,
-			), true ) );
+			], true ) );
 			*/
 
 		}
@@ -605,10 +675,18 @@ class Spirit_Of_Football_Mirror {
 				$new_location = (array) $location;
 
 				// Unset redundant data to create new location.
-				if ( isset( $new_location['id'] ) ) unset( $new_location['id'] );
-				if ( isset( $new_location['object_id'] ) ) unset( $new_location['object_id'] );
-				if ( isset( $new_location['label'] ) ) unset( $new_location['label'] );
-				if ( isset( $new_location['post_author'] ) ) unset( $new_location['post_author'] );
+				if ( isset( $new_location['id'] ) ) {
+					unset( $new_location['id'] );
+				}
+				if ( isset( $new_location['object_id'] ) ) {
+					unset( $new_location['object_id'] );
+				}
+				if ( isset( $new_location['label'] ) ) {
+					unset( $new_location['label'] );
+				}
+				if ( isset( $new_location['post_author'] ) ) {
+					unset( $new_location['post_author'] );
+				}
 
 				// Grab geo date.
 				$geo_date = null;
@@ -622,9 +700,9 @@ class Spirit_Of_Football_Mirror {
 
 				// Log the problem if there is one.
 				if ( is_wp_error( $success ) ) {
-					$e = new Exception;
+					$e = new Exception();
 					$trace = $e->getTraceAsString();
-					error_log( print_r( array(
+					error_log( print_r( [
 						'method' => __METHOD__,
 						'post_id' => $post->ID,
 						'new_id' => $new_id,
@@ -632,7 +710,7 @@ class Spirit_Of_Football_Mirror {
 						'new_location' => $new_location,
 						'error' => $success->get_error_message(),
 						'backtrace' => $trace,
-					), true ) );
+					], true ) );
 				}
 
 			}
@@ -688,7 +766,7 @@ class Spirit_Of_Football_Mirror {
 			}
 
 			// Issue with the timezone selected, set to 'UTC'.
-			if( empty( $tzstring ) ){
+			if ( empty( $tzstring ) ){
 				$tzstring = 'UTC';
 			}
 
@@ -698,7 +776,9 @@ class Spirit_Of_Football_Mirror {
 		}
 
 		// Bail early if already a DTZ object.
-		if ( $tzstring instanceOf DateTimeZone ) return $tzstring;
+		if ( $tzstring instanceOf DateTimeZone ) {
+			return $tzstring;
+		}
 
 		// Create DTZ object.
 		$timezone = new DateTimeZone( $tzstring );

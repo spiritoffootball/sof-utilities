@@ -1,4 +1,17 @@
 <?php
+/**
+ * CiviCRM Class.
+ *
+ * Handles general CiviCRM modifications.
+ *
+ * @package Spirit_Of_Football_Utilities
+ * @since 0.2.3
+ */
+
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
+
+
 
 /**
  * SOF CiviCRM Class.
@@ -12,16 +25,45 @@
  */
 class Spirit_Of_Football_CiviCRM {
 
+	/**
+	 * Plugin (calling) object.
+	 *
+	 * @since 0.3
+	 * @access public
+	 * @var object $plugin The plugin object.
+	 */
+	public $plugin;
+
 
 
 	/**
 	 * Constructor.
 	 *
+	 * @since 0.2.3
+	 *
+	 * @param object $plugin The plugin object.
+	 */
+	public function __construct( $plugin ) {
+
+		// Store reference to plugin.
+		$this->plugin = $plugin;
+
+		// Init when this plugin is loaded.
+		add_action( 'sof_utilities/loaded', [ $this, 'initialise' ] );
+
+	}
+
+
+
+	/**
+	 * Initialise this object.
+	 *
 	 * @since 0.3
 	 */
-	public function __construct() {
+	public function initialise() {
 
-		// Nothing.
+		// Register hooks.
+		$this->register_hooks();
 
 	}
 
@@ -35,7 +77,7 @@ class Spirit_Of_Football_CiviCRM {
 	public function register_hooks() {
 
 		// Maybe add our style overrides.
-		add_action( 'civicrm_admin_utilities_admin_overridden', array( $this, 'enqueue_admin_css' ), 10 );
+		add_action( 'civicrm_admin_utilities_admin_overridden', [ $this, 'enqueue_admin_css' ], 10 );
 
 	}
 
@@ -56,7 +98,7 @@ class Spirit_Of_Football_CiviCRM {
 		wp_enqueue_style(
 			'sof_utilities_civicrm_admin',
 			plugins_url( 'assets/css/sof-civicrm.css', SOF_UTILITIES_FILE ),
-			array( 'civicrm_admin_utilities_admin_override' ),
+			[ 'civicrm_admin_utilities_admin_override' ],
 			CIVICRM_ADMIN_UTILITIES_VERSION, // Version.
 			'all' // Media.
 		);

@@ -11,12 +11,8 @@
  * @subpackage SOF
  */
 
-
-
 // Exit if accessed directly.
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
-}
+defined( 'ABSPATH' ) || exit;
 
 
 
@@ -39,10 +35,10 @@ class SOF_Docs_Widget_Recent_Docs extends WP_Widget {
 	public function __construct() {
 
 		// Use the class `widget_recent_entries` to inherit WP Recent Posts widget styling.
-		$widget_ops = array(
+		$widget_ops = [
 			'classname' => 'widget_recent_entries widget_recent_bp_docs widget_recent_sof_docs',
 			'description' => __( 'Displays the most recent Docs that the visitor can read. Used on SOF Member Homepage.', 'sof-utilities' ),
-		);
+		];
 
 		parent::__construct(
 			'widget_recent_sof_docs',
@@ -88,10 +84,10 @@ class SOF_Docs_Widget_Recent_Docs extends WP_Widget {
 		}
 		$show_date = isset( $instance['show_date'] ) ? $instance['show_date'] : false;
 
-		$doc_args = array(
+		$doc_args = [
 			'posts_per_page' => $number,
 			'post_status'    => array( 'publish' ),
-		);
+		];
 
 		/*
 		 * If this widget appears on a single user's profile, we want to
@@ -100,7 +96,7 @@ class SOF_Docs_Widget_Recent_Docs extends WP_Widget {
 		 */
 		if ( bp_is_user() ) {
 			$my_groups = groups_get_user_groups( bp_loggedin_user_id() );
-			$d_group_id = ! empty( $my_groups['total'] ) ? $my_groups['groups'] : array( 0 );
+			$d_group_id = ! empty( $my_groups['total'] ) ? $my_groups['groups'] : [ 0 ];
 			$doc_args['group_id'] = $d_group_id;
 		}
 
