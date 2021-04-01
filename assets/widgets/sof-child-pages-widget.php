@@ -41,7 +41,7 @@ class SOF_Widget_Child_Pages extends WP_Widget {
 		];
 
 		parent::__construct(
-			'widget_featured_page',
+			'widget_child_pages',
 			_x( 'SOF Child Pages Widget', 'widget name', 'sof-utilities' ),
 			$widget_ops
 		);
