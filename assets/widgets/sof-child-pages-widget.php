@@ -115,12 +115,15 @@ class SOF_Widget_Child_Pages extends WP_Widget {
 		}
 
 		// Build args for the menu.
-		$args = [
+		$query = [
 			'child_of' => $page_id,
 		];
 
 		// Show it.
-		wp_page_menu( $args );
+		wp_page_menu( $query );
+
+		// Show widget suffix.
+		echo ( isset( $args['after_widget'] ) ? $args['after_widget'] : '' );
 
 	}
 
