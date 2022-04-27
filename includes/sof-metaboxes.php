@@ -191,7 +191,8 @@ class Spirit_Of_Football_Metaboxes {
 		}
 
 		// Authenticate.
-		$_nonce = isset( $_POST['sof_nonce'] ) ? $_POST['sof_nonce'] : '';
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$_nonce = isset( $_POST['sof_nonce'] ) ? wp_unslash( $_POST['sof_nonce'] ) : '';
 		if ( ! wp_verify_nonce( $_nonce, 'sof_page_settings' ) ) {
 			return;
 		}
@@ -233,7 +234,8 @@ class Spirit_Of_Football_Metaboxes {
 			$key = 'show_heading';
 
 			// Find the data.
-			$_data = ( isset( $_POST[ $key ] ) ) ? esc_sql( $_POST[ $key ] ) : '0';
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+			$_data = isset( $_POST[ $key ] ) ? (int) wp_unslash( $_POST[ $key ] ) : '0';
 
 			// Attached Quote.
 			$this->save_meta( $post, 'show_heading', $_data );

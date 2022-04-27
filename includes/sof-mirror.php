@@ -489,7 +489,8 @@ class Spirit_Of_Football_Mirror {
 		}
 
 		// Authenticate.
-		$nonce = isset( $_POST['sofev2018_nonce'] ) ? $_POST['sofev2018_nonce'] : '';
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+		$nonce = isset( $_POST['sofev2018_nonce'] ) ? wp_unslash( $_POST['sofev2018_nonce'] ) : '';
 		if ( ! wp_verify_nonce( $nonce, 'sofev2018_post_settings' ) ) {
 			return;
 		}
