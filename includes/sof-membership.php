@@ -4,14 +4,13 @@
  *
  * Handles SOF-specific Membership modifications.
  *
- * @package Spirit_Of_Football_Utilities
  * @since 0.2
+ *
+ * @package Spirit_Of_Football_Utilities
  */
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
-
-
 
 /**
  * SOF Membership Class.
@@ -19,14 +18,11 @@ defined( 'ABSPATH' ) || exit;
  * A class that encapsulates SOF-specific Membership procedures.
  *
  * @since 0.2
- *
- * @package WordPress
- * @subpackage SOF
  */
 class Spirit_Of_Football_Membership {
 
 	/**
-	 * Plugin (calling) object.
+	 * Plugin object.
 	 *
 	 * @since 0.3
 	 * @access public
@@ -42,8 +38,6 @@ class Spirit_Of_Football_Membership {
 	 * @var int $group_id The numeric ID of the BuddyPress "Teamer" group.
 	 */
 	public $group_id = 9;
-
-
 
 	/**
 	 * Constructor.
@@ -62,8 +56,6 @@ class Spirit_Of_Football_Membership {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -75,8 +67,6 @@ class Spirit_Of_Football_Membership {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register WordPress hooks.
@@ -102,11 +92,7 @@ class Spirit_Of_Football_Membership {
 	}
 
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Actions to perform when a capability is added via CiviCRM Membership.
@@ -154,8 +140,6 @@ class Spirit_Of_Football_Membership {
 
 	}
 
-
-
 	/**
 	 * Actions to perform when a capability is removed via CiviCRM Membership.
 	 *
@@ -199,8 +183,6 @@ class Spirit_Of_Football_Membership {
 
 	}
 
-
-
 	/**
 	 * Filter access to Participant Listings.
 	 *
@@ -232,9 +214,4 @@ class Spirit_Of_Football_Membership {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

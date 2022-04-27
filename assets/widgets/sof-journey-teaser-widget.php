@@ -47,8 +47,7 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 	 *
 	 * @since 0.2.2
 	 *
-	 * @param array $args     Display arguments including 'before_title', 'after_title',
-	 *                        'before_widget', and 'after_widget'.
+	 * @param array $args Display arguments including 'before_title', 'after_title', 'before_widget', and 'after_widget'.
 	 * @param array $instance Settings for the current Journey Teaser widget instance.
 	 */
 	public function widget( $args, $instance ) {

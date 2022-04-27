@@ -4,14 +4,13 @@
  *
  * Handles SOF-specific Widgets.
  *
- * @package Spirit_Of_Football_Utilities
  * @since 0.2.1
+ *
+ * @package Spirit_Of_Football_Utilities
  */
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
-
-
 
 /**
  * SOF Widgets Class.
@@ -19,22 +18,17 @@ defined( 'ABSPATH' ) || exit;
  * A class that encapsulates initialisation of SOF-specific Widgets.
  *
  * @since 0.2.1
- *
- * @package WordPress
- * @subpackage SOF
  */
 class Spirit_Of_Football_Widgets {
 
 	/**
-	 * Plugin (calling) object.
+	 * Plugin object.
 	 *
 	 * @since 0.3
 	 * @access public
 	 * @var object $plugin The plugin object.
 	 */
 	public $plugin;
-
-
 
 	/**
 	 * Constructor.
@@ -53,8 +47,6 @@ class Spirit_Of_Football_Widgets {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -66,8 +58,6 @@ class Spirit_Of_Football_Widgets {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register WordPress hooks.
@@ -82,11 +72,7 @@ class Spirit_Of_Football_Widgets {
 	}
 
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * Register widgets for this component.
@@ -109,9 +95,4 @@ class Spirit_Of_Football_Widgets {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

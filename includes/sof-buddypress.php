@@ -22,7 +22,7 @@ defined( 'ABSPATH' ) || exit;
 class Spirit_Of_Football_BuddyPress {
 
 	/**
-	 * Plugin (calling) object.
+	 * Plugin object.
 	 *
 	 * @since 0.3
 	 * @access public

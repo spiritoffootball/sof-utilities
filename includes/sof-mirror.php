@@ -25,7 +25,7 @@ defined( 'ABSPATH' ) || exit;
 class Spirit_Of_Football_Mirror {
 
 	/**
-	 * Plugin (calling) object.
+	 * Plugin object.
 	 *
 	 * @since 0.3
 	 * @access public

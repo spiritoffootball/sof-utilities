@@ -4,14 +4,13 @@
  *
  * Handles general CiviCRM modifications.
  *
- * @package Spirit_Of_Football_Utilities
  * @since 0.2.3
+ *
+ * @package Spirit_Of_Football_Utilities
  */
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
-
-
 
 /**
  * SOF CiviCRM Class.
@@ -19,22 +18,17 @@ defined( 'ABSPATH' ) || exit;
  * A class that encapsulates SOF-specific CiviCRM manipulation.
  *
  * @since 0.3
- *
- * @package WordPress
- * @subpackage SOF
  */
 class Spirit_Of_Football_CiviCRM {
 
 	/**
-	 * Plugin (calling) object.
+	 * Plugin object.
 	 *
 	 * @since 0.3
 	 * @access public
 	 * @var object $plugin The plugin object.
 	 */
 	public $plugin;
-
-
 
 	/**
 	 * Constructor.
@@ -53,8 +47,6 @@ class Spirit_Of_Football_CiviCRM {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -66,8 +58,6 @@ class Spirit_Of_Football_CiviCRM {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register WordPress hooks.
@@ -81,11 +71,7 @@ class Spirit_Of_Football_CiviCRM {
 
 	}
 
-
-
 	// -------------------------------------------------------------------------
-
-
 
 	/**
 	 * CiviCRM Admin Utilities is prettifying CiviCRM - add our style overrides.
@@ -105,9 +91,4 @@ class Spirit_Of_Football_CiviCRM {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}
