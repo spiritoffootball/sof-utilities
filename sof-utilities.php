@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: SOF Utilities
- * Plugin URI: http://spiritoffootball.com
- * Description: Network-wide Utilities for the SOF sites.
+ * Plugin URI: https://github.com/spiritoffootball/sof-utilities
+ * Description: Network-wide utilities for the SOF sites.
  * Author: Christian Wach
  * Version: 0.3.1
  * Author URI: https://haystack.co.uk
