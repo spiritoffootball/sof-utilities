@@ -7,14 +7,11 @@
  *
  * @since 0.3
  *
- * @package WordPress
- * @subpackage SOF
+ * @package Spirit_Of_Football_Utilities
  */
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
-
-
 
 /**
  * Core class used to implement a "Child Pages" widget.
@@ -24,8 +21,6 @@ defined( 'ABSPATH' ) || exit;
  * @see WP_Widget
  */
 class SOF_Widget_Child_Pages extends WP_Widget {
-
-
 
 	/**
 	 * Constructor registers widget with WordPress.
@@ -48,29 +43,15 @@ class SOF_Widget_Child_Pages extends WP_Widget {
 
 	}
 
-
-
 	/**
 	 * Outputs the content for the current Featured Page widget instance.
 	 *
 	 * @since 0.3
 	 *
-	 * @param array $args	 Display arguments including 'before_title', 'after_title',
-	 *						'before_widget', and 'after_widget'.
+	 * @param array $args Display arguments including 'before_title', 'after_title', 'before_widget', and 'after_widget'.
 	 * @param array $instance Settings for the current Featured Page widget instance.
 	 */
 	public function widget( $args, $instance ) {
-
-		/*
-		$e = new Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'args' => $args,
-			'instance' => $instance,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Show widget prefix.
 		echo ( isset( $args['before_widget'] ) ? $args['before_widget'] : '' );
@@ -127,8 +108,6 @@ class SOF_Widget_Child_Pages extends WP_Widget {
 
 	}
 
-
-
 	/**
 	 * Outputs the settings form for the Child Pages widget.
 	 *
@@ -139,20 +118,18 @@ class SOF_Widget_Child_Pages extends WP_Widget {
 	public function form( $instance ) {
 
 		// Get Title.
-		$title = isset( $instance['title'] ) ? strip_tags( $instance['title'] ) : '';
+		$title = isset( $instance['title'] ) ? wp_strip_all_tags( $instance['title'] ) : '';
 
 		?>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'sof-utilities' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php esc_html_e( 'Title:', 'sof-utilities' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
 		</p>
 
 		<?php
 
 	}
-
-
 
 	/**
 	 * Sanitize widget form values as they are saved.
@@ -175,9 +152,4 @@ class SOF_Widget_Child_Pages extends WP_Widget {
 
 	}
 
-
-
 }
-
-
-

@@ -7,14 +7,11 @@
  *
  * @since 0.2.1
  *
- * @package WordPress
- * @subpackage SOF
+ * @package Spirit_Of_Football_Utilities
  */
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
-
-
 
 /**
  * Core class used to implement a Recent Docs widget.
@@ -50,8 +47,6 @@ class SOF_Docs_Widget_Recent_Docs extends WP_Widget {
 
 	}
 
-
-
 	/**
 	 * Outputs the content for the current Recent Docs widget instance.
 	 *
@@ -86,7 +81,7 @@ class SOF_Docs_Widget_Recent_Docs extends WP_Widget {
 
 		$doc_args = [
 			'posts_per_page' => $number,
-			'post_status'    => array( 'publish' ),
+			'post_status'    => [ 'publish' ],
 		];
 
 		/*
@@ -106,16 +101,18 @@ class SOF_Docs_Widget_Recent_Docs extends WP_Widget {
 				echo $args['before_title'] . $title . $args['after_title'];
 			} ?>
 			<ul>
-			<?php while ( bp_docs_has_docs() ) : bp_docs_the_doc(); ?>
-				<li>
-					<a href="<?php the_permalink(); ?>"><?php get_the_title() ? the_title() : the_ID(); ?></a>
-				<?php if ( $show_date ) : ?>
-					<span class="post-date"><?php echo get_the_date(); ?></span>
-				<?php endif; ?>
-				</li>
-			<?php endwhile; ?>
-		</ul>
-		<?php echo $args['after_widget'];
+				<?php while ( bp_docs_has_docs() ) : ?>
+					<?php bp_docs_the_doc(); ?>
+					<li>
+						<a href="<?php the_permalink(); ?>"><?php get_the_title() ? the_title() : the_ID(); ?></a>
+						<?php if ( $show_date ) : ?>
+							<span class="post-date"><?php echo get_the_date(); ?></span>
+						<?php endif; ?>
+					</li>
+				<?php endwhile; ?>
+				</ul>
+		<?php
+		echo $args['after_widget'];
 
 		endif;
 
@@ -125,8 +122,6 @@ class SOF_Docs_Widget_Recent_Docs extends WP_Widget {
 		$bp->bp_docs->doc_query = $temp_doc_query;
 
 	}
-
-
 
 	/**
 	 * Handles updating the settings for the current Recent Docs widget instance.
@@ -140,16 +135,14 @@ class SOF_Docs_Widget_Recent_Docs extends WP_Widget {
 	 */
 	public function update( $new_instance, $old_instance ) {
 
-		$instance              = $old_instance;
-		$instance['title']     = sanitize_text_field( $new_instance['title'] );
-		$instance['number']    = (int) $new_instance['number'];
+		$instance = $old_instance;
+		$instance['title'] = sanitize_text_field( $new_instance['title'] );
+		$instance['number'] = (int) $new_instance['number'];
 		$instance['show_date'] = isset( $new_instance['show_date'] ) ? (bool) $new_instance['show_date'] : false;
 
 		return $instance;
 
 	}
-
-
 
 	/**
 	 * Outputs the settings form for the Recent Docs widget.
@@ -160,26 +153,33 @@ class SOF_Docs_Widget_Recent_Docs extends WP_Widget {
 	 */
 	public function form( $instance ) {
 
-		$title     = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
-		$number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
+		$title = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
+		$number = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
 		$show_date = isset( $instance['show_date'] ) ? (bool) $instance['show_date'] : false;
 
 		?>
-		<p><label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'sof-utilities' ); ?></label>
-		<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" /></p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>">
+				<?php esc_html_e( 'Title:', 'sof-utilities' ); ?>
+			</label>
+			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" />
+		</p>
 
-		<p><label for="<?php echo $this->get_field_id( 'number' ); ?>"><?php _e( 'Number of docs to show:', 'sof-utilities' ); ?></label>
-		<input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1" value="<?php echo $number; ?>" size="3" /></p>
+		<p>
+			<label for="<?php echo $this->get_field_id( 'number' ); ?>">
+				<?php esc_html_e( 'Number of docs to show:', 'sof-utilities' ); ?>
+			</label>
+			<input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1" value="<?php echo $number; ?>" size="3" />
+		</p>
 
-		<p><input class="checkbox" type="checkbox"<?php checked( $show_date ); ?> id="<?php echo $this->get_field_id( 'show_date' ); ?>" name="<?php echo $this->get_field_name( 'show_date' ); ?>" />
-		<label for="<?php echo $this->get_field_id( 'show_date' ); ?>"><?php _e( 'Display post date?', 'sof-utilities' ); ?></label></p>
+		<p>
+			<input class="checkbox" type="checkbox"<?php checked( $show_date ); ?> id="<?php echo $this->get_field_id( 'show_date' ); ?>" name="<?php echo $this->get_field_name( 'show_date' ); ?>" />
+			<label for="<?php echo $this->get_field_id( 'show_date' ); ?>">
+				<?php esc_html_e( 'Display post date?', 'sof-utilities' ); ?>
+			</label>
+			</p>
 		<?php
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

@@ -6,14 +6,11 @@
  *
  * @since 0.3
  *
- * @package WordPress
- * @subpackage SOF
+ * @package Spirit_Of_Football_Utilities
  */
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
-
-
 
 /**
  * Core class used to implement a "Featured Page" widget.
@@ -32,8 +29,6 @@ class SOF_Widget_Featured_Page extends WP_Widget {
 	 * @var array $links The translatable list of link text options.
 	 */
 	public $links;
-
-
 
 	/**
 	 * Constructor registers widget with WordPress.
@@ -64,35 +59,21 @@ class SOF_Widget_Featured_Page extends WP_Widget {
 
 	}
 
-
-
 	/**
 	 * Outputs the content for the current Featured Page widget instance.
 	 *
 	 * @since 0.3
 	 *
-	 * @param array $args	 Display arguments including 'before_title', 'after_title',
-	 *						'before_widget', and 'after_widget'.
+	 * @param array $args Display arguments including 'before_title', 'after_title', 'before_widget', and 'after_widget'.
 	 * @param array $instance Settings for the current Featured Page widget instance.
 	 */
 	public function widget( $args, $instance ) {
-
-		/*
-		$e = new Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'args' => $args,
-			'instance' => $instance,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Get Page ID.
 		$page_id = ! empty( $instance['page-id'] ) ? (int) $instance['page-id'] : -1;
 
 		// Sanity check.
-		if ( empty( $page_id ) OR $page_id == -1 ) {
+		if ( empty( $page_id ) || $page_id == -1 ) {
 			return;
 		}
 
@@ -106,7 +87,7 @@ class SOF_Widget_Featured_Page extends WP_Widget {
 		if ( $link_text_id !== 0 ) {
 
 			// Get the translatable text.
-			$link_text = $this->links[$link_text_id];
+			$link_text = $this->links[ $link_text_id ];
 
 			/**
 			 * Filter the default link text.
@@ -123,7 +104,7 @@ class SOF_Widget_Featured_Page extends WP_Widget {
 		}
 
 		// Get desired Featured Image size from widget setting.
-		$image_size = ! empty( $instance['image-size'] ) ? strip_tags( $instance['image-size'] ) : 'thumbnail';
+		$image_size = ! empty( $instance['image-size'] ) ? wp_strip_all_tags( $instance['image-size'] ) : 'thumbnail';
 
 		// Define args for query.
 		$query_args = [
@@ -136,7 +117,8 @@ class SOF_Widget_Featured_Page extends WP_Widget {
 		// Did we get any results?
 		if ( $query->have_posts() ) :
 
-			while ( $query->have_posts() ) : $query->the_post();
+			while ( $query->have_posts() ) :
+				$query->the_post();
 
 				// Show widget prefix.
 				echo ( isset( $args['before_widget'] ) ? $args['before_widget'] : '' );
@@ -172,7 +154,7 @@ class SOF_Widget_Featured_Page extends WP_Widget {
 				} else {
 
 					// Do we have a Feature Image?
-					if (  $image_size != 'no-thumbnail' AND has_post_thumbnail() ) {
+					if ( $image_size != 'no-thumbnail' && has_post_thumbnail() ) {
 						$has_feature_image = true;
 						$feature_image_class = ' has_feature_image';
 					}
@@ -184,59 +166,10 @@ class SOF_Widget_Featured_Page extends WP_Widget {
 					$feature_image_class .= ' has_page_title';
 				}
 
-				?>
+				// Include template.
+				include SOF_UTILITIES_PATH . 'assets/templates/sof-featured-page-template.php';
 
-				<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-
-					<div class="post_inner<?php echo $feature_image_class; ?>">
-
-						<div class="post_header">
-
-							<?php if ( $has_feature_image ) : ?>
-								<?php the_post_thumbnail( get_the_ID(), 'medium-640' ); ?>
-							<?php endif; ?>
-
-							<?php if ( $show_title === 'yes' AND ! $featured_video ) : ?>
-								<div class="post_title">
-									<h2><?php if ( $link_text_id !== 0 ) : ?><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute( [ 'before' => __( 'Permanent Link to: ', 'sof-utilities' ), 'after'  => '' ] ); ?>"><?php endif; ?><?php the_title(); ?><?php if ( $link_text_id !== 0 ) : ?></a><?php endif; ?></h2>
-								</div><!-- /post_title -->
-							<?php endif; ?>
-
-						</div><!-- /post_header -->
-
-						<?php if ( $featured_video ) : ?>
-							<div class="post_video">
-								<?php the_field( 'featured_video' ); ?>
-							</div><!-- /post_video -->
-						<?php endif; ?>
-
-						<?php if ( $show_title === 'yes' AND $featured_video ) : ?>
-							<div class="post_title">
-								<h2><?php if ( $link_text_id !== 0 ) : ?><a href="<?php the_permalink() ?>" rel="bookmark" title="<?php the_title_attribute( [ 'before' => __( 'Permanent Link to: ', 'sof-utilities' ), 'after'  => '' ] ); ?>"><?php endif; ?><?php the_title(); ?><?php if ( $link_text_id !== 0 ) : ?></a><?php endif; ?></h2>
-							</div><!-- /post_title -->
-						<?php endif; ?>
-
-						<div class="post_excerpt">
-							<?php if ( get_field( 'featured_text' ) ) : ?>
-								<?php the_field( 'featured_text' ); ?>
-							<?php else : ?>
-								<?php the_excerpt(); ?>
-							<?php endif; ?>
-						</div><!-- /post_excerpt -->
-
-					</div><!-- /post_inner -->
-
-					<?php if ( $link_text_id !== 0 ) : ?>
-						<div class="post_explore">
-							<p><a class="button" href="<?php the_permalink() ?>"><?php echo $link_text; ?></a></p>
-						</div><!-- /post_explore -->
-					<?php endif; ?>
-
-					<?php edit_post_link( 'Edit this content', '<p class="edit_link">', '</p>' ); ?>
-
-				</div><!-- /post -->
-
-			<?php endwhile;
+			endwhile;
 
 			// Show widget suffix.
 			echo ( isset( $args['after_widget'] ) ? $args['after_widget'] : '' );
@@ -249,8 +182,6 @@ class SOF_Widget_Featured_Page extends WP_Widget {
 
 	}
 
-
-
 	/**
 	 * Outputs the settings form for the Featured Page widget.
 	 *
@@ -261,9 +192,9 @@ class SOF_Widget_Featured_Page extends WP_Widget {
 	public function form( $instance ) {
 
 		// Get Title, Page ID, Feature Image Size and Link Text ID.
-		$title = isset( $instance['title'] ) ? strip_tags( $instance['title'] ) : '';
+		$title = isset( $instance['title'] ) ? wp_strip_all_tags( $instance['title'] ) : '';
 		$page_id = isset( $instance['page-id'] ) ? (int) $instance['page-id'] : 0;
-		$image_size = isset( $instance['image-size'] ) ? strip_tags( $instance['image-size'] ) : 'thumbnail';
+		$image_size = isset( $instance['image-size'] ) ? wp_strip_all_tags( $instance['image-size'] ) : 'thumbnail';
 		$show_title = isset( $instance['show-title'] ) ? $instance['show-title'] : 'yes';
 		$link_text_id = ! empty( $instance['link-text-id'] ) ? $instance['link-text-id'] : 0;
 
@@ -288,42 +219,42 @@ class SOF_Widget_Featured_Page extends WP_Widget {
 		?>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'sof-utilities' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php esc_html_e( 'Title:', 'sof-utilities' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'page-id' ); ?>"><?php _e( 'Page:', 'sof-utilities' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'page-id' ); ?>"><?php esc_html_e( 'Page:', 'sof-utilities' ); ?></label>
 			<?php if ( ! empty( $pages ) ) : ?>
 				<select class="widefat" name="<?php echo $this->get_field_name( 'page-id' ); ?>" id="<?php echo $this->get_field_id( 'page-id' ); ?>">
-					<option value="-1"><?php _e( 'Choose a page', 'sof-utilities' ); ?></option>
+					<option value="-1"><?php esc_html_e( 'Choose a page', 'sof-utilities' ); ?></option>
 					<?php echo walk_page_dropdown_tree( $pages, $args['depth'], $args ); ?>
 				</select>
 			<?php endif; ?>
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'image-size' ); ?>"><?php _e( 'Feature Image size:', 'sof-utilities' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'image-size' ); ?>"><?php esc_html_e( 'Feature Image size:', 'sof-utilities' ); ?></label>
 			<select class="widefat" id="<?php echo $this->get_field_id( 'image-size' ); ?>" name="<?php echo $this->get_field_name( 'image-size' ); ?>">
-				<option value="no-thumbnail" <?php selected( $image_size, 'no-thumbnail' ); ?>><?php _e( 'Do not use a Feature Image', 'sof-utilities' ); ?></option>
-				<?php foreach( $image_sizes AS $key => $value ) : ?>
+				<option value="no-thumbnail" <?php selected( $image_size, 'no-thumbnail' ); ?>><?php esc_html_e( 'Do not use a Feature Image', 'sof-utilities' ); ?></option>
+				<?php foreach ( $image_sizes as $key => $value ) : ?>
 					<option value="<?php echo $key; ?>" <?php selected( $image_size, $key ); ?>><?php echo $key; ?> (<?php printf( __( '%1$dx%2$d', 'sof-utilities' ), $value['width'], $value['height'] ); ?>)</option>
 				<?php endforeach; ?>
 			</select>
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'show-title' ); ?>"><?php _e( 'Show Page Title:', 'sof-utilities' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'show-title' ); ?>"><?php esc_html_e( 'Show Page Title:', 'sof-utilities' ); ?></label>
 			<select class="widefat" id="<?php echo $this->get_field_id( 'show-title' ); ?>" name="<?php echo $this->get_field_name( 'show-title' ); ?>">
-				<option value="yes" <?php selected( $show_title, 'yes' ); ?>><?php _e( 'Yes', '' ); ?></option>
-				<option value="no" <?php selected( $show_title, 'no' ); ?>><?php _e( 'No', '' ); ?></option>
+				<option value="yes" <?php selected( $show_title, 'yes' ); ?>><?php esc_html_e( 'Yes', 'sof-utilities' ); ?></option>
+				<option value="no" <?php selected( $show_title, 'no' ); ?>><?php esc_html_e( 'No', 'sof-utilities' ); ?></option>
 			</select>
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'link-text-id' ); ?>"><?php _e( 'Link text:', 'sof-utilities' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'link-text-id' ); ?>"><?php esc_html_e( 'Link text:', 'sof-utilities' ); ?></label>
 			<select class="widefat" id="<?php echo $this->get_field_id( 'link-text-id' ); ?>" name="<?php echo $this->get_field_name( 'link-text-id' ); ?>">
-				<?php foreach( $this->links AS $key => $value ) : ?>
+				<?php foreach ( $this->links as $key => $value ) : ?>
 					<option value="<?php echo $key; ?>" <?php selected( $link_text_id, $key ); ?>><?php echo $value; ?></option>
 				<?php endforeach; ?>
 			</select>
@@ -332,8 +263,6 @@ class SOF_Widget_Featured_Page extends WP_Widget {
 		<?php
 
 	}
-
-
 
 	/**
 	 * Sanitize widget form values as they are saved.
@@ -356,9 +285,4 @@ class SOF_Widget_Featured_Page extends WP_Widget {
 
 	}
 
-
-
 }
-
-
-

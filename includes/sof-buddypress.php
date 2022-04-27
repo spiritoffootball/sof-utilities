@@ -4,14 +4,13 @@
  *
  * Handles general BuddyPress modifications.
  *
- * @package Spirit_Of_Football_Utilities
  * @since 0.2.3
+ *
+ * @package Spirit_Of_Football_Utilities
  */
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
-
-
 
 /**
  * SOF BuddyPress Class.
@@ -19,9 +18,6 @@ defined( 'ABSPATH' ) || exit;
  * A class that encapsulates SOF-specific BuddyPress manipulation.
  *
  * @since 0.2.3
- *
- * @package WordPress
- * @subpackage SOF
  */
 class Spirit_Of_Football_BuddyPress {
 
@@ -33,8 +29,6 @@ class Spirit_Of_Football_BuddyPress {
 	 * @var object $plugin The plugin object.
 	 */
 	public $plugin;
-
-
 
 	/**
 	 * Constructor.
@@ -53,8 +47,6 @@ class Spirit_Of_Football_BuddyPress {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -67,8 +59,6 @@ class Spirit_Of_Football_BuddyPress {
 
 	}
 
-
-
 	/**
 	 * Register WordPress hooks.
 	 *
@@ -78,12 +68,12 @@ class Spirit_Of_Football_BuddyPress {
 
 		// Check if SOF CIC can handle this.
 		$sofcic = false;
-		if ( 'sofcic' != sof_get_site() AND function_exists( 'bp_core_get_user_domain' ) ) {
+		if ( 'sofcic' != sof_get_site() && function_exists( 'bp_core_get_user_domain' ) ) {
 			$sofcic = true;
 		}
 
 		// Include only on SOF eV and maybe on SOF CIC.
-		if ( 'sofev' == sof_get_site() OR $sofcic === true ) {
+		if ( 'sofev' == sof_get_site() || $sofcic === true ) {
 
 			// Redirect to calling page after login.
 			add_filter( 'login_redirect', [ $this, 'login_redirect' ], 20, 3 );
@@ -95,11 +85,7 @@ class Spirit_Of_Football_BuddyPress {
 
 	}
 
-
-
-	// #########################################################################
-
-
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Redirect user after successful login.
@@ -125,19 +111,19 @@ class Spirit_Of_Football_BuddyPress {
 		}
 
 		// Bail if not main site and user is site administrator.
-		if ( ! is_main_site() AND user_can( $user, 'manage_options' ) ) {
+		if ( ! is_main_site() && user_can( $user, 'manage_options' ) ) {
 			return $redirect_to;
 		}
 
 		// Is our hidden input set?
-		if ( isset( $_REQUEST['pcp-current-page'] ) AND ! empty( $_REQUEST['pcp-current-page'] ) ) {
+		if ( isset( $_REQUEST['pcp-current-page'] ) && ! empty( $_REQUEST['pcp-current-page'] ) ) {
 			$redirect_to = $_REQUEST['pcp-current-page'];
 		}
 		*/
 
 		// Is this user held in moderation queue?
 		if (
-			function_exists( 'bp_registration_get_moderation_status' ) AND
+			function_exists( 'bp_registration_get_moderation_status' ) &&
 			bp_registration_get_moderation_status( $user->ID )
 		) {
 
@@ -156,8 +142,6 @@ class Spirit_Of_Football_BuddyPress {
 
 	}
 
-
-
 	/**
 	 * Add a link to the password recovery page to the BuddyPress login widget.
 	 *
@@ -170,14 +154,9 @@ class Spirit_Of_Football_BuddyPress {
 
 		// Add link to password recovery page.
 		echo '<span class="bp-login-widget-password-link">';
-		echo '<a href="' . $url . '">' . __( 'Lost your password?' ) . '</a>';
+		echo '<a href="' . $url . '">' . __( 'Lost your password?', 'sof-utilities' ) . '</a>';
 		echo '</span>';
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

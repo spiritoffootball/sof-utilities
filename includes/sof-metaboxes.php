@@ -4,14 +4,13 @@
  *
  * Handles SOF-specific Metaboxes on default post types.
  *
- * @package Spirit_Of_Football_Utilities
  * @since 0.1
+ *
+ * @package Spirit_Of_Football_Utilities
  */
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
-
-
 
 /**
  * SOF Metaboxes Class.
@@ -19,9 +18,6 @@ defined( 'ABSPATH' ) || exit;
  * A class that encapsulates SOF-specific Metaboxes on default post types.
  *
  * @since 0.1
- *
- * @package WordPress
- * @subpackage SOF
  */
 class Spirit_Of_Football_Metaboxes {
 
@@ -33,8 +29,6 @@ class Spirit_Of_Football_Metaboxes {
 	 * @var object $plugin The plugin object.
 	 */
 	public $plugin;
-
-
 
 	/**
 	 * Constructor.
@@ -53,8 +47,6 @@ class Spirit_Of_Football_Metaboxes {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -66,8 +58,6 @@ class Spirit_Of_Football_Metaboxes {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register WordPress hooks.
@@ -90,8 +80,6 @@ class Spirit_Of_Football_Metaboxes {
 	}
 
 
-
-
 	/**
 	 * Actions to perform on plugin activation.
 	 *
@@ -100,8 +88,6 @@ class Spirit_Of_Football_Metaboxes {
 	public function activate() {
 
 	}
-
-
 
 	/**
 	 * Actions to perform on plugin deactivation. (NOT deletion)
@@ -112,11 +98,7 @@ class Spirit_Of_Football_Metaboxes {
 
 	}
 
-
-
-	// #########################################################################
-
-
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Adds meta boxes to admin screens.
@@ -135,8 +117,6 @@ class Spirit_Of_Football_Metaboxes {
 		);
 
 	}
-
-
 
 	/**
 	 * Adds meta box to page edit screens.
@@ -157,7 +137,7 @@ class Spirit_Of_Football_Metaboxes {
 		// Show a title.
 		echo '<p><strong><label for="show_heading">' . __( 'Make title hidden', 'sof-utilities' ) . '</label></strong>';
 
-		// Set key
+		// Set key.
 		$db_key = 'show_heading';
 
 		// Default to "not checked".
@@ -165,7 +145,7 @@ class Spirit_Of_Football_Metaboxes {
 
 		// Override if the custom field has a value and it's the checked value.
 		$existing = get_post_meta( $post->ID, $db_key, true );
-		if ( false !== $existing AND $existing == '1' ) {
+		if ( false !== $existing && $existing == '1' ) {
 			$checked = ' checked="checked"';
 		}
 
@@ -176,8 +156,6 @@ class Spirit_Of_Football_Metaboxes {
 		';
 
 	}
-
-
 
 	/**
 	 * Stores our additional params.
@@ -192,15 +170,11 @@ class Spirit_Of_Football_Metaboxes {
 		// We don't use post_id because we're not interested in revisions.
 
 		// Store our page meta data.
-		$result = $this->_save_page_meta( $post );
+		$result = $this->save_page_meta( $post );
 
 	}
 
-
-
-	// #########################################################################
-
-
+	// -------------------------------------------------------------------------
 
 	/**
 	 * When a page is saved, this also saves the options.
@@ -209,7 +183,7 @@ class Spirit_Of_Football_Metaboxes {
 	 *
 	 * @param WP_Post $post_obj The object for the post (or revision).
 	 */
-	private function _save_page_meta( $post_obj ) {
+	private function save_page_meta( $post_obj ) {
 
 		// If no post, kick out.
 		if ( ! $post_obj ) {
@@ -223,7 +197,7 @@ class Spirit_Of_Football_Metaboxes {
 		}
 
 		// Is this an auto save routine?
-		if ( defined('DOING_AUTOSAVE') AND DOING_AUTOSAVE ) {
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 			return;
 		}
 
@@ -259,16 +233,14 @@ class Spirit_Of_Football_Metaboxes {
 			$key = 'show_heading';
 
 			// Find the data.
-			$_data = ( isset( $_POST[$key] ) ) ? esc_sql( $_POST[$key] ) : '0';
+			$_data = ( isset( $_POST[ $key ] ) ) ? esc_sql( $_POST[ $key ] ) : '0';
 
 			// Attached Quote.
-			$this->_save_meta( $post, 'show_heading', $_data );
+			$this->save_meta( $post, 'show_heading', $_data );
 
 		}
 
 	}
-
-
 
 	/**
 	 * Utility to automate meta data saving.
@@ -280,7 +252,7 @@ class Spirit_Of_Football_Metaboxes {
 	 * @param mixed $data The data to be saved.
 	 * @return mixed $data The data that was saved.
 	 */
-	private function _save_meta( $post, $key, $data = '' ) {
+	private function save_meta( $post, $key, $data = '' ) {
 
 		// If the custom field already has a value.
 		$existing = get_post_meta( $post->ID, $key, true );
@@ -301,9 +273,4 @@ class Spirit_Of_Football_Metaboxes {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

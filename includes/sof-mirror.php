@@ -4,14 +4,13 @@
  *
  * Handles mirroring of content between The Ball 2018 and SOF Germany 2018 blog.
  *
- * @package Spirit_Of_Football_Utilities
  * @since 0.2.1
+ *
+ * @package Spirit_Of_Football_Utilities
  */
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
-
-
 
 /**
  * SOF Mirror Content Class.
@@ -21,12 +20,7 @@ defined( 'ABSPATH' ) || exit;
  * term in the 'category' taxonomy), the content is mirrored to The Ball 2018
  * site for translation.
  *
- * The
- *
  * @since 0.2.1
- *
- * @package WordPress
- * @subpackage SOF
  */
 class Spirit_Of_Football_Mirror {
 
@@ -86,8 +80,6 @@ class Spirit_Of_Football_Mirror {
 	 */
 	public $post_meta_key_en = '_theball2018_post_id';
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -105,8 +97,6 @@ class Spirit_Of_Football_Mirror {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -118,8 +108,6 @@ class Spirit_Of_Football_Mirror {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register WordPress hooks.
@@ -158,11 +146,7 @@ class Spirit_Of_Football_Mirror {
 
 	}
 
-
-
-	// #########################################################################
-
-
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Prepends links to page/post content.
@@ -204,8 +188,6 @@ class Spirit_Of_Football_Mirror {
 		return $content;
 
 	}
-
-
 
 	/**
 	 * Get the link to the English version on The Ball 2018.
@@ -249,24 +231,10 @@ class Spirit_Of_Football_Mirror {
 		// Switch back.
 		restore_current_blog();
 
-		/*
-		$e = new Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'post_id' => $post_id,
-			'english_id' => $english_id,
-			'link' => $link,
-			'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Show link.
 		return $link;
 
 	}
-
-
 
 	/**
 	 * Get the link to the German version on SOF eV.
@@ -310,24 +278,10 @@ class Spirit_Of_Football_Mirror {
 		// Switch back.
 		restore_current_blog();
 
-		/*
-		$e = new Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'post_id' => $post_id,
-			'german_id' => $german_id,
-			'link' => $link,
-			'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// --<
 		return $link;
 
 	}
-
-
 
 	/**
 	 * Adds meta boxes to admin screens on The Ball 2018.
@@ -347,8 +301,6 @@ class Spirit_Of_Football_Mirror {
 		);
 
 	}
-
-
 
 	/**
 	 * Adds meta box to post edit screens on The Ball 2018.
@@ -400,11 +352,7 @@ class Spirit_Of_Football_Mirror {
 
 	}
 
-
-
-	// #########################################################################
-
-
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Adds meta boxes to admin screens on SOF eV.
@@ -424,8 +372,6 @@ class Spirit_Of_Football_Mirror {
 		);
 
 	}
-
-
 
 	/**
 	 * Adds meta box to post edit screens on SOF eV.
@@ -460,18 +406,6 @@ class Spirit_Of_Football_Mirror {
 
 			// Get the edit post link.
 			$edit_link = get_edit_post_link( $existing_id );
-
-			/*
-			$e = new Exception();
-			$trace = $e->getTraceAsString();
-			error_log( print_r( [
-				'method' => __METHOD__,
-				'post' => $post,
-				'existing_id' => $existing_id,
-				'edit_link' => $edit_link,
-				'backtrace' => $trace,
-			], true ) );
-			*/
 
 			// Switch back.
 			restore_current_blog();
@@ -510,13 +444,11 @@ class Spirit_Of_Football_Mirror {
 					'</label>
 				</div>' . "\n";
 
-		}
+			}
 
 		}
 
 	}
-
-
 
 	/**
 	 * Intercept save post and check if it's part of the "Daily Ballblog".
@@ -530,7 +462,7 @@ class Spirit_Of_Football_Mirror {
 	public function save_post( $post_id, $post, $update ) {
 
 		// Bail if not a valid post.
-		if ( ! $post instanceOf WP_Post ) {
+		if ( ! $post instanceof WP_Post ) {
 			return;
 		}
 
@@ -540,7 +472,7 @@ class Spirit_Of_Football_Mirror {
 		}
 
 		// Bail if this is an auto save routine.
-		if ( defined( 'DOING_AUTOSAVE' ) AND DOING_AUTOSAVE ) {
+		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
 			return;
 		}
 
@@ -550,7 +482,8 @@ class Spirit_Of_Football_Mirror {
 		}
 
 		// If this is a revision, get the real post ID and post object.
-		if ( $parent_id = wp_is_post_revision( $post_id ) ) {
+		$parent_id = wp_is_post_revision( $post_id );
+		if ( $parent_id ) {
 			$post_id = $parent_id;
 			$post = get_post( $post_id );
 		}
@@ -572,25 +505,10 @@ class Spirit_Of_Football_Mirror {
 			return;
 		}
 
-		/*
-		$e = new Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'post_id' => $post_id,
-			'post' => $post,
-			'update' => $update,
-			'has-term' => $has_term ? 'y' : 'n',
-			'backtrace' => $trace,
-		], true ) );
-		*/
-
 		// Mirror content.
 		$this->mirror_post( $post, $update );
 
 	}
-
-
 
 	/**
 	 * Mirror the post to a corresponding post on The Ball 2018 site.
@@ -636,24 +554,9 @@ class Spirit_Of_Football_Mirror {
 			'menu_order' => 0,
 		];
 
-
-		// If Geo Mashup is active.
+		// Get location if Geo Mashup is active.
 		if ( class_exists( 'GeoMashupDB' ) ) {
-
-			// Get location.
 			$location = GeoMashupDB::get_post_location( $post->ID );
-
-			/*
-			$e = new Exception();
-			$trace = $e->getTraceAsString();
-			error_log( print_r( [
-				'method' => __METHOD__,
-				'post_id' => $post->ID,
-				'location' => $location,
-				'backtrace' => $trace,
-			], true ) );
-			*/
-
 		}
 
 		// Switch to The Ball 2018.
@@ -669,7 +572,7 @@ class Spirit_Of_Football_Mirror {
 			$this->save_meta( $new_id, $this->post_meta_key_de, (string) $post->ID );
 
 			// If Geo Mashup is active and we have a location.
-			if ( class_exists( 'GeoMashupDB' ) AND isset( $location ) ) {
+			if ( class_exists( 'GeoMashupDB' ) && isset( $location ) ) {
 
 				// Convert new location to array.
 				$new_location = (array) $location;
@@ -727,8 +630,6 @@ class Spirit_Of_Football_Mirror {
 
 	}
 
-
-
 	/**
 	 * Utility that returns the timezone of the current site.
 	 *
@@ -739,7 +640,7 @@ class Spirit_Of_Football_Mirror {
 	 * @since 0.2.1
 	 *
 	 * @return DateTimeZone The blog timezone.
-	*/
+	 */
 	public function get_timezone() {
 
 		// Have we cached this?
@@ -766,7 +667,7 @@ class Spirit_Of_Football_Mirror {
 			}
 
 			// Issue with the timezone selected, set to 'UTC'.
-			if ( empty( $tzstring ) ){
+			if ( empty( $tzstring ) ) {
 				$tzstring = 'UTC';
 			}
 
@@ -776,7 +677,7 @@ class Spirit_Of_Football_Mirror {
 		}
 
 		// Bail early if already a DTZ object.
-		if ( $tzstring instanceOf DateTimeZone ) {
+		if ( $tzstring instanceof DateTimeZone ) {
 			return $tzstring;
 		}
 
@@ -787,8 +688,6 @@ class Spirit_Of_Football_Mirror {
 		return $timezone;
 
 	}
-
-
 
 	/**
 	 * Utility to simplify metadata saving.
@@ -815,9 +714,4 @@ class Spirit_Of_Football_Mirror {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

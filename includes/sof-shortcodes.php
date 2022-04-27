@@ -4,14 +4,13 @@
  *
  * Handles SOF-specific Shortcodes.
  *
- * @package Spirit_Of_Football_Utilities
  * @since 0.1
+ *
+ * @package Spirit_Of_Football_Utilities
  */
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
-
-
 
 /**
  * SOF Custom Shortcodes Class.
@@ -19,9 +18,6 @@ defined( 'ABSPATH' ) || exit;
  * A class that encapsulates SOF-specific Shortcodes.
  *
  * @since 0.1
- *
- * @package WordPress
- * @subpackage SOF
  */
 class Spirit_Of_Football_Shortcodes {
 
@@ -33,8 +29,6 @@ class Spirit_Of_Football_Shortcodes {
 	 * @var object $plugin The plugin object.
 	 */
 	public $plugin;
-
-
 
 	/**
 	 * Constructor.
@@ -53,8 +47,6 @@ class Spirit_Of_Football_Shortcodes {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -66,8 +58,6 @@ class Spirit_Of_Football_Shortcodes {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register WordPress hooks.
@@ -81,11 +71,7 @@ class Spirit_Of_Football_Shortcodes {
 
 	}
 
-
-
-	// #########################################################################
-
-
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Add the team to a page via a shortcode.
@@ -117,7 +103,7 @@ class Spirit_Of_Football_Shortcodes {
 			$item = absint( trim( $item ) );
 		});
 
-		// Define args (users in order)
+		// Define args (users in order).
 		$args = [
 			'include' => $include_users,
 			'orderby' => 'include',
@@ -133,7 +119,7 @@ class Spirit_Of_Football_Shortcodes {
 			$team .= '<div id="sof_team">' . "\n";
 
 			// Loop through sorted users.
-			foreach( $users AS $user ) {
+			foreach ( $users as $user ) {
 
 				// Get data.
 				$user_data = get_userdata( $user->ID );
@@ -145,7 +131,7 @@ class Spirit_Of_Football_Shortcodes {
 				$team .= '<h2>' . esc_html( $user->display_name ) . '</h2>' . "\n";
 
 				// Add gravatar.
-				$team .= '<div class="author_avatar">' . get_avatar( $user_data->user_email, $size='200' ) . '</div>' . "\n";
+				$team .= '<div class="author_avatar">' . get_avatar( $user_data->user_email, $size = '200' ) . '</div>' . "\n";
 
 				// Open text wrapper.
 				$team .= '<div class="sof_team_member_desc">' . "\n";
@@ -154,11 +140,11 @@ class Spirit_Of_Football_Shortcodes {
 				$team .= '<p>' . esc_html( nl2br( $user_data->description ) ) . '</p>' . "\n";
 
 				// Show link to profile if we're a super admin.
-				if ( is_multisite() AND is_super_admin() ) {
+				if ( is_multisite() && is_super_admin() ) {
 					$url = admin_url( 'user-edit.php?user_id=' . $user->ID );
 					$team .= '<p><a class="post-edit-link" href="' . $url . '">' .
-								__( 'Edit this profile', 'spiritoffootball' ) .
-							 '</a></p>' . "\n";
+						__( 'Edit this profile', 'sof-utilities' ) .
+					'</a></p>' . "\n";
 				}
 
 				// Close sof_team_desc.
@@ -179,9 +165,4 @@ class Spirit_Of_Football_Shortcodes {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

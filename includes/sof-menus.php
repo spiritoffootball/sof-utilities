@@ -4,14 +4,13 @@
  *
  * Handles SOF-specific Menu modifications.
  *
- * @package Spirit_Of_Football_Utilities
  * @since 0.1
+ *
+ * @package Spirit_Of_Football_Utilities
  */
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
-
-
 
 /**
  * SOF Menus Class.
@@ -19,9 +18,6 @@ defined( 'ABSPATH' ) || exit;
  * A class that encapsulates SOF-specific Menu manipulation.
  *
  * @since 0.1
- *
- * @package WordPress
- * @subpackage SOF
  */
 class Spirit_Of_Football_Menus {
 
@@ -33,8 +29,6 @@ class Spirit_Of_Football_Menus {
 	 * @var object $plugin The plugin object.
 	 */
 	public $plugin;
-
-
 
 	/**
 	 * Constructor.
@@ -53,8 +47,6 @@ class Spirit_Of_Football_Menus {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -66,8 +58,6 @@ class Spirit_Of_Football_Menus {
 		$this->register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register WordPress hooks.
@@ -89,8 +79,6 @@ class Spirit_Of_Football_Menus {
 		$this->sofbr_register_hooks();
 
 	}
-
-
 
 	/**
 	 * Register WordPress hooks on the SOF CIC site.
@@ -117,8 +105,6 @@ class Spirit_Of_Football_Menus {
 
 	}
 
-
-
 	/**
 	 * Register WordPress hooks on the SOF eV site.
 	 *
@@ -143,8 +129,6 @@ class Spirit_Of_Football_Menus {
 		add_action( 'wp_before_admin_bar_render', [ $this, 'sofev_admin_bar_tweaks' ], 1000 );
 
 	}
-
-
 
 	/**
 	 * Register WordPress hooks on the SOF Brasil site.
@@ -171,11 +155,7 @@ class Spirit_Of_Football_Menus {
 
 	}
 
-
-
-	// #########################################################################
-
-
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Remove Multi-network admin bar.
@@ -197,11 +177,7 @@ class Spirit_Of_Football_Menus {
 
 	}
 
-
-
-	// #########################################################################
-
-
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Filter the main menu on the SOF CIC root site.
@@ -257,8 +233,6 @@ class Spirit_Of_Football_Menus {
 
 	}
 
-
-
 	/**
 	 * Tweak the BuddyPress dropdown in the WordPress admin bar.
 	 *
@@ -282,9 +256,6 @@ class Spirit_Of_Football_Menus {
 		// Get user object.
 		$user = wp_get_current_user();
 
-		// Get member type.
-		//$member_type = bp_get_member_type( $user->ID );
-
 		// Remove the WordPress logo menu.
 		$wp_admin_bar->remove_menu( 'wp-logo' );
 
@@ -304,11 +275,7 @@ class Spirit_Of_Football_Menus {
 
 	}
 
-
-
-	// #########################################################################
-
-
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Filter the main menu on the root site.
@@ -322,12 +289,12 @@ class Spirit_Of_Football_Menus {
 	public function sofev_filter_menu( $sorted_menu_items, $args ) {
 
 		// Only on front end.
-		if( is_admin() ) {
+		if ( is_admin() ) {
 			return $sorted_menu_items;
 		}
 
 		// Only on main blog.
-		if( ! is_main_site() ) {
+		if ( ! is_main_site() ) {
 			return $sorted_menu_items;
 		}
 
@@ -359,8 +326,6 @@ class Spirit_Of_Football_Menus {
 
 	}
 
-
-
 	/**
 	 * Tweak the BuddyPress dropdown in the WordPress admin bar.
 	 *
@@ -379,9 +344,6 @@ class Spirit_Of_Football_Menus {
 		// Get user object.
 		$user = wp_get_current_user();
 
-		// Get member type.
-		//$member_type = bp_get_member_type( $user->ID );
-
 		// Remove the WordPress logo menu.
 		$wp_admin_bar->remove_menu( 'wp-logo' );
 
@@ -399,14 +361,12 @@ class Spirit_Of_Football_Menus {
 		];
 		$wp_admin_bar->add_node( $args );
 
-		// Target community and network members.
-		//if ( $member_type == 'community' OR $member_type == 'network' ) {
+		// Target "editors" and above.
 		if ( ! current_user_can( 'edit_posts' ) ) {
 
 			// Avoid links to WordPress admin on main site.
 			if ( is_main_site() ) {
 
-				///*
 				// Target "My Sites".
 				$args = [
 					'id' => 'my-sites',
@@ -430,9 +390,7 @@ class Spirit_Of_Football_Menus {
 					'href' => esc_url( home_url( '/' ) ),
 				];
 				$wp_admin_bar->add_node( $args );
-				//*/
 
-				///*
 				// Remove temporarily.
 				$wp_admin_bar->remove_node( 'my-sites' );
 				$wp_admin_bar->remove_node( 'blog-1' );
@@ -440,7 +398,6 @@ class Spirit_Of_Football_Menus {
 				$wp_admin_bar->remove_node( 'site-name' );
 				$wp_admin_bar->remove_node( 'new-content' );
 				$wp_admin_bar->remove_node( 'new-media' );
-				//*/
 
 				// Remove "Dashboard".
 				$wp_admin_bar->remove_node( 'dashboard' );
@@ -451,11 +408,7 @@ class Spirit_Of_Football_Menus {
 
 	}
 
-
-
-	// #########################################################################
-
-
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Filter the main menu on the SOF Brasil site.
@@ -500,8 +453,6 @@ class Spirit_Of_Football_Menus {
 
 	}
 
-
-
 	/**
 	 * Tweak the BuddyPress dropdown in the WordPress admin bar.
 	 *
@@ -519,9 +470,6 @@ class Spirit_Of_Football_Menus {
 
 		// Get user object.
 		$user = wp_get_current_user();
-
-		// Get member type.
-		//$member_type = bp_get_member_type( $user->ID );
 
 		// Remove the WordPress logo menu.
 		$wp_admin_bar->remove_menu( 'wp-logo' );
@@ -552,11 +500,7 @@ class Spirit_Of_Football_Menus {
 
 	}
 
-
-
-	// #########################################################################
-
-
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Filter the main menu on the root site.
@@ -570,10 +514,10 @@ class Spirit_Of_Football_Menus {
 	private function remove_item( &$sorted_menu_items, $type, $url_snippet ) {
 
 		// Loop through them and get the menu item's key.
-		foreach( $sorted_menu_items AS $key => $item ) {
+		foreach ( $sorted_menu_items as $key => $item ) {
 
 			// Is it the item we're looking for?
-			if ( $item->type == $type AND false !== strpos( $item->url, $url_snippet ) ) {
+			if ( $item->type == $type && false !== strpos( $item->url, $url_snippet ) ) {
 
 				// Store found key.
 				$found = $key;
@@ -585,14 +529,9 @@ class Spirit_Of_Football_Menus {
 
 		// Remove it if we find it.
 		if ( isset( $found ) ) {
-			unset( $sorted_menu_items[$found] );
+			unset( $sorted_menu_items[ $found ] );
 		}
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

@@ -1,16 +1,19 @@
-<?php /*
---------------------------------------------------------------------------------
-Plugin Name: SOF Utilities
-Plugin URI: http://spiritoffootball.com
-Description: Network-wide Utilities for the SOF sites.
-Author: Christian Wach
-Version: 0.3.1
-Author URI: http://haystack.co.uk
-Text Domain: sof-utilities
---------------------------------------------------------------------------------
-*/
+<?php
+/**
+ * Plugin Name: SOF Utilities
+ * Plugin URI: http://spiritoffootball.com
+ * Description: Network-wide Utilities for the SOF sites.
+ * Author: Christian Wach
+ * Version: 0.3.1
+ * Author URI: https://haystack.co.uk
+ * Text Domain: sof-utilities
+ * Domain Path: /languages
+ *
+ * @package Spirit_Of_Football_Utilities
+ */
 
-
+// Exit if accessed directly.
+defined( 'ABSPATH' ) || exit;
 
 // Set our version here.
 define( 'SOF_UTILITIES_VERSION', '0.3.1' );
@@ -30,17 +33,12 @@ if ( ! defined( 'SOF_UTILITIES_PATH' ) ) {
 	define( 'SOF_UTILITIES_PATH', plugin_dir_path( SOF_UTILITIES_FILE ) );
 }
 
-
-
 /**
  * SOF Utilities Class.
  *
  * A class that encapsulates network-wide utilities.
  *
  * @since 0.1
- *
- * @package WordPress
- * @subpackage SOF
  */
 class Spirit_Of_Football_Utilities {
 
@@ -125,8 +123,6 @@ class Spirit_Of_Football_Utilities {
 	 */
 	public $widgets;
 
-
-
 	/**
 	 * Constructor.
 	 *
@@ -139,8 +135,6 @@ class Spirit_Of_Football_Utilities {
 
 	}
 
-
-
 	/**
 	 * Initialise.
 	 *
@@ -150,7 +144,7 @@ class Spirit_Of_Football_Utilities {
 
 		// Only do this once.
 		static $done;
-		if ( isset( $done ) AND $done === true ) {
+		if ( isset( $done ) && $done === true ) {
 			return;
 		}
 
@@ -178,8 +172,6 @@ class Spirit_Of_Football_Utilities {
 
 	}
 
-
-
 	/**
 	 * Include files.
 	 *
@@ -199,8 +191,6 @@ class Spirit_Of_Football_Utilities {
 		include_once SOF_UTILITIES_PATH . 'includes/sof-widgets.php';
 
 	}
-
-
 
 	/**
 	 * Set up objects.
@@ -222,8 +212,6 @@ class Spirit_Of_Football_Utilities {
 
 	}
 
-
-
 	/**
 	 * Register WordPress hooks.
 	 *
@@ -238,8 +226,6 @@ class Spirit_Of_Football_Utilities {
 
 	}
 
-
-
 	/**
 	 * Actions to perform on plugin activation.
 	 *
@@ -251,8 +237,6 @@ class Spirit_Of_Football_Utilities {
 		$this->cpts->activate();
 
 	}
-
-
 
 	/**
 	 * Actions to perform on plugin deactivation. (NOT deletion)
@@ -266,8 +250,6 @@ class Spirit_Of_Football_Utilities {
 
 	}
 
-
-
 	/**
 	 * Load translations if present.
 	 *
@@ -276,6 +258,7 @@ class Spirit_Of_Football_Utilities {
 	public function translation() {
 
 		// Load translations.
+		// phpcs:ignore WordPress.WP.DeprecatedParameters.Load_plugin_textdomainParam2Found
 		load_plugin_textdomain(
 			'sof-utilities', // Unique name.
 			false, // Deprecated argument.
@@ -283,8 +266,6 @@ class Spirit_Of_Football_Utilities {
 		);
 
 	}
-
-
 
 	/**
 	 * Puts WordPress into pseudo-maintenance mode.
@@ -294,11 +275,11 @@ class Spirit_Of_Football_Utilities {
 	public function maintenance_mode() {
 
 		// Allow back-end and network admins access.
-		if ( ! is_admin() AND ! current_user_can( 'manage_network_plugins' ) ) {
+		if ( ! is_admin() && ! current_user_can( 'manage_network_plugins' ) ) {
 
 			// Invoke maintenance.
 			if ( file_exists( WP_CONTENT_DIR . '/maintenance.php' ) ) {
-				require_once( WP_CONTENT_DIR . '/maintenance.php' );
+				require_once WP_CONTENT_DIR . '/maintenance.php';
 				die();
 			}
 
@@ -306,18 +287,14 @@ class Spirit_Of_Football_Utilities {
 
 	}
 
-
-
-} // Class ends.
-
-
+}
 
 /**
  * Utility to get a reference to this plugin.
  *
  * @since 0.3
  *
- * @return CiviCRM_ACF_Integration $civicrm_acf_integration The plugin reference.
+ * @return Spirit_Of_Football_Utilities $plugin The plugin reference.
  */
 function spirit_of_football_utilities() {
 
@@ -334,8 +311,6 @@ function spirit_of_football_utilities() {
 
 }
 
-
-
 // Initialise plugin now.
 spirit_of_football_utilities();
 
@@ -344,6 +319,3 @@ register_activation_hook( __FILE__, [ spirit_of_football_utilities(), 'activate'
 
 // Deactivation.
 register_deactivation_hook( __FILE__, [ spirit_of_football_utilities(), 'deactivate' ] );
-
-
-

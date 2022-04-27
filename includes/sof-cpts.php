@@ -4,14 +4,13 @@
  *
  * Handles SOF-specific Custom Post Types.
  *
- * @package Spirit_Of_Football_Utilities
  * @since 0.1
+ *
+ * @package Spirit_Of_Football_Utilities
  */
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
-
-
 
 /**
  * SOF Custom Post Types Class.
@@ -19,9 +18,6 @@ defined( 'ABSPATH' ) || exit;
  * A class that encapsulates SOF-specific Custom Post Types.
  *
  * @since 0.1
- *
- * @package WordPress
- * @subpackage SOF
  */
 class Spirit_Of_Football_CPTs {
 
@@ -33,8 +29,6 @@ class Spirit_Of_Football_CPTs {
 	 * @var object $plugin The plugin object.
 	 */
 	public $plugin;
-
-
 
 	/**
 	 * Constructor.
@@ -53,8 +47,6 @@ class Spirit_Of_Football_CPTs {
 
 	}
 
-
-
 	/**
 	 * Initialise this object.
 	 *
@@ -67,8 +59,6 @@ class Spirit_Of_Football_CPTs {
 
 	}
 
-
-
 	/**
 	 * Register WordPress hooks.
 	 *
@@ -80,8 +70,6 @@ class Spirit_Of_Football_CPTs {
 		//add_action( 'init', [ $this, 'create_post_types' ] );
 
 	}
-
-
 
 
 	/**
@@ -99,8 +87,6 @@ class Spirit_Of_Football_CPTs {
 
 	}
 
-
-
 	/**
 	 * Actions to perform on plugin deactivation. (NOT deletion)
 	 *
@@ -113,11 +99,7 @@ class Spirit_Of_Football_CPTs {
 
 	}
 
-
-
-	// #########################################################################
-
-
+	// -------------------------------------------------------------------------
 
 	/**
 	 * Create our Custom Post Types.
@@ -128,9 +110,4 @@ class Spirit_Of_Football_CPTs {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}

@@ -6,14 +6,11 @@
  *
  * @since 0.2.2
  *
- * @package WordPress
- * @subpackage SOF
+ * @package Spirit_Of_Football_Utilities
  */
 
 // Exit if accessed directly.
 defined( 'ABSPATH' ) || exit;
-
-
 
 /**
  * Core class used to implement a "Journey Teaser" widget.
@@ -23,8 +20,6 @@ defined( 'ABSPATH' ) || exit;
  * @see WP_Widget
  */
 class SOF_Widget_Journey_Teaser extends WP_Widget {
-
-
 
 	/**
 	 * Constructor registers widget with WordPress.
@@ -47,8 +42,6 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 
 	}
 
-
-
 	/**
 	 * Outputs the content for the current Journey Teaser widget instance.
 	 *
@@ -59,17 +52,6 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 	 * @param array $instance Settings for the current Journey Teaser widget instance.
 	 */
 	public function widget( $args, $instance ) {
-
-		/*
-		$e = new Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'args' => $args,
-			'instance' => $instance,
-			//'backtrace' => $trace,
-		], true ) );
-		*/
 
 		// Get target site.
 		$target_site_id = ! empty( $instance['target_site'] ) ? $instance['target_site'] : '';
@@ -109,7 +91,10 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 				echo ( isset( $args['after_title'] ) ? $args['after_title'] : '' );
 			}
 
-			while ( $posts->have_posts() ) : $posts->the_post(); ?>
+			while ( $posts->have_posts() ) :
+				$posts->the_post();
+
+				?>
 
 				<div class="post latest_ball_post">
 
@@ -160,17 +145,17 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 						margin: 0;
 						padding: 0.6em 0.8em;
 						line-height: 1.3;
-   					}
+					}
 					.cp-homepage-widgets .post_header_inner h2 a,
 					#activity_sidebar.sidebar_container .post_header_inner h2 a {
 						color: #fff;
 						text-decoration: none;
-   					}
-   					.cp-homepage-widgets .post_excerpt, .post_explore,
-   					#activity_sidebar.sidebar_container .post_excerpt, .post_explore {
-   						padding: 0 15px;
-   						line-height: 1.5;
-   					}
+					}
+					.cp-homepage-widgets .post_excerpt, .post_explore,
+					#activity_sidebar.sidebar_container .post_excerpt, .post_explore {
+						padding: 0 15px;
+						line-height: 1.5;
+					}
 					</style>
 
 					<div class="post_header<?php echo $feature_image_class; ?>">
@@ -188,7 +173,7 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 
 							<div class="post_header_text">
 
-								<h2><a href="<?php the_permalink() ?>" rel="bookmark" title="Permanent Link: <?php the_title(); ?>"><?php the_title(); ?></a></h2>
+								<h2><a href="<?php the_permalink(); ?>" rel="bookmark" title="Permanent Link: <?php the_title(); ?>"><?php the_title(); ?></a></h2>
 
 							</div><!-- /post_header_text -->
 
@@ -201,12 +186,14 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 					</div><!-- /post_excerpt -->
 
 					<div class="post_explore">
-						<p><a class="button" href="<?php the_permalink() ?>"><?php _e( 'Read More', 'sof-utilities' ); ?></a> <a class="button" href="<?php echo get_site_url( null, '/blog/' ); ?>"><?php _e( 'Go to the blog', 'sof-utilities' ); ?></a></p>
+						<p><a class="button" href="<?php the_permalink(); ?>"><?php esc_html_e( 'Read More', 'sof-utilities' ); ?></a> <a class="button" href="<?php echo get_site_url( null, '/blog/' ); ?>"><?php esc_html_e( 'Go to the blog', 'sof-utilities' ); ?></a></p>
 					</div><!-- /post_excerpt -->
 
 				</div><!-- /latest_ball_post -->
 
-			<?php endwhile;
+				<?php
+
+			endwhile;
 
 			// Show widget suffix.
 			echo ( isset( $args['after_widget'] ) ? $args['after_widget'] : '' );
@@ -221,8 +208,6 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 		endif;
 
 	}
-
-
 
 	/**
 	 * Outputs the settings form for the Journey Teaser widget.
@@ -257,15 +242,15 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 		?>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php _e( 'Title:', 'sof-utilities' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php esc_html_e( 'Title:', 'sof-utilities' ); ?></label>
 			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'target_site' ); ?>" class="site_label"><?php _e( 'Latest Ball Journey Site', 'sof-utilities' ); ?></label>
+			<label for="<?php echo $this->get_field_id( 'target_site' ); ?>" class="site_label"><?php esc_html_e( 'Latest Ball Journey Site', 'sof-utilities' ); ?></label>
 			<select id="<?php echo $this->get_field_id( 'target_site' ); ?>" name="<?php echo $this->get_field_name( 'target_site' ); ?>" class="widefat">
-				<option value="" <?php selected( $target_site, '' ); ?>><?php _e( 'None', 'sof-utilities' ); ?></option>
-				<?php foreach( $sites as $site ) { ?>
+				<option value="" <?php selected( $target_site, '' ); ?>><?php esc_html_e( 'None', 'sof-utilities' ); ?></option>
+				<?php foreach ( $sites as $site ) { ?>
 					<option id="<?php echo $site->blog_id; ?>" value="<?php echo $site->blog_id; ?>" <?php selected( $target_site, $site->blog_id ); ?>><?php echo esc_html( get_blog_details( $site->blog_id )->blogname ); ?></option>
 				<?php } ?>
 			</select>
@@ -274,8 +259,6 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 		<?php
 
 	}
-
-
 
 	/**
 	 * Sanitize widget form values as they are saved.
@@ -298,9 +281,4 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 
 	}
 
-
-
-} // Class ends.
-
-
-
+}
