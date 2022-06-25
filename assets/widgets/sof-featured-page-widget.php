@@ -78,7 +78,7 @@ class SOF_Widget_Featured_Page extends WP_Widget {
 		}
 
 		// Do we want to show the Page Title?
-		$show_title = isset( $instance['show-title'] ) ? $instance['show-title'] : 'yes';
+		$show_title = ! empty( $instance['show-title'] ) ? $instance['show-title'] : 'yes';
 
 		// Get selected Link Text ID.
 		$link_text_id = ! empty( $instance['link-text-id'] ) ? $instance['link-text-id'] : 0;
@@ -142,7 +142,10 @@ class SOF_Widget_Featured_Page extends WP_Widget {
 				}
 
 				// Get the Featured Video.
-				$featured_video = get_field( 'featured_video' );
+				$featured_video = false;
+				if ( defined( 'ACF' ) ) {
+					$featured_video = get_field( 'featured_video' );
+				}
 
 				// Init.
 				$has_feature_image = false;
@@ -162,7 +165,7 @@ class SOF_Widget_Featured_Page extends WP_Widget {
 				}
 
 				// Maybe add Page Title class.
-				if ( $show_title ) {
+				if ( $show_title === 'yes' ) {
 					$feature_image_class .= ' has_page_title';
 				}
 

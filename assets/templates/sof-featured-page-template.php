@@ -27,7 +27,7 @@ $title_atts = [
 		<div class="post_header">
 
 			<?php if ( $has_feature_image ) : ?>
-				<?php the_post_thumbnail( get_the_ID(), 'medium-640' ); ?>
+				<?php the_post_thumbnail( $image_size ); ?>
 			<?php endif; ?>
 
 			<?php if ( $show_title === 'yes' && ! $featured_video ) : ?>
@@ -67,7 +67,7 @@ $title_atts = [
 		<?php endif; ?>
 
 		<div class="post_excerpt">
-			<?php if ( get_field( 'featured_text' ) ) : ?>
+			<?php if ( defined( 'ACF' ) && get_field( 'featured_text' ) ) : ?>
 				<?php the_field( 'featured_text' ); ?>
 			<?php else : ?>
 				<?php the_excerpt(); ?>
