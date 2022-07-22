@@ -185,7 +185,7 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 					</div><!-- /post_excerpt -->
 
 					<div class="post_explore">
-						<p><a class="button" href="<?php the_permalink(); ?>"><?php esc_html_e( 'Read More', 'sof-utilities' ); ?></a> <a class="button" href="<?php echo get_site_url( null, '/blog/' ); ?>"><?php esc_html_e( 'Go to the blog', 'sof-utilities' ); ?></a></p>
+						<p><a class="button" href="<?php the_permalink(); ?>"><?php esc_html_e( 'Article', 'sof-utilities' ); ?></a> <a class="button" href="<?php echo get_site_url( null, '/blog/' ); ?>"><?php esc_html_e( 'Blog', 'sof-utilities' ); ?></a> <a class="button" href="<?php echo get_site_url(); ?>"><?php esc_html_e( 'Website', 'sof-utilities' ); ?></a></p>
 					</div><!-- /post_excerpt -->
 
 				</div><!-- /latest_ball_post -->
