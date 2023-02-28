@@ -218,9 +218,9 @@ class Spirit_Of_Football_Menus {
 			return;
 		}
 
-		// Sandwich the "My Sites" menu callback.
-		add_action( 'admin_bar_menu', [ $this, 'theball_groups_hook_remove' ], 19 );
-		add_action( 'admin_bar_menu', [ $this, 'theball_groups_hook_add' ], 21 );
+		// Ensure "Groups" only filters on Sites where it is active.
+		add_action( 'switch_blog', [ $this, 'theball_groups_switch_to' ], 20, 3 );
+		add_action( 'switch_blog', [ $this, 'theball_groups_switch_back' ], 21, 3 );
 
 	}
 
@@ -575,9 +575,30 @@ class Spirit_Of_Football_Menus {
 	 * @since 0.3.1
 	 */
 	public function theball_groups_hook_remove() {
-		if ( class_exists( 'Groups_WordPress' ) ) {
-			remove_filter( 'user_has_cap', [ 'Groups_WordPress', 'user_has_cap' ], PHP_INT_MAX );
+
+		// Don't remove when class not present.
+		if ( ! class_exists( 'Groups_WordPress' ) ) {
+			return;
 		}
+
+		// Don't remove when filter not present.
+		if ( ! has_filter( 'user_has_cap', [ 'Groups_WordPress', 'user_has_cap' ] ) ) {
+			return;
+		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'action' => 'REMOVE FILTER',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Okay, remove.
+		remove_filter( 'user_has_cap', [ 'Groups_WordPress', 'user_has_cap' ], PHP_INT_MAX );
+
 	}
 
 	/**
@@ -586,9 +607,98 @@ class Spirit_Of_Football_Menus {
 	 * @since 0.3.1
 	 */
 	public function theball_groups_hook_add() {
-		if ( class_exists( 'Groups_WordPress' ) ) {
-			add_filter( 'user_has_cap', [ 'Groups_WordPress', 'user_has_cap' ], PHP_INT_MAX, 4 );
+
+		// Don't add when class not present.
+		if ( ! class_exists( 'Groups_WordPress' ) ) {
+			return;
 		}
+
+		// Don't add when filter is present.
+		if ( has_filter( 'user_has_cap', [ 'Groups_WordPress', 'user_has_cap' ] ) ) {
+			return;
+		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'action' => 'ADD FILTER',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Okay, add.
+		add_filter( 'user_has_cap', [ 'Groups_WordPress', 'user_has_cap' ], PHP_INT_MAX, 4 );
+
+	}
+
+	/**
+	 * Removes the "Groups" plugin callback.
+	 *
+	 * @since 0.3.1
+	 */
+	public function theball_groups_switch_to( $new_blog_id, $prev_blog_id, $context ) {
+
+		// Bail if not "switching to".
+		if ( 'switch' !== $context ) {
+			return;
+		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'context' => $context,
+			'new_blog_id' => $new_blog_id,
+			'prev_blog_id' => $prev_blog_id,
+			'groups_active' => is_plugin_active( 'groups/groups.php' ) ? 'Y' : 'N',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Toggle filter depending on whether the "Groups" plugin is active on the Site.
+		if ( ! is_plugin_active( 'groups/groups.php' ) ) {
+			$this->theball_groups_hook_remove();
+		} else {
+			$this->theball_groups_hook_add();
+		}
+
+	}
+
+	/**
+	 * Adds the "Groups" plugin callback.
+	 *
+	 * @since 0.3.1
+	 */
+	public function theball_groups_switch_back( $new_blog_id, $prev_blog_id, $context ) {
+
+		// Bail if not "switching back".
+		if ( 'restore' !== $context ) {
+			return;
+		}
+
+		/*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'context' => $context,
+			'new_blog_id' => $new_blog_id,
+			'prev_blog_id' => $prev_blog_id,
+			'groups_active' => is_plugin_active( 'groups/groups.php' ) ? 'Y' : 'N',
+			//'backtrace' => $trace,
+		], true ) );
+		*/
+
+		// Toggle filter depending on whether the "Groups" plugin is active on the Site.
+		if ( ! is_plugin_active( 'groups/groups.php' ) ) {
+			$this->theball_groups_hook_remove();
+		} else {
+			$this->theball_groups_hook_add();
+		}
+
 	}
 
 	// -------------------------------------------------------------------------
