@@ -697,7 +697,7 @@ class Spirit_Of_Football_Menus {
 	// -------------------------------------------------------------------------
 
 	/**
-	 * Filter the main menu on the root site.
+	 * Removes an item of a given type and URL from an array of menu items.
 	 *
 	 * @since 0.1
 	 *
@@ -710,18 +710,15 @@ class Spirit_Of_Football_Menus {
 		// Loop through them and get the menu item's key.
 		foreach ( $sorted_menu_items as $key => $item ) {
 
-			// Is it the item we're looking for?
+			// Store found key if it's the item we're looking for.
 			if ( $item->type == $type && false !== strpos( $item->url, $url_snippet ) ) {
-
-				// Store found key.
 				$found = $key;
 				break;
-
 			}
 
 		}
 
-		// Remove it if we find it.
+		// Remove item if we found it.
 		if ( isset( $found ) ) {
 			unset( $sorted_menu_items[ $found ] );
 		}
