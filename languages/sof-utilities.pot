@@ -1,4 +1,4 @@
-# Copyright (C) 2022 Christian Wach
+# Copyright (C) 2023 Christian Wach
 # This file is distributed under the same license as the SOF Utilities plugin.
 msgid ""
 msgstr ""
@@ -9,9 +9,9 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-04-27T10:18:52+00:00\n"
+"POT-Creation-Date: 2023-02-28T11:08:44+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.6.0\n"
+"X-Generator: WP-CLI 2.7.1\n"
 "X-Domain: sof-utilities\n"
 
 #. Plugin Name of the plugin
@@ -34,153 +34,215 @@ msgstr ""
 msgid "https://haystack.co.uk"
 msgstr ""
 
+#: assets/templates/sof-featured-page-template.php:17
 msgid "Permanent Link to: "
 msgstr ""
 
+#: assets/templates/sof-featured-page-template.php:85
 msgid "Edit this content"
 msgstr ""
 
+#: assets/widgets/sof-child-pages-widget.php:35
 msgid "Display a list of child pages for a given page."
 msgstr ""
 
+#: assets/widgets/sof-child-pages-widget.php:40
 msgctxt "widget name"
 msgid "SOF Child Pages Widget"
 msgstr ""
 
+#: assets/widgets/sof-child-pages-widget.php:126
+#: assets/widgets/sof-docs-widget.php:163
+#: assets/widgets/sof-featured-page-widget.php:225
+#: assets/widgets/sof-journey-teaser-widget.php:244
 msgid "Title:"
 msgstr ""
 
+#: assets/widgets/sof-docs-widget.php:37
 msgid "Displays the most recent Docs that the visitor can read. Used on SOF Member Homepage."
 msgstr ""
 
+#: assets/widgets/sof-docs-widget.php:42
 msgctxt "widget name"
 msgid "(BuddyPress Docs) Recent SOF Docs"
 msgstr ""
 
+#: assets/widgets/sof-docs-widget.php:71
 msgid "Recent Documents"
 msgstr ""
 
+#: assets/widgets/sof-docs-widget.php:170
 msgid "Number of docs to show:"
 msgstr ""
 
+#: assets/widgets/sof-docs-widget.php:178
 msgid "Display post date?"
 msgstr ""
 
+#: assets/widgets/sof-featured-page-widget.php:42
 msgid "Do not show a Link"
 msgstr ""
 
+#: assets/widgets/sof-featured-page-widget.php:43
 msgid "Read More"
 msgstr ""
 
+#: assets/widgets/sof-featured-page-widget.php:44
 msgid "Find Out More"
 msgstr ""
 
+#: assets/widgets/sof-featured-page-widget.php:45
 msgid "Continue Reading"
 msgstr ""
 
+#: assets/widgets/sof-featured-page-widget.php:51
 msgid "Display a page title, excerpt and featured image."
 msgstr ""
 
+#: assets/widgets/sof-featured-page-widget.php:56
 msgctxt "widget name"
 msgid "SOF Page Widget"
 msgstr ""
 
+#: assets/widgets/sof-featured-page-widget.php:230
 msgid "Page:"
 msgstr ""
 
+#: assets/widgets/sof-featured-page-widget.php:233
 msgid "Choose a page"
 msgstr ""
 
+#: assets/widgets/sof-featured-page-widget.php:240
 msgid "Feature Image size:"
 msgstr ""
 
+#: assets/widgets/sof-featured-page-widget.php:242
 msgid "Do not use a Feature Image"
 msgstr ""
 
+#. translators: 1: Numeric width of the image, 2: Numeric height of the image.
+#: assets/widgets/sof-featured-page-widget.php:245
 msgid "%1$dx%2$d"
 msgstr ""
 
+#: assets/widgets/sof-featured-page-widget.php:251
 msgid "Show Page Title:"
 msgstr ""
 
+#: assets/widgets/sof-featured-page-widget.php:253
 msgid "Yes"
 msgstr ""
 
+#: assets/widgets/sof-featured-page-widget.php:254
 msgid "No"
 msgstr ""
 
+#: assets/widgets/sof-featured-page-widget.php:259
 msgid "Link text:"
 msgstr ""
 
+#: assets/widgets/sof-journey-teaser-widget.php:34
 msgid "Displays a \"Journey Teaser\" to guide visitors to the current blog."
 msgstr ""
 
+#: assets/widgets/sof-journey-teaser-widget.php:39
 msgctxt "widget name"
 msgid "Journey Teaser"
 msgstr ""
 
-msgid "Go to the blog"
+#: assets/widgets/sof-journey-teaser-widget.php:188
+msgid "Article"
 msgstr ""
 
+#: assets/widgets/sof-journey-teaser-widget.php:188
+msgid "Blog"
+msgstr ""
+
+#: assets/widgets/sof-journey-teaser-widget.php:188
+msgid "Website"
+msgstr ""
+
+#: assets/widgets/sof-journey-teaser-widget.php:224
 msgid "Follow the Journey"
 msgstr ""
 
+#: assets/widgets/sof-journey-teaser-widget.php:249
 msgid "Latest Ball Journey Site"
 msgstr ""
 
+#: assets/widgets/sof-journey-teaser-widget.php:251
 msgid "None"
 msgstr ""
 
+#: includes/sof-buddypress.php:157
+#: includes/sof-co-authors.php:157
 msgid "Lost your password?"
 msgstr ""
 
+#: includes/sof-membership.php:134
 msgid "Could not add user to group"
 msgstr ""
 
+#: includes/sof-membership.php:177
 msgid "Could not remove user from group"
 msgstr ""
 
+#: includes/sof-metaboxes.php:113
 msgid "Title Visibility"
 msgstr ""
 
+#: includes/sof-metaboxes.php:138
 msgid "Make title hidden"
 msgstr ""
 
+#: includes/sof-mirror.php:226
 msgid "Read this post in English"
 msgstr ""
 
+#: includes/sof-mirror.php:273
 msgid "Read this post in German"
 msgstr ""
 
+#: includes/sof-mirror.php:296
 msgid "German version"
 msgstr ""
 
+#: includes/sof-mirror.php:327
 msgid "This post does not have a German version."
 msgstr ""
 
+#: includes/sof-mirror.php:336
 msgid "This post has a German version."
 msgstr ""
 
+#: includes/sof-mirror.php:348
 msgid "Edit German version"
 msgstr ""
 
+#: includes/sof-mirror.php:367
 msgid "English version"
 msgstr ""
 
+#: includes/sof-mirror.php:402
 msgid "This post has an English version."
 msgstr ""
 
+#: includes/sof-mirror.php:414
 msgid "Edit English version"
 msgstr ""
 
+#: includes/sof-mirror.php:425
 msgid "You will be able to create an English version of this post on The Ball 2018 when you have added it to the \"Daily Ballblog\" category. You do not have to publish this post first - it can still be in draft mode."
 msgstr ""
 
+#: includes/sof-mirror.php:434
 msgid "You can now create a copy of this post on The Ball 2018. When you have done so, you can translate it into English. It is best to make a copy when this post is finished and published."
 msgstr ""
 
+#: includes/sof-mirror.php:437
 msgid "Create an English version"
 msgstr ""
 
+#: includes/sof-shortcodes.php:146
 msgid "Edit this profile"
 msgstr ""
