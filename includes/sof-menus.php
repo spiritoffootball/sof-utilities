@@ -66,6 +66,9 @@ class Spirit_Of_Football_Menus {
 	 */
 	public function register_hooks() {
 
+		// Modify the WordPress admin bar on all Sites.
+		add_action( 'wp_before_admin_bar_render', [ $this, 'wp_remove_menu' ], 1000 );
+
 		// Remove Multi-network Menu from admin bar for everyone.
 		add_action( 'wp_before_admin_bar_render', [ $this, 'wpmn_remove_menu' ], 2000 );
 
@@ -81,12 +84,34 @@ class Spirit_Of_Football_Menus {
 		// Maybe register SOF Brasil hooks.
 		$this->sofbr_register_hooks();
 
+		/*
 		// Maybe register The Ball hooks.
 		$this->theball_register_hooks();
+		*/
 
 	}
 
 	// -------------------------------------------------------------------------
+
+	/**
+	 * Modifies the WordPress admin bar on all Sites.
+	 *
+	 * @since 0.3.1
+	 */
+	public function wp_remove_menu() {
+
+		// Access object.
+		global $wp_admin_bar;
+
+		// Bail if not logged in.
+		if ( ! is_user_logged_in() ) {
+			return;
+		}
+
+		// Remove the WordPress logo menu.
+		$wp_admin_bar->remove_menu( 'wp-logo' );
+
+	}
 
 	/**
 	 * Remove Multi-network admin bar.
@@ -102,6 +127,11 @@ class Spirit_Of_Football_Menus {
 
 		// Access menu object.
 		global $wp_admin_bar;
+
+		// Bail if not logged in.
+		if ( ! is_user_logged_in() ) {
+			return;
+		}
 
 		// Remove the WordPress Multi-network menu.
 		$wp_admin_bar->remove_menu( 'my-networks' );
@@ -209,12 +239,6 @@ class Spirit_Of_Football_Menus {
 			return;
 		}
 
-		// Get user object.
-		$user = wp_get_current_user();
-
-		// Remove the WordPress logo menu.
-		$wp_admin_bar->remove_menu( 'wp-logo' );
-
 		// Target BuddyPress dropdown parent.
 		$args = [
 			'id' => 'my-account',
@@ -321,12 +345,6 @@ class Spirit_Of_Football_Menus {
 		if ( ! is_user_logged_in() ) {
 			return;
 		}
-
-		// Get user object.
-		$user = wp_get_current_user();
-
-		// Remove the WordPress logo menu.
-		$wp_admin_bar->remove_menu( 'wp-logo' );
 
 		// Target BuddyPress dropdown parent.
 		$args = [
@@ -474,12 +492,6 @@ class Spirit_Of_Football_Menus {
 			return;
 		}
 
-		// Get user object.
-		$user = wp_get_current_user();
-
-		// Remove the WordPress logo menu.
-		$wp_admin_bar->remove_menu( 'wp-logo' );
-
 		// Remove the WordPress "My Sites" menu for all but network admins.
 		if ( ! is_super_admin() ) {
 			$wp_admin_bar->remove_menu( 'my-sites' );
@@ -534,13 +546,7 @@ class Spirit_Of_Football_Menus {
 			return;
 		}
 
-		// Ensure "Groups" only filters on Sites where it is active.
-		add_action( 'switch_blog', [ $this, 'theball_groups_switch_to' ], 20, 3 );
-		add_action( 'switch_blog', [ $this, 'theball_groups_switch_back' ], 21, 3 );
-
 	}
-
-	// -------------------------------------------------------------------------
 
 	/**
 	 * Tweak the WordPress admin bar.
@@ -555,141 +561,6 @@ class Spirit_Of_Football_Menus {
 		// Bail if not logged in.
 		if ( ! is_user_logged_in() ) {
 			return;
-		}
-
-		// Remove the WordPress logo menu.
-		$wp_admin_bar->remove_menu( 'wp-logo' );
-
-	}
-
-	/**
-	 * Removes the "Groups" plugin callback.
-	 *
-	 * @since 0.3.1
-	 */
-	public function theball_groups_hook_remove() {
-
-		// Don't remove when class not present.
-		if ( ! class_exists( 'Groups_WordPress' ) ) {
-			return;
-		}
-
-		// Don't remove when filter not present.
-		if ( ! has_filter( 'user_has_cap', [ 'Groups_WordPress', 'user_has_cap' ] ) ) {
-			return;
-		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'action' => 'REMOVE FILTER',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
-		// Okay, remove.
-		remove_filter( 'user_has_cap', [ 'Groups_WordPress', 'user_has_cap' ], PHP_INT_MAX );
-
-	}
-
-	/**
-	 * Adds the "Groups" plugin callback.
-	 *
-	 * @since 0.3.1
-	 */
-	public function theball_groups_hook_add() {
-
-		// Don't add when class not present.
-		if ( ! class_exists( 'Groups_WordPress' ) ) {
-			return;
-		}
-
-		// Don't add when filter is present.
-		if ( has_filter( 'user_has_cap', [ 'Groups_WordPress', 'user_has_cap' ] ) ) {
-			return;
-		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'action' => 'ADD FILTER',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
-		// Okay, add.
-		add_filter( 'user_has_cap', [ 'Groups_WordPress', 'user_has_cap' ], PHP_INT_MAX, 4 );
-
-	}
-
-	/**
-	 * Removes the "Groups" plugin callback.
-	 *
-	 * @since 0.3.1
-	 */
-	public function theball_groups_switch_to( $new_blog_id, $prev_blog_id, $context ) {
-
-		// Bail if not "switching to".
-		if ( 'switch' !== $context ) {
-			return;
-		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'context' => $context,
-			'new_blog_id' => $new_blog_id,
-			'prev_blog_id' => $prev_blog_id,
-			'groups_active' => is_plugin_active( 'groups/groups.php' ) ? 'Y' : 'N',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
-		// Toggle filter depending on whether the "Groups" plugin is active on the Site.
-		if ( ! is_plugin_active( 'groups/groups.php' ) ) {
-			$this->theball_groups_hook_remove();
-		} else {
-			$this->theball_groups_hook_add();
-		}
-
-	}
-
-	/**
-	 * Adds the "Groups" plugin callback.
-	 *
-	 * @since 0.3.1
-	 */
-	public function theball_groups_switch_back( $new_blog_id, $prev_blog_id, $context ) {
-
-		// Bail if not "switching back".
-		if ( 'restore' !== $context ) {
-			return;
-		}
-
-		/*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'context' => $context,
-			'new_blog_id' => $new_blog_id,
-			'prev_blog_id' => $prev_blog_id,
-			'groups_active' => is_plugin_active( 'groups/groups.php' ) ? 'Y' : 'N',
-			//'backtrace' => $trace,
-		], true ) );
-		*/
-
-		// Toggle filter depending on whether the "Groups" plugin is active on the Site.
-		if ( ! is_plugin_active( 'groups/groups.php' ) ) {
-			$this->theball_groups_hook_remove();
-		} else {
-			$this->theball_groups_hook_add();
 		}
 
 	}
