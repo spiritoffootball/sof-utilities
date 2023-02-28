@@ -241,6 +241,7 @@ class SOF_Widget_Featured_Page extends WP_Widget {
 			<select class="widefat" id="<?php echo $this->get_field_id( 'image-size' ); ?>" name="<?php echo $this->get_field_name( 'image-size' ); ?>">
 				<option value="no-thumbnail" <?php selected( $image_size, 'no-thumbnail' ); ?>><?php esc_html_e( 'Do not use a Feature Image', 'sof-utilities' ); ?></option>
 				<?php foreach ( $image_sizes as $key => $value ) : ?>
+					<?php /* translators: 1: Numeric width of the image, 2: Numeric height of the image. */ ?>
 					<option value="<?php echo $key; ?>" <?php selected( $image_size, $key ); ?>><?php echo $key; ?> (<?php printf( __( '%1$dx%2$d', 'sof-utilities' ), $value['width'], $value['height'] ); ?>)</option>
 				<?php endforeach; ?>
 			</select>
