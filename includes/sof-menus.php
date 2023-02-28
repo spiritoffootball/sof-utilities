@@ -68,7 +68,9 @@ class Spirit_Of_Football_Menus {
 
 		// Remove Multi-network Menu from admin bar for everyone.
 		add_action( 'wp_before_admin_bar_render', [ $this, 'wpmn_remove_menu' ], 2000 );
-		add_filter( 'wp_admin_bar_show_site_icons', [ $this, 'wpmn_remove_site_icons' ] );
+
+		// Always remove Site Icons. Prevents 404 for SOF Brasil.
+		add_filter( 'wp_admin_bar_show_site_icons', '__return_false' );
 
 		// Maybe register SOF CIC hooks.
 		$this->sofcic_register_hooks();
@@ -106,15 +108,6 @@ class Spirit_Of_Football_Menus {
 
 	}
 
-	/**
-	 * Remove Site Icons from "My Sites" menu.
-	 *
-	 * @since 0.3.1
-	 */
-	public function wpmn_remove_site_icons() {
-		return false;
-	}
-
 	// -------------------------------------------------------------------------
 
 	/**
@@ -141,90 +134,6 @@ class Spirit_Of_Football_Menus {
 		add_action( 'wp_before_admin_bar_render', [ $this, 'sofcic_admin_bar_tweaks' ], 1000 );
 
 	}
-
-	/**
-	 * Register WordPress hooks on the SOF eV network.
-	 *
-	 * @since 0.1
-	 */
-	public function sofev_register_hooks() {
-
-		// Include only on SOF eV network.
-		if ( 'sofev' != sof_get_site() ) {
-			return;
-		}
-
-		// Filter menu based on membership.
-		add_action( 'wp_nav_menu_objects', [ $this, 'sofev_filter_menu' ], 20, 2 );
-
-		/*
-		 * Amends the BuddyPress dropdown in the WordPress admin bar.
-		 *
-		 * The top-level items point to "Profile -> Edit" by default, but this
-		 * seems kind of unintuitive, so point them to Member Home instead.
-		 */
-		add_action( 'wp_before_admin_bar_render', [ $this, 'sofev_admin_bar_tweaks' ], 1000 );
-
-	}
-
-	/**
-	 * Register WordPress hooks on the SOF Brasil network.
-	 *
-	 * @since 0.1
-	 */
-	public function sofbr_register_hooks() {
-
-		// Include only on SOF Brasil network.
-		if ( 'sofbr' != sof_get_site() ) {
-			return;
-		}
-
-		// Filter menu based on membership.
-		add_action( 'wp_nav_menu_objects', [ $this, 'sofbr_filter_menu' ], 20, 2 );
-
-		/*
-		 * Amends the BuddyPress dropdown in the WordPress admin bar.
-		 *
-		 * The top-level items point to "Profile -> Edit" by default, but this
-		 * seems kind of unintuitive, so point them to Member Home instead.
-		 */
-		add_action( 'wp_before_admin_bar_render', [ $this, 'sofbr_admin_bar_tweaks' ], 1000 );
-
-	}
-
-	/**
-	 * Register WordPress hooks on the "The Ball" network.
-	 *
-	 * @since 0.3.1
-	 */
-	public function theball_register_hooks() {
-
-		// Amend the WordPress admin bar.
-		add_action( 'wp_before_admin_bar_render', [ $this, 'theball_admin_bar_tweaks' ], 1000 );
-
-		// Include only on The Ball network.
-		if ( 'theball' != sof_get_site() ) {
-			return;
-		}
-
-		// Get the current site.
-		$current_site = get_site();
-		if ( empty( $current_site ) ) {
-			return;
-		}
-
-		// Bail if not the 2022 path.
-		if ( '/2022/' !== $current_site->path ) {
-			return;
-		}
-
-		// Ensure "Groups" only filters on Sites where it is active.
-		add_action( 'switch_blog', [ $this, 'theball_groups_switch_to' ], 20, 3 );
-		add_action( 'switch_blog', [ $this, 'theball_groups_switch_back' ], 21, 3 );
-
-	}
-
-	// -------------------------------------------------------------------------
 
 	/**
 	 * Filter the main menu on the SOF CIC root site.
@@ -323,6 +232,31 @@ class Spirit_Of_Football_Menus {
 	}
 
 	// -------------------------------------------------------------------------
+
+	/**
+	 * Register WordPress hooks on the SOF eV network.
+	 *
+	 * @since 0.1
+	 */
+	public function sofev_register_hooks() {
+
+		// Include only on SOF eV network.
+		if ( 'sofev' != sof_get_site() ) {
+			return;
+		}
+
+		// Filter menu based on membership.
+		add_action( 'wp_nav_menu_objects', [ $this, 'sofev_filter_menu' ], 20, 2 );
+
+		/*
+		 * Amends the BuddyPress dropdown in the WordPress admin bar.
+		 *
+		 * The top-level items point to "Profile -> Edit" by default, but this
+		 * seems kind of unintuitive, so point them to Member Home instead.
+		 */
+		add_action( 'wp_before_admin_bar_render', [ $this, 'sofev_admin_bar_tweaks' ], 1000 );
+
+	}
 
 	/**
 	 * Filter the main menu on the root site.
@@ -458,6 +392,31 @@ class Spirit_Of_Football_Menus {
 	// -------------------------------------------------------------------------
 
 	/**
+	 * Register WordPress hooks on the SOF Brasil network.
+	 *
+	 * @since 0.1
+	 */
+	public function sofbr_register_hooks() {
+
+		// Include only on SOF Brasil network.
+		if ( 'sofbr' != sof_get_site() ) {
+			return;
+		}
+
+		// Filter menu based on membership.
+		add_action( 'wp_nav_menu_objects', [ $this, 'sofbr_filter_menu' ], 20, 2 );
+
+		/*
+		 * Amends the BuddyPress dropdown in the WordPress admin bar.
+		 *
+		 * The top-level items point to "Profile -> Edit" by default, but this
+		 * seems kind of unintuitive, so point them to Member Home instead.
+		 */
+		add_action( 'wp_before_admin_bar_render', [ $this, 'sofbr_admin_bar_tweaks' ], 1000 );
+
+	}
+
+	/**
 	 * Filter the main menu on the SOF Brasil site.
 	 *
 	 * @since 0.3
@@ -544,6 +503,40 @@ class Spirit_Of_Football_Menus {
 			'href' => trailingslashit( bp_loggedin_user_domain() ),
 		];
 		$wp_admin_bar->add_node( $args );
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
+	 * Register WordPress hooks on the "The Ball" network.
+	 *
+	 * @since 0.3.1
+	 */
+	public function theball_register_hooks() {
+
+		// Amend the WordPress admin bar.
+		add_action( 'wp_before_admin_bar_render', [ $this, 'theball_admin_bar_tweaks' ], 1000 );
+
+		// Include only on The Ball network.
+		if ( 'theball' != sof_get_site() ) {
+			return;
+		}
+
+		// Get the current site.
+		$current_site = get_site();
+		if ( empty( $current_site ) ) {
+			return;
+		}
+
+		// Bail if not the 2022 path.
+		if ( '/2022/' !== $current_site->path ) {
+			return;
+		}
+
+		// Ensure "Groups" only filters on Sites where it is active.
+		add_action( 'switch_blog', [ $this, 'theball_groups_switch_to' ], 20, 3 );
+		add_action( 'switch_blog', [ $this, 'theball_groups_switch_back' ], 21, 3 );
 
 	}
 
