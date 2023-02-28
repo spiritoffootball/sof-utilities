@@ -66,8 +66,11 @@ class Spirit_Of_Football_Menus {
 	 */
 	public function register_hooks() {
 
+		// Sort Sites by Network for all Users.
+		add_filter( 'get_blogs_of_user', [ $this, 'sort_sites' ] );
+
 		// Modify the WordPress admin bar on all Sites.
-		add_action( 'wp_before_admin_bar_render', [ $this, 'wp_remove_menu' ], 1000 );
+		add_action( 'wp_before_admin_bar_render', [ $this, 'wp_modify_menu' ], 1000 );
 
 		// Remove Multi-network Menu from admin bar for everyone.
 		add_action( 'wp_before_admin_bar_render', [ $this, 'wpmn_remove_menu' ], 2000 );
@@ -94,11 +97,115 @@ class Spirit_Of_Football_Menus {
 	// -------------------------------------------------------------------------
 
 	/**
+	 * Sorts the array of Sites by Network for all Users.
+	 *
+	 * @since 0.4
+	 */
+	public function sort_sites( $sites ) {
+
+		// Do initial sort.
+		uasort( $sites, [ $this, 'sort_by_network' ] );
+
+		// Return early if we have no Networks.
+		$networks = get_networks();
+		if ( empty( $networks ) ) {
+			return $sites;
+		}
+
+		// Collect Main Sites so we can exclude Sub-sites below.
+		$main_sites = [];
+		foreach ( $networks as $network ) {
+			$main_site_id = $network->site_id;
+			if ( array_key_exists( $main_site_id, $sites ) ) {
+				$main_sites[ $main_site_id ] = $sites[ $main_site_id ];
+			}
+		}
+
+		// Group Sub-sites by Network.
+		$grouped = [];
+		foreach ( $sites as $site ) {
+			if ( ! array_key_exists( $site->userblog_id, $main_sites ) ) {
+				$grouped[ $site->site_id ][ $site->userblog_id ] = $site;
+			}
+		}
+
+		// Sort Sub-sites by Site Title.
+		foreach ( $grouped as $site_id => $group ) {
+			uasort( $group, [ $this, 'sort_by_blogname' ] );
+			$grouped[ $site_id ] = $group;
+		}
+
+		// Rebuild Sites array.
+		$sites = [];
+		foreach ( $networks as $network ) {
+
+			// If we have a Main Site, add it.
+			if ( array_key_exists( $network->site_id, $main_sites ) ) {
+				$sites[ $network->site_id ] = $main_sites[ $network->site_id ];
+			}
+
+			// If we have a group of Sub-sites, add them.
+			if ( array_key_exists( $network->id, $grouped ) ) {
+				$sites += $grouped[ $network->id ];
+			}
+
+		}
+
+		// --<
+		return $sites;
+
+	}
+
+	/**
+	 * Sorts the array of Sites by Network ID.
+	 *
+	 * @since 0.4
+	 *
+	 * @param object $a The reference array item.
+	 * @param object $b The comparison array item.
+	 * @return int -1, 0, or 1 if the first argument is considered less than, equal to, or greater than the second.
+	 */
+	public function sort_by_network( $a, $b ) {
+
+		// Return early if equal.
+		if ( (int) $a->site_id === (int) $b->site_id ) {
+			return 0;
+		}
+
+		// Return comparison.
+		return ( (int) $a->site_id < (int) $b->site_id ) ? -1 : 1;
+
+	}
+
+	/**
+	 * Sorts the array of Sites by "blogname".
+	 *
+	 * @since 0.4
+	 *
+	 * @param object $a The reference array item.
+	 * @param object $b The comparison array item.
+	 * @return int -1, 0, or 1 if the first argument is considered less than, equal to, or greater than the second.
+	 */
+	public function sort_by_blogname( $a, $b ) {
+
+		// Return early if equal.
+		if ( $a->blogname == $b->blogname ) {
+			return 0;
+		}
+
+		// Return comparison.
+		return ( strtolower( $a->blogname ) < strtolower( $b->blogname ) ) ? -1 : 1;
+
+	}
+
+	// -------------------------------------------------------------------------
+
+	/**
 	 * Modifies the WordPress admin bar on all Sites.
 	 *
 	 * @since 0.3.1
 	 */
-	public function wp_remove_menu() {
+	public function wp_modify_menu() {
 
 		// Access object.
 		global $wp_admin_bar;
@@ -110,6 +217,55 @@ class Spirit_Of_Football_Menus {
 
 		// Remove the WordPress logo menu.
 		$wp_admin_bar->remove_menu( 'wp-logo' );
+
+		return;
+
+		///*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			'wp_admin_bar' => $wp_admin_bar,
+			'wp_admin_bar->user' => $wp_admin_bar->user,
+			//'backtrace' => $trace,
+		], true ) );
+		//*/
+
+		$blog_names = [];
+		$sites = $wp_admin_bar->user->blogs;
+		foreach ( $sites as $site_id => $site ) {
+			$blog_names[ $site_id ] = strtoupper( $site->blogname );
+		}
+
+		// Remove main blog from list - we want that to show at the top.
+		unset( $blog_names[1] );
+
+		// Order by name
+		asort( $blog_names );
+
+		// Create new array
+		$wp_admin_bar->user->blogs = [];
+
+		// Add main blog back in to list
+		if ( $sites[1] ) {
+			$wp_admin_bar->user->blogs[1] = $sites[1];
+		}
+
+		// Add others back in alphabetically
+		foreach ( $blog_names as $site_id => $name ) {
+			$wp_admin_bar->user->blogs[ $site_id ] = $sites[ $site_id ];
+		}
+
+		///*
+		$e = new \Exception();
+		$trace = $e->getTraceAsString();
+		error_log( print_r( [
+			'method' => __METHOD__,
+			//'wp_admin_bar' => $wp_admin_bar,
+			'wp_admin_bar->user' => $wp_admin_bar->user,
+			//'backtrace' => $trace,
+		], true ) );
+		//*/
 
 	}
 
@@ -360,7 +516,7 @@ class Spirit_Of_Football_Menus {
 		];
 		$wp_admin_bar->add_node( $args );
 
-		// Target "editors" and above.
+		// Target anyone less than "editor".
 		if ( ! current_user_can( 'edit_posts' ) ) {
 
 			// Avoid links to WordPress admin on main site.
