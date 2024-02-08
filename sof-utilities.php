@@ -45,9 +45,11 @@ class Spirit_Of_Football_Utilities {
 	/**
 	 * Pseudo-maintenance mode.
 	 *
+	 * True sets WordPress into pseudo-maintenance mode.
+	 *
 	 * @since 0.3
 	 * @access private
-	 * @var bool $maintenance_mode True sets WordPress into pseudo-maintenance mode.
+	 * @var bool
 	 */
 	private $maintenance_mode = false;
 
@@ -56,7 +58,7 @@ class Spirit_Of_Football_Utilities {
 	 *
 	 * @since 0.1
 	 * @access public
-	 * @var object $buddypress The BuddyPress object.
+	 * @var Spirit_Of_Football_BuddyPress
 	 */
 	public $buddypress;
 
@@ -65,7 +67,7 @@ class Spirit_Of_Football_Utilities {
 	 *
 	 * @since 0.1
 	 * @access public
-	 * @var object $civicrm The CiviCRM object.
+	 * @var Spirit_Of_Football_CiviCRM
 	 */
 	public $civicrm;
 
@@ -74,7 +76,7 @@ class Spirit_Of_Football_Utilities {
 	 *
 	 * @since 0.1
 	 * @access public
-	 * @var object $cpts The Custom Post Types object.
+	 * @var Spirit_Of_Football_CPTs
 	 */
 	public $cpts;
 
@@ -83,7 +85,7 @@ class Spirit_Of_Football_Utilities {
 	 *
 	 * @since 0.1
 	 * @access public
-	 * @var object $metaboxes The Metaboxes object.
+	 * @var Spirit_Of_Football_Metaboxes
 	 */
 	public $metaboxes;
 
@@ -92,7 +94,7 @@ class Spirit_Of_Football_Utilities {
 	 *
 	 * @since 0.1
 	 * @access public
-	 * @var object $menus The Menus object.
+	 * @var Spirit_Of_Football_Menus
 	 */
 	public $menus;
 
@@ -101,7 +103,7 @@ class Spirit_Of_Football_Utilities {
 	 *
 	 * @since 0.2
 	 * @access public
-	 * @var object $membership The Membership object.
+	 * @var Spirit_Of_Football_Membership
 	 */
 	public $membership;
 
@@ -110,16 +112,25 @@ class Spirit_Of_Football_Utilities {
 	 *
 	 * @since 0.2.1
 	 * @access public
-	 * @var object $mirror The Mirror object.
+	 * @var Spirit_Of_Football_Mirror
 	 */
 	public $mirror;
+
+	/**
+	 * Shortcodes object.
+	 *
+	 * @since 0.2.1
+	 * @access public
+	 * @var Spirit_Of_Football_Shortcodes
+	 */
+	public $shortcodes;
 
 	/**
 	 * Widgets object.
 	 *
 	 * @since 0.2.1
 	 * @access public
-	 * @var object $widgets The Widgets object.
+	 * @var Spirit_Of_Football_Widgets
 	 */
 	public $widgets;
 
