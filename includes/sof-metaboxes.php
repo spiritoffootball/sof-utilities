@@ -151,7 +151,7 @@ class Spirit_Of_Football_Metaboxes {
 
 		// Select.
 		echo '
-		<input id="show_heading" name="show_heading" value="1" type="checkbox" ' . checked( 1, $checked ) . '/>
+		<input id="show_heading" name="show_heading" value="1" type="checkbox" ' . checked( 1, $checked, false ) . '/>
 		</p>
 		';
 
