@@ -5,7 +5,7 @@
  * Plugin Name: SOF Utilities
  * Description: Network-wide utilities for the SOF sites.
  * Plugin URI:  https://github.com/spiritoffootball/sof-utilities
- * Version:     0.4
+ * Version:     0.4.1
  * Author:      Christian Wach
  * Author URI:  https://haystack.co.uk
  * Text Domain: sof-utilities
@@ -18,7 +18,7 @@
 defined( 'ABSPATH' ) || exit;
 
 // Set our version here.
-define( 'SOF_UTILITIES_VERSION', '0.4' );
+define( 'SOF_UTILITIES_VERSION', '0.4.1' );
 
 // Store reference to this file.
 if ( ! defined( 'SOF_UTILITIES_FILE' ) ) {
