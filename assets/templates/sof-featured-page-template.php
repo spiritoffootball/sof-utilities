@@ -4,9 +4,8 @@
  *
  * Displays a page title, excerpt and featured image.
  *
- * @since 0.3.1
- *
  * @package Spirit_Of_Football_Utilities
+ * @since 0.3.1
  */
 
 // Exit if accessed directly.
@@ -15,14 +14,13 @@ defined( 'ABSPATH' ) || exit;
 // Define title attributes.
 $title_atts = [
 	'before' => __( 'Permanent Link to: ', 'sof-utilities' ),
-	'after' => '',
+	'after'  => '',
 ];
 
 ?>
-
 <div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-	<div class="post_inner<?php echo $feature_image_class; ?>">
+	<div class="post_inner<?php echo esc_attr( $feature_image_class ); ?>">
 
 		<div class="post_header">
 
@@ -30,14 +28,14 @@ $title_atts = [
 				<?php the_post_thumbnail( $image_size ); ?>
 			<?php endif; ?>
 
-			<?php if ( $show_title === 'yes' && ! $featured_video ) : ?>
+			<?php if ( 'yes' === $show_title && ! $featured_video ) : ?>
 				<div class="post_title">
 					<h2>
-						<?php if ( $link_text_id !== 0 ) : ?>
+						<?php if ( 0 !== $link_text_id ) : ?>
 							<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute( $title_atts ); ?>">
 						<?php endif; ?>
 						<?php the_title(); ?>
-						<?php if ( $link_text_id !== 0 ) : ?>
+						<?php if ( 0 !== $link_text_id ) : ?>
 							</a>
 						<?php endif; ?>
 					</h2>
@@ -52,14 +50,14 @@ $title_atts = [
 			</div><!-- /post_video -->
 		<?php endif; ?>
 
-		<?php if ( $show_title === 'yes' && $featured_video ) : ?>
+		<?php if ( 'yes' === $show_title && $featured_video ) : ?>
 			<div class="post_title">
 				<h2>
-					<?php if ( $link_text_id !== 0 ) : ?>
+					<?php if ( 0 !== $link_text_id ) : ?>
 						<a href="<?php the_permalink(); ?>" rel="bookmark" title="<?php the_title_attribute( $title_atts ); ?>">
 					<?php endif; ?>
 					<?php the_title(); ?>
-					<?php if ( $link_text_id !== 0 ) : ?>
+					<?php if ( 0 !== $link_text_id ) : ?>
 						</a>
 					<?php endif; ?>
 				</h2>
@@ -76,12 +74,12 @@ $title_atts = [
 
 	</div><!-- /post_inner -->
 
-	<?php if ( $link_text_id !== 0 ) : ?>
+	<?php if ( 0 !== $link_text_id ) : ?>
 		<div class="post_explore">
-			<p><a class="button" href="<?php the_permalink(); ?>"><?php echo $link_text; ?></a></p>
+			<p><a class="button" href="<?php the_permalink(); ?>"><?php echo esc_html( $link_text ); ?></a></p>
 		</div><!-- /post_explore -->
 	<?php endif; ?>
 
 	<?php edit_post_link( __( 'Edit this content', 'sof-utilities' ), '<p class="edit_link">', '</p>' ); ?>
 
-</div><!-- /post -->
+</div><!-- /#post -->

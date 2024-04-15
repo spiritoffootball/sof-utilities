@@ -67,7 +67,7 @@ class Spirit_Of_Football_Metaboxes {
 	public function register_hooks() {
 
 		// Exclude from SOF eV for now.
-		if ( 'sofev' == sof_get_site() ) {
+		if ( 'sofev' === sof_get_site() ) {
 			return;
 		}
 
@@ -135,23 +135,23 @@ class Spirit_Of_Football_Metaboxes {
 		// ---------------------------------------------------------------------
 
 		// Show a title.
-		echo '<p><strong><label for="show_heading">' . __( 'Make title hidden', 'sof-utilities' ) . '</label></strong>';
+		echo '<p><strong><label for="show_heading">' . esc_html__( 'Make title hidden', 'sof-utilities' ) . '</label></strong>';
 
 		// Set key.
 		$db_key = 'show_heading';
 
 		// Default to "not checked".
-		$checked = '';
+		$checked = 0;
 
 		// Override if the custom field has a value and it's the checked value.
 		$existing = get_post_meta( $post->ID, $db_key, true );
-		if ( false !== $existing && $existing == '1' ) {
-			$checked = ' checked="checked"';
+		if ( false !== $existing && '1' === (string) $existing ) {
+			$checked = 1;
 		}
 
 		// Select.
 		echo '
-		<input id="show_heading" name="show_heading" value="1" type="checkbox" ' . $checked . '/>
+		<input id="show_heading" name="show_heading" value="1" type="checkbox" ' . checked( 1, $checked ) . '/>
 		</p>
 		';
 
@@ -208,10 +208,10 @@ class Spirit_Of_Football_Metaboxes {
 		}
 
 		// Check for revision.
-		if ( $post_obj->post_type == 'revision' ) {
+		if ( 'revision' === $post_obj->post_type ) {
 
 			// Get parent.
-			if ( $post_obj->post_parent != 0 ) {
+			if ( 0 !== (int) $post_obj->post_parent ) {
 				$post = get_post( $post_obj->post_parent );
 			} else {
 				$post = $post_obj;
@@ -228,7 +228,7 @@ class Spirit_Of_Football_Metaboxes {
 		global $wpdb;
 
 		// If default page type.
-		if ( $post->post_type == 'page' ) {
+		if ( 'page' === $post->post_type ) {
 
 			// Set key.
 			$key = 'show_heading';
@@ -250,8 +250,8 @@ class Spirit_Of_Football_Metaboxes {
 	 * @since 0.1
 	 *
 	 * @param WP_Post $post The WordPress post object.
-	 * @param string $key The meta key.
-	 * @param mixed $data The data to be saved.
+	 * @param string  $key The meta key.
+	 * @param mixed   $data The data to be saved.
 	 * @return mixed $data The data that was saved.
 	 */
 	private function save_meta( $post, $key, $data = '' ) {

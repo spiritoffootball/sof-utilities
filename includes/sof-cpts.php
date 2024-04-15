@@ -66,8 +66,10 @@ class Spirit_Of_Football_CPTs {
 	 */
 	public function register_hooks() {
 
+		/*
 		// Always create post types.
-		//add_action( 'init', [ $this, 'create_post_types' ] );
+		add_action( 'init', [ $this, 'create_post_types' ] );
+		*/
 
 	}
 

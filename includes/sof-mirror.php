@@ -117,7 +117,7 @@ class Spirit_Of_Football_Mirror {
 	public function register_hooks() {
 
 		// On The Ball 2018.
-		if ( $this->site_id_en == get_current_blog_id() ) {
+		if ( get_current_blog_id() === $this->site_id_en ) {
 
 			// Add meta boxes.
 			add_action( 'add_meta_boxes', [ $this, 'add_meta_boxes_theball' ] );
@@ -131,7 +131,7 @@ class Spirit_Of_Football_Mirror {
 		}
 
 		// Only proceed on SOF eV.
-		if ( $this->site_id_de != get_current_blog_id() ) {
+		if ( get_current_blog_id() !== $this->site_id_de ) {
 			return;
 		}
 
@@ -167,7 +167,7 @@ class Spirit_Of_Football_Mirror {
 		}
 
 		// If on German site.
-		if ( $this->site_id_de == get_current_blog_id() ) {
+		if ( get_current_blog_id() === $this->site_id_de ) {
 			$link = $this->get_link_en( $post->ID );
 			if ( ! empty( $link ) ) {
 				$prepend = '<div class="sof_mirror">' . $link . '</div>';
@@ -176,7 +176,7 @@ class Spirit_Of_Football_Mirror {
 		}
 
 		// If on English site.
-		if ( $this->site_id_en == get_current_blog_id() ) {
+		if ( get_current_blog_id() === $this->site_id_en ) {
 			$link = $this->get_link_de( $post->ID );
 			if ( ! empty( $link ) ) {
 				$prepend = '<div class="sof_mirror">' . $link . '</div>';
@@ -200,7 +200,7 @@ class Spirit_Of_Football_Mirror {
 	public function get_link_en( $post_id ) {
 
 		// Bail if not on German site.
-		if ( $this->site_id_de != get_current_blog_id() ) {
+		if ( get_current_blog_id() !== $this->site_id_de ) {
 			return;
 		}
 
@@ -219,7 +219,7 @@ class Spirit_Of_Football_Mirror {
 		$link = '';
 
 		// Check that the post is published.
-		if ( 'publish' == get_post_status( $english_id ) ) {
+		if ( 'publish' === get_post_status( $english_id ) ) {
 
 			// Construct link.
 			$link = '<a href="' . get_permalink( $english_id ) . '" class="button sof_english_post">' .
@@ -247,7 +247,7 @@ class Spirit_Of_Football_Mirror {
 	public function get_link_de( $post_id ) {
 
 		// Bail if not on English site.
-		if ( $this->site_id_en != get_current_blog_id() ) {
+		if ( get_current_blog_id() !== $this->site_id_en ) {
 			return false;
 		}
 
@@ -266,7 +266,7 @@ class Spirit_Of_Football_Mirror {
 		$link = '';
 
 		// Check that the post is published.
-		if ( 'publish' == get_post_status( $german_id ) ) {
+		if ( 'publish' === get_post_status( $german_id ) ) {
 
 			// Construct link.
 			$link = '<a href="' . get_permalink( $german_id ) . '" class="button sof_german_post">' .
@@ -324,7 +324,8 @@ class Spirit_Of_Football_Mirror {
 		if ( empty( $existing_id ) ) {
 
 			// Helpful text.
-			echo '<p>' . __( 'This post does not have a German version.', 'sof-utilities' ) . '</p>' . "\n";
+			echo '<p>' . esc_html__( 'This post does not have a German version.', 'sof-utilities' ) . '</p>' . "\n";
+			return;
 
 		}
 
@@ -333,7 +334,7 @@ class Spirit_Of_Football_Mirror {
 		// -----------------------------------------------------------------
 
 		// Helpful text.
-		echo '<p>' . __( 'This post has a German version.', 'sof-utilities' ) . '</p>' . "\n";
+		echo '<p>' . esc_html__( 'This post has a German version.', 'sof-utilities' ) . '</p>' . "\n";
 
 		// Switch to SOF eV.
 		switch_to_blog( $this->site_id_de );
@@ -348,7 +349,7 @@ class Spirit_Of_Football_Mirror {
 		$link = __( 'Edit German version', 'sof-utilities' );
 
 		// Show link.
-		echo '<p><a href="' . $edit_link . '">' . $link . '</a></p>' . "\n";
+		echo '<p><a href="' . esc_url( $edit_link ) . '">' . esc_html( $link ) . '</a></p>' . "\n";
 
 	}
 
@@ -399,7 +400,7 @@ class Spirit_Of_Football_Mirror {
 			// -----------------------------------------------------------------
 
 			// Helpful text.
-			echo '<p>' . __( 'This post has an English version.', 'sof-utilities' ) . '</p>' . "\n";
+			echo '<p>' . esc_html__( 'This post has an English version.', 'sof-utilities' ) . '</p>' . "\n";
 
 			// Switch to The Ball 2018.
 			switch_to_blog( $this->site_id_en );
@@ -411,10 +412,10 @@ class Spirit_Of_Football_Mirror {
 			restore_current_blog();
 
 			// Define label.
-			$link = __( 'Edit English version', 'sof-utilities' );
+			$label = __( 'Edit English version', 'sof-utilities' );
 
 			// Show link.
-			echo '<p><a href="' . $edit_link . '">' . $link . '</a></p>' . "\n";
+			echo '<p><a href="' . esc_url( $edit_link ) . '">' . esc_html( $label ) . '</a></p>' . "\n";
 
 		} else {
 
@@ -422,7 +423,7 @@ class Spirit_Of_Football_Mirror {
 			if ( ! has_term( $this->term_id, 'category', $post->ID ) ) {
 
 				// Helpful text.
-				echo '<p>' . __( 'You will be able to create an English version of this post on The Ball 2018 when you have added it to the "Daily Ballblog" category. You do not have to publish this post first - it can still be in draft mode.', 'sof-utilities' ) . '</p>' . "\n";
+				echo '<p>' . esc_html__( 'You will be able to create an English version of this post on The Ball 2018 when you have added it to the "Daily Ballblog" category. You do not have to publish this post first - it can still be in draft mode.', 'sof-utilities' ) . '</p>' . "\n";
 
 			} else {
 
@@ -431,7 +432,7 @@ class Spirit_Of_Football_Mirror {
 				// -----------------------------------------------------------------
 
 				// Helpful text.
-				echo '<p>' . __( 'You can now create a copy of this post on The Ball 2018. When you have done so, you can translate it into English. It is best to make a copy when this post is finished and published.', 'sof-utilities' ) . '</p>' . "\n";
+				echo '<p>' . esc_html__( 'You can now create a copy of this post on The Ball 2018. When you have done so, you can translate it into English. It is best to make a copy when this post is finished and published.', 'sof-utilities' ) . '</p>' . "\n";
 
 				// Define label.
 				$label = __( 'Create an English version', 'sof-utilities' );
@@ -440,7 +441,7 @@ class Spirit_Of_Football_Mirror {
 				echo '
 				<div class="checkbox">
 					<label for="sofev2018_create_en"><input type="checkbox" value="1" id="sofev2018_create_en" name="sofev2018_create_en" /> ' .
-						$label .
+						esc_html( $label ) .
 					'</label>
 				</div>' . "\n";
 
@@ -455,9 +456,9 @@ class Spirit_Of_Football_Mirror {
 	 *
 	 * @since 0.2.1
 	 *
-	 * @param int $post_id The numeric ID of the WP post.
+	 * @param int    $post_id The numeric ID of the WP post.
 	 * @param object $post The WP post object.
-	 * @param bool $update True if the post is being updated, false otherwise.
+	 * @param bool   $update True if the post is being updated, false otherwise.
 	 */
 	public function save_post( $post_id, $post, $update ) {
 
@@ -467,7 +468,7 @@ class Spirit_Of_Football_Mirror {
 		}
 
 		// Bail if not a post.
-		if ( $post->post_type != 'post' ) {
+		if ( 'post' !== $post->post_type ) {
 			return;
 		}
 
@@ -485,7 +486,7 @@ class Spirit_Of_Football_Mirror {
 		$parent_id = wp_is_post_revision( $post_id );
 		if ( $parent_id ) {
 			$post_id = $parent_id;
-			$post = get_post( $post_id );
+			$post    = get_post( $post_id );
 		}
 
 		// Authenticate.
@@ -497,7 +498,7 @@ class Spirit_Of_Football_Mirror {
 
 		// Bail if our checkbox has not been checked.
 		$active = isset( $_POST['sofev2018_create_en'] ) ? absint( $_POST['sofev2018_create_en'] ) : '0';
-		if ( $active !== 1 ) {
+		if ( 1 !== $active ) {
 			return;
 		}
 
@@ -517,7 +518,7 @@ class Spirit_Of_Football_Mirror {
 	 * @since 0.2.1
 	 *
 	 * @param object $post The WP post object.
-	 * @param bool $update True if the post is being updated, false otherwise.
+	 * @param bool   $update True if the post is being updated, false otherwise.
 	 */
 	public function mirror_post( $post, $update ) {
 
@@ -538,21 +539,21 @@ class Spirit_Of_Football_Mirror {
 
 		// Copy relevant data to fresh array.
 		$new_post = [
-			'post_type' => $post->post_type,
-			'post_status' => 'draft',
-			'post_date' => $post->post_date,
-			'post_date_gmt' => $post->post_date_gmt,
-			'post_title' => $post->post_title,
-			'post_author' => $post->post_author,
-			'post_content' => $content,
-			'post_excerpt' => $post->post_excerpt,
-			'comment_status' => $post->comment_status,
-			'ping_status' => $post->ping_status,
-			'to_ping' => '', // Quick fix for Windows.
-			'pinged' => '', // Quick fix for Windows.
+			'post_type'             => $post->post_type,
+			'post_status'           => 'draft',
+			'post_date'             => $post->post_date,
+			'post_date_gmt'         => $post->post_date_gmt,
+			'post_title'            => $post->post_title,
+			'post_author'           => $post->post_author,
+			'post_content'          => $content,
+			'post_excerpt'          => $post->post_excerpt,
+			'comment_status'        => $post->comment_status,
+			'ping_status'           => $post->ping_status,
+			'to_ping'               => '', // Quick fix for Windows.
+			'pinged'                => '', // Quick fix for Windows.
 			'post_content_filtered' => '', // Quick fix for Windows.
-			'post_parent' => 0,
-			'menu_order' => 0,
+			'post_parent'           => 0,
+			'menu_order'            => 0,
 		];
 
 		// Get location if Geo Mashup is active.
@@ -604,17 +605,18 @@ class Spirit_Of_Football_Mirror {
 
 				// Log the problem if there is one.
 				if ( is_wp_error( $success ) ) {
-					$e = new Exception();
+					$e     = new Exception();
 					$trace = $e->getTraceAsString();
-					error_log( print_r( [
-						'method' => __METHOD__,
-						'post_id' => $post->ID,
-						'new_id' => $new_id,
-						'location' => $location,
+					$log   = [
+						'method'       => __METHOD__,
+						'post_id'      => $post->ID,
+						'new_id'       => $new_id,
+						'location'     => $location,
 						'new_location' => $new_location,
-						'error' => $success->get_error_message(),
-						'backtrace' => $trace,
-					], true ) );
+						'error'        => $success->get_error_message(),
+						'backtrace'    => $trace,
+					];
+					$this->plugin->log_error( $log );
 				}
 
 			}
@@ -662,6 +664,7 @@ class Spirit_Of_Football_Mirror {
 			 *
 			 * IANA timezone database that provides PHP's timezone support uses (i.e. reversed) POSIX style signs.
 			 */
+			// phpcs:ignore WordPress.PHP.StrictComparisons.LooseComparison
 			if ( empty( $tzstring ) && 0 != $offset && floor( $offset ) == $offset ) {
 				$offset_st = $offset > 0 ? "-$offset" : '+' . absint( $offset );
 				$tzstring  = 'Etc/GMT' . $offset_st;
@@ -695,9 +698,9 @@ class Spirit_Of_Football_Mirror {
 	 *
 	 * @since 0.2.1
 	 *
-	 * @param int $post_id The numeric ID of the WordPress post.
+	 * @param int    $post_id The numeric ID of the WordPress post.
 	 * @param string $key The meta key.
-	 * @param mixed $data The data to be saved.
+	 * @param mixed  $data The data to be saved.
 	 * @return mixed $data The data that was saved.
 	 */
 	public function save_meta( $post_id, $key, $data = '' ) {

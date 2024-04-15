@@ -100,6 +100,9 @@ class Spirit_Of_Football_Menus {
 	 * Sorts the array of Sites by Network for all Users.
 	 *
 	 * @since 0.4
+	 *
+	 * @param array $sites The array of Sites by Network.
+	 * @return array $sites The modified array of Sites by Network.
 	 */
 	public function sort_sites( $sites ) {
 
@@ -189,7 +192,7 @@ class Spirit_Of_Football_Menus {
 	public function sort_by_blogname( $a, $b ) {
 
 		// Return early if equal.
-		if ( $a->blogname == $b->blogname ) {
+		if ( $a->blogname === $b->blogname ) {
 			return 0;
 		}
 
@@ -218,19 +221,7 @@ class Spirit_Of_Football_Menus {
 		// Remove the WordPress logo menu.
 		$wp_admin_bar->remove_menu( 'wp-logo' );
 
-		return;
-
-		///*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			'wp_admin_bar' => $wp_admin_bar,
-			'wp_admin_bar->user' => $wp_admin_bar->user,
-			//'backtrace' => $trace,
-		], true ) );
-		//*/
-
+		/*
 		$blog_names = [];
 		$sites = $wp_admin_bar->user->blogs;
 		foreach ( $sites as $site_id => $site ) {
@@ -255,17 +246,7 @@ class Spirit_Of_Football_Menus {
 		foreach ( $blog_names as $site_id => $name ) {
 			$wp_admin_bar->user->blogs[ $site_id ] = $sites[ $site_id ];
 		}
-
-		///*
-		$e = new \Exception();
-		$trace = $e->getTraceAsString();
-		error_log( print_r( [
-			'method' => __METHOD__,
-			//'wp_admin_bar' => $wp_admin_bar,
-			'wp_admin_bar->user' => $wp_admin_bar->user,
-			//'backtrace' => $trace,
-		], true ) );
-		//*/
+		*/
 
 	}
 
@@ -304,7 +285,7 @@ class Spirit_Of_Football_Menus {
 	public function sofcic_register_hooks() {
 
 		// Include only on SOF CIC network.
-		if ( 'sofcic' != sof_get_site() ) {
+		if ( 'sofcic' !== sof_get_site() ) {
 			return;
 		}
 
@@ -397,14 +378,14 @@ class Spirit_Of_Football_Menus {
 
 		// Target BuddyPress dropdown parent.
 		$args = [
-			'id' => 'my-account',
+			'id'   => 'my-account',
 			'href' => trailingslashit( bp_loggedin_user_domain() ),
 		];
 		$wp_admin_bar->add_node( $args );
 
 		// Target BuddyPress dropdown user info.
 		$args = [
-			'id' => 'user-info',
+			'id'   => 'user-info',
 			'href' => trailingslashit( bp_loggedin_user_domain() ),
 		];
 		$wp_admin_bar->add_node( $args );
@@ -421,7 +402,7 @@ class Spirit_Of_Football_Menus {
 	public function sofev_register_hooks() {
 
 		// Include only on SOF eV network.
-		if ( 'sofev' != sof_get_site() ) {
+		if ( sof_get_site() !== 'sofev' ) {
 			return;
 		}
 
@@ -504,14 +485,14 @@ class Spirit_Of_Football_Menus {
 
 		// Target BuddyPress dropdown parent.
 		$args = [
-			'id' => 'my-account',
+			'id'   => 'my-account',
 			'href' => trailingslashit( bp_loggedin_user_domain() ),
 		];
 		$wp_admin_bar->add_node( $args );
 
 		// Target BuddyPress dropdown user info.
 		$args = [
-			'id' => 'user-info',
+			'id'   => 'user-info',
 			'href' => trailingslashit( bp_loggedin_user_domain() ),
 		];
 		$wp_admin_bar->add_node( $args );
@@ -524,14 +505,14 @@ class Spirit_Of_Football_Menus {
 
 				// Target "My Sites".
 				$args = [
-					'id' => 'my-sites',
+					'id'   => 'my-sites',
 					'href' => esc_url( home_url( '/' ) ),
 				];
 				$wp_admin_bar->add_node( $args );
 
 				// Target "Main Site Name".
 				$args = [
-					'id' => 'blog-1',
+					'id'   => 'blog-1',
 					'href' => esc_url( home_url( '/' ) ),
 				];
 				$wp_admin_bar->add_node( $args );
@@ -541,7 +522,7 @@ class Spirit_Of_Football_Menus {
 
 				// Target "Site Name".
 				$args = [
-					'id' => 'site-name',
+					'id'   => 'site-name',
 					'href' => esc_url( home_url( '/' ) ),
 				];
 				$wp_admin_bar->add_node( $args );
@@ -573,7 +554,7 @@ class Spirit_Of_Football_Menus {
 	public function sofbr_register_hooks() {
 
 		// Include only on SOF Brasil network.
-		if ( 'sofbr' != sof_get_site() ) {
+		if ( 'sofbr' !== sof_get_site() ) {
 			return;
 		}
 
@@ -660,14 +641,14 @@ class Spirit_Of_Football_Menus {
 
 		// Target BuddyPress dropdown parent.
 		$args = [
-			'id' => 'my-account',
+			'id'   => 'my-account',
 			'href' => trailingslashit( bp_loggedin_user_domain() ),
 		];
 		$wp_admin_bar->add_node( $args );
 
 		// Target BuddyPress dropdown user info.
 		$args = [
-			'id' => 'user-info',
+			'id'   => 'user-info',
 			'href' => trailingslashit( bp_loggedin_user_domain() ),
 		];
 		$wp_admin_bar->add_node( $args );
@@ -687,7 +668,7 @@ class Spirit_Of_Football_Menus {
 		add_action( 'wp_before_admin_bar_render', [ $this, 'theball_admin_bar_tweaks' ], 1000 );
 
 		// Include only on The Ball network.
-		if ( 'theball' != sof_get_site() ) {
+		if ( 'theball' !== sof_get_site() ) {
 			return;
 		}
 
@@ -729,7 +710,7 @@ class Spirit_Of_Football_Menus {
 	 * @since 0.1
 	 *
 	 * @param array $sorted_menu_items The menu items, sorted by each menu item's menu order.
-	 * @param str $type The type of menu item we're looking for.
+	 * @param str   $type The type of menu item we're looking for.
 	 * @param array $url_snippet The slug we're looking for in the menu item's target URL.
 	 */
 	private function remove_item( &$sorted_menu_items, $type, $url_snippet ) {
@@ -738,7 +719,7 @@ class Spirit_Of_Football_Menus {
 		foreach ( $sorted_menu_items as $key => $item ) {
 
 			// Store found key if it's the item we're looking for.
-			if ( $item->type == $type && false !== strpos( $item->url, $url_snippet ) ) {
+			if ( $item->type === $type && false !== strpos( $item->url, $url_snippet ) ) {
 				$found = $key;
 				break;
 			}

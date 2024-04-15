@@ -1,11 +1,13 @@
 <?php
 /**
+ * SOF Utilities
+ *
  * Plugin Name: SOF Utilities
- * Plugin URI: https://github.com/spiritoffootball/sof-utilities
  * Description: Network-wide utilities for the SOF sites.
- * Author: Christian Wach
- * Version: 0.4
- * Author URI: https://haystack.co.uk
+ * Plugin URI:  https://github.com/spiritoffootball/sof-utilities
+ * Version:     0.4
+ * Author:      Christian Wach
+ * Author URI:  https://haystack.co.uk
  * Text Domain: sof-utilities
  * Domain Path: /languages
  *
@@ -155,7 +157,7 @@ class Spirit_Of_Football_Utilities {
 
 		// Only do this once.
 		static $done;
-		if ( isset( $done ) && $done === true ) {
+		if ( isset( $done ) && true === $done ) {
 			return;
 		}
 
@@ -212,14 +214,14 @@ class Spirit_Of_Football_Utilities {
 
 		// Init objects.
 		$this->buddypress = new Spirit_Of_Football_BuddyPress( $this );
-		$this->civicrm = new Spirit_Of_Football_CiviCRM( $this );
-		$this->cpts = new Spirit_Of_Football_CPTs( $this );
-		$this->metaboxes = new Spirit_Of_Football_Metaboxes( $this );
-		$this->menus = new Spirit_Of_Football_Menus( $this );
+		$this->civicrm    = new Spirit_Of_Football_CiviCRM( $this );
+		$this->cpts       = new Spirit_Of_Football_CPTs( $this );
+		$this->metaboxes  = new Spirit_Of_Football_Metaboxes( $this );
+		$this->menus      = new Spirit_Of_Football_Menus( $this );
 		$this->membership = new Spirit_Of_Football_Membership( $this );
-		$this->mirror = new Spirit_Of_Football_Mirror( $this );
+		$this->mirror     = new Spirit_Of_Football_Mirror( $this );
 		$this->shortcodes = new Spirit_Of_Football_Shortcodes( $this );
-		$this->widgets = new Spirit_Of_Football_Widgets( $this );
+		$this->widgets    = new Spirit_Of_Football_Widgets( $this );
 
 	}
 
@@ -295,6 +297,35 @@ class Spirit_Of_Football_Utilities {
 			}
 
 		}
+
+	}
+
+	/**
+	 * Write to the error log.
+	 *
+	 * @since 0.4
+	 *
+	 * @param array $data The data to write to the log file.
+	 */
+	public function log_error( $data = [] ) {
+
+		// Skip if not debugging.
+		if ( SOF_PLEDGEBALL_DEBUG === false ) {
+			return;
+		}
+
+		// Skip if empty.
+		if ( empty( $data ) ) {
+			return;
+		}
+
+		// Format data.
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_print_r
+		$error = print_r( $data, true );
+
+		// Write to log file.
+		// phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+		error_log( $error );
 
 	}
 

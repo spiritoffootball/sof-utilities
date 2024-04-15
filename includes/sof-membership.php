@@ -76,7 +76,7 @@ class Spirit_Of_Football_Membership {
 	public function register_hooks() {
 
 		// Include only on SOF eV for now.
-		if ( 'sofev' != sof_get_site() ) {
+		if ( sof_get_site() !== 'sofev' ) {
 			return;
 		}
 
@@ -110,7 +110,7 @@ class Spirit_Of_Football_Membership {
 		}
 
 		// Bail if not the "Mitglied" capability.
-		if ( $capability != 'civimember_1' ) {
+		if ( 'civimember_1' !== $capability ) {
 			return;
 		}
 
@@ -126,16 +126,17 @@ class Spirit_Of_Football_Membership {
 		$success = groups_join_group( $this->group_id, $user->ID );
 
 		// Log an error on failure.
-		if ( $success === false ) {
-			$e = new Exception();
+		if ( false === $success ) {
+			$e     = new Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
-				'method' => __METHOD__,
+			$log   = [
+				'method'    => __METHOD__,
 				'procedure' => __( 'Could not add user to group', 'sof-utilities' ),
-				'user' => $user,
-				'group_id' => $this->group_id,
+				'user'      => $user,
+				'group_id'  => $this->group_id,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 		}
 
 	}
@@ -156,7 +157,7 @@ class Spirit_Of_Football_Membership {
 		}
 
 		// Bail if not the "Mitglied" capability.
-		if ( $capability != 'civimember_1' ) {
+		if ( 'civimember_1' !== $capability ) {
 			return;
 		}
 
@@ -169,16 +170,17 @@ class Spirit_Of_Football_Membership {
 		$success = groups_leave_group( $this->group_id, $user->ID );
 
 		// Log an error on failure.
-		if ( $success === false ) {
-			$e = new Exception();
+		if ( false === $success ) {
+			$e     = new Exception();
 			$trace = $e->getTraceAsString();
-			error_log( print_r( [
-				'method' => __METHOD__,
+			$log   = [
+				'method'    => __METHOD__,
 				'procedure' => __( 'Could not remove user from group', 'sof-utilities' ),
-				'user' => $user,
-				'group_id' => $this->group_id,
+				'user'      => $user,
+				'group_id'  => $this->group_id,
 				'backtrace' => $trace,
-			], true ) );
+			];
+			$this->plugin->log_error( $log );
 		}
 
 	}
@@ -189,7 +191,7 @@ class Spirit_Of_Football_Membership {
 	 * @since 0.2.1
 	 *
 	 * @param bool $granted False by default - assumes access not granted.
-	 * @param int $post_id The numeric ID of the WP post.
+	 * @param int  $post_id The numeric ID of the WP post.
 	 * @return bool $granted True if access granted, false otherwise.
 	 */
 	public function permissions_pl( $granted, $post_id = null ) {

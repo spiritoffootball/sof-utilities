@@ -30,7 +30,7 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 
 		// Use the class `widget_recent_entries` to inherit WP Recent Posts widget styling.
 		$widget_ops = [
-			'classname' => 'widget_journey_teaser',
+			'classname'   => 'widget_journey_teaser',
 			'description' => __( 'Displays a "Journey Teaser" to guide visitors to the current blog.', 'sof-utilities' ),
 		];
 
@@ -65,9 +65,9 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 
 		// Define args for query.
 		$query_args = [
-			'post_type' => 'post',
-			'no_found_rows' => true,
-			'post_status' => 'publish',
+			'post_type'      => 'post',
+			'no_found_rows'  => true,
+			'post_status'    => 'publish',
 			'posts_per_page' => 1,
 		];
 
@@ -81,13 +81,17 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 			$title = apply_filters( 'widget_title', empty( $instance['title'] ) ? '' : $instance['title'], $instance, $this->id_base );
 
 			// Show widget prefix.
-			echo ( isset( $args['before_widget'] ) ? $args['before_widget'] : '' );
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo isset( $args['before_widget'] ) ? $args['before_widget'] : '';
 
 			// Show title if there is one.
 			if ( ! empty( $title ) ) {
-				echo ( isset( $args['before_title'] ) ? $args['before_title'] : '' );
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo isset( $args['before_title'] ) ? $args['before_title'] : '';
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo $title;
-				echo ( isset( $args['after_title'] ) ? $args['after_title'] : '' );
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo isset( $args['after_title'] ) ? $args['after_title'] : '';
 			}
 
 			while ( $posts->have_posts() ) :
@@ -100,12 +104,12 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 					<?php
 
 					// Init.
-					$has_feature_image = false;
+					$has_feature_image   = false;
 					$feature_image_class = '';
 
 					// Do we have a feature image?
 					if ( has_post_thumbnail() ) {
-						$has_feature_image = true;
+						$has_feature_image   = true;
 						$feature_image_class = ' has_feature_image';
 					}
 
@@ -157,7 +161,7 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 					}
 					</style>
 
-					<div class="post_header<?php echo $feature_image_class; ?>">
+					<div class="post_header<?php echo esc_attr( $feature_image_class ); ?>">
 
 						<div class="post_header_inner">
 
@@ -185,7 +189,7 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 					</div><!-- /post_excerpt -->
 
 					<div class="post_explore">
-						<p><a class="button" href="<?php the_permalink(); ?>"><?php esc_html_e( 'Article', 'sof-utilities' ); ?></a> <a class="button" href="<?php echo get_site_url( null, '/blog/' ); ?>"><?php esc_html_e( 'Blog', 'sof-utilities' ); ?></a> <a class="button" href="<?php echo get_site_url(); ?>"><?php esc_html_e( 'Website', 'sof-utilities' ); ?></a></p>
+						<p><a class="button" href="<?php the_permalink(); ?>"><?php esc_html_e( 'Article', 'sof-utilities' ); ?></a> <a class="button" href="<?php echo esc_url( get_site_url( null, '/blog/' ) ); ?>"><?php esc_html_e( 'Blog', 'sof-utilities' ); ?></a> <a class="button" href="<?php echo esc_url( get_site_url() ); ?>"><?php esc_html_e( 'Website', 'sof-utilities' ); ?></a></p>
 					</div><!-- /post_excerpt -->
 
 				</div><!-- /latest_ball_post -->
@@ -195,7 +199,8 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 			endwhile;
 
 			// Show widget suffix.
-			echo ( isset( $args['after_widget'] ) ? $args['after_widget'] : '' );
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo isset( $args['after_widget'] ) ? $args['after_widget'] : '';
 
 			// Reset the post globals as this query will have stomped on it.
 			wp_reset_postdata();
@@ -203,7 +208,6 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 			// Unswitch the site.
 			restore_current_blog();
 
-		// End check for posts.
 		endif;
 
 	}
@@ -230,9 +234,9 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 		// Init query args.
 		$site_args = [
 			'archived' => 0,
-			'spam' => 0,
-			'deleted' => 0,
-			'public' => 1,
+			'spam'     => 0,
+			'deleted'  => 0,
+			'public'   => 1,
 		];
 
 		// Get sites.
@@ -241,16 +245,16 @@ class SOF_Widget_Journey_Teaser extends WP_Widget {
 		?>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php esc_html_e( 'Title:', 'sof-utilities' ); ?></label>
-			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Title:', 'sof-utilities' ); ?></label>
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'target_site' ); ?>" class="site_label"><?php esc_html_e( 'Latest Ball Journey Site', 'sof-utilities' ); ?></label>
-			<select id="<?php echo $this->get_field_id( 'target_site' ); ?>" name="<?php echo $this->get_field_name( 'target_site' ); ?>" class="widefat">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'target_site' ) ); ?>" class="site_label"><?php esc_html_e( 'Latest Ball Journey Site', 'sof-utilities' ); ?></label>
+			<select id="<?php echo esc_attr( $this->get_field_id( 'target_site' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'target_site' ) ); ?>" class="widefat">
 				<option value="" <?php selected( $target_site, '' ); ?>><?php esc_html_e( 'None', 'sof-utilities' ); ?></option>
 				<?php foreach ( $sites as $site ) { ?>
-					<option id="<?php echo $site->blog_id; ?>" value="<?php echo $site->blog_id; ?>" <?php selected( $target_site, $site->blog_id ); ?>><?php echo esc_html( get_blog_details( $site->blog_id )->blogname ); ?></option>
+					<option id="<?php echo esc_attr( $site->blog_id ); ?>" value="<?php echo esc_attr( $site->blog_id ); ?>" <?php selected( $target_site, $site->blog_id ); ?>><?php echo esc_html( get_blog_details( $site->blog_id )->blogname ); ?></option>
 				<?php } ?>
 			</select>
 		</p>

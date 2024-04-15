@@ -79,7 +79,7 @@ class Spirit_Of_Football_Shortcodes {
 	 * @since 0.3 Moved here from the "spiritoffootball" theme.
 	 *
 	 * @param array $attr The saved shortcode attributes.
-	 * @param str $content The enclosed content of the shortcode.
+	 * @param str   $content The enclosed content of the shortcode.
 	 * @return str $team The HTML markup for the shortcode.
 	 */
 	public function team_render( $attr, $content = null ) {
@@ -99,9 +99,12 @@ class Spirit_Of_Football_Shortcodes {
 		$include_users = explode( ',', $shortcode_atts['include'] );
 
 		// Sanitise array items.
-		array_walk( $include_users, function( &$item ) {
-			$item = absint( trim( $item ) );
-		});
+		array_walk(
+			$include_users,
+			function( &$item ) {
+				$item = absint( trim( $item ) );
+			}
+		);
 
 		// Define args (users in order).
 		$args = [
@@ -141,7 +144,7 @@ class Spirit_Of_Football_Shortcodes {
 
 				// Show link to profile if we're a super admin.
 				if ( is_multisite() && is_super_admin() ) {
-					$url = admin_url( 'user-edit.php?user_id=' . $user->ID );
+					$url   = admin_url( 'user-edit.php?user_id=' . $user->ID );
 					$team .= '<p><a class="post-edit-link" href="' . $url . '">' .
 						__( 'Edit this profile', 'sof-utilities' ) .
 					'</a></p>' . "\n";

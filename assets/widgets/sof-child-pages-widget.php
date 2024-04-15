@@ -31,7 +31,7 @@ class SOF_Widget_Child_Pages extends WP_Widget {
 
 		// Use the class `widget_recent_entries` to inherit WP Recent Posts widget styling.
 		$widget_ops = [
-			'classname' => 'widget_child_pages',
+			'classname'   => 'widget_child_pages',
 			'description' => __( 'Display a list of child pages for a given page.', 'sof-utilities' ),
 		];
 
@@ -54,7 +54,8 @@ class SOF_Widget_Child_Pages extends WP_Widget {
 	public function widget( $args, $instance ) {
 
 		// Show widget prefix.
-		echo ( isset( $args['before_widget'] ) ? $args['before_widget'] : '' );
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo isset( $args['before_widget'] ) ? $args['before_widget'] : '';
 
 		/**
 		 * Get filtered title.
@@ -69,8 +70,11 @@ class SOF_Widget_Child_Pages extends WP_Widget {
 
 		// Show title if there is one.
 		if ( ! empty( $title ) ) {
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo isset( $args['before_title'] ) ? $args['before_title'] : '';
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $title;
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo isset( $args['after_title'] ) ? $args['after_title'] : '';
 		}
 
@@ -104,7 +108,8 @@ class SOF_Widget_Child_Pages extends WP_Widget {
 		wp_page_menu( $query );
 
 		// Show widget suffix.
-		echo ( isset( $args['after_widget'] ) ? $args['after_widget'] : '' );
+		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo isset( $args['after_widget'] ) ? $args['after_widget'] : '';
 
 	}
 
@@ -123,8 +128,8 @@ class SOF_Widget_Child_Pages extends WP_Widget {
 		?>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>"><?php esc_html_e( 'Title:', 'sof-utilities' ); ?></label>
-			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>"><?php esc_html_e( 'Title:', 'sof-utilities' ); ?></label>
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>">
 		</p>
 
 		<?php

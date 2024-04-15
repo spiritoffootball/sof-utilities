@@ -33,7 +33,7 @@ class SOF_Docs_Widget_Recent_Docs extends WP_Widget {
 
 		// Use the class `widget_recent_entries` to inherit WP Recent Posts widget styling.
 		$widget_ops = [
-			'classname' => 'widget_recent_entries widget_recent_bp_docs widget_recent_sof_docs',
+			'classname'   => 'widget_recent_entries widget_recent_bp_docs widget_recent_sof_docs',
 			'description' => __( 'Displays the most recent Docs that the visitor can read. Used on SOF Member Homepage.', 'sof-utilities' ),
 		];
 
@@ -61,7 +61,7 @@ class SOF_Docs_Widget_Recent_Docs extends WP_Widget {
 		$bp = buddypress();
 
 		// Store the existing doc_query, so ours is made from scratch.
-		$temp_doc_query = isset( $bp->bp_docs->doc_query ) ? $bp->bp_docs->doc_query : null;
+		$temp_doc_query         = isset( $bp->bp_docs->doc_query ) ? $bp->bp_docs->doc_query : null;
 		$bp->bp_docs->doc_query = null;
 
 		if ( ! isset( $args['widget_id'] ) ) {
@@ -90,14 +90,16 @@ class SOF_Docs_Widget_Recent_Docs extends WP_Widget {
 		 * If viewing another user's profile, doc access will kick in.
 		 */
 		if ( bp_is_user() ) {
-			$my_groups = groups_get_user_groups( bp_loggedin_user_id() );
-			$d_group_id = ! empty( $my_groups['total'] ) ? $my_groups['groups'] : [ 0 ];
+			$my_groups            = groups_get_user_groups( bp_loggedin_user_id() );
+			$d_group_id           = ! empty( $my_groups['total'] ) ? $my_groups['groups'] : [ 0 ];
 			$doc_args['group_id'] = $d_group_id;
 		}
 
 		if ( bp_docs_has_docs( $doc_args ) ) :
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $args['before_widget'];
 			if ( $title ) {
+				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				echo $args['before_title'] . $title . $args['after_title'];
 			} ?>
 			<ul>
@@ -111,9 +113,9 @@ class SOF_Docs_Widget_Recent_Docs extends WP_Widget {
 					</li>
 				<?php endwhile; ?>
 				</ul>
-		<?php
-		echo $args['after_widget'];
-
+			<?php
+			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			echo $args['after_widget'];
 		endif;
 
 		wp_reset_postdata();
@@ -135,9 +137,9 @@ class SOF_Docs_Widget_Recent_Docs extends WP_Widget {
 	 */
 	public function update( $new_instance, $old_instance ) {
 
-		$instance = $old_instance;
-		$instance['title'] = sanitize_text_field( $new_instance['title'] );
-		$instance['number'] = (int) $new_instance['number'];
+		$instance              = $old_instance;
+		$instance['title']     = sanitize_text_field( $new_instance['title'] );
+		$instance['number']    = (int) $new_instance['number'];
 		$instance['show_date'] = isset( $new_instance['show_date'] ) ? (bool) $new_instance['show_date'] : false;
 
 		return $instance;
@@ -153,28 +155,28 @@ class SOF_Docs_Widget_Recent_Docs extends WP_Widget {
 	 */
 	public function form( $instance ) {
 
-		$title = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
-		$number = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
+		$title     = isset( $instance['title'] ) ? esc_attr( $instance['title'] ) : '';
+		$number    = isset( $instance['number'] ) ? absint( $instance['number'] ) : 5;
 		$show_date = isset( $instance['show_date'] ) ? (bool) $instance['show_date'] : false;
 
 		?>
 		<p>
-			<label for="<?php echo $this->get_field_id( 'title' ); ?>">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>">
 				<?php esc_html_e( 'Title:', 'sof-utilities' ); ?>
 			</label>
-			<input class="widefat" id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" type="text" value="<?php echo $title; ?>" />
+			<input class="widefat" id="<?php echo esc_attr( $this->get_field_id( 'title' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'title' ) ); ?>" type="text" value="<?php echo esc_attr( $title ); ?>" />
 		</p>
 
 		<p>
-			<label for="<?php echo $this->get_field_id( 'number' ); ?>">
+			<label for="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>">
 				<?php esc_html_e( 'Number of docs to show:', 'sof-utilities' ); ?>
 			</label>
-			<input class="tiny-text" id="<?php echo $this->get_field_id( 'number' ); ?>" name="<?php echo $this->get_field_name( 'number' ); ?>" type="number" step="1" min="1" value="<?php echo $number; ?>" size="3" />
+			<input class="tiny-text" id="<?php echo esc_attr( $this->get_field_id( 'number' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'number' ) ); ?>" type="number" step="1" min="1" value="<?php echo esc_attr( $number ); ?>" size="3" />
 		</p>
 
 		<p>
-			<input class="checkbox" type="checkbox"<?php checked( $show_date ); ?> id="<?php echo $this->get_field_id( 'show_date' ); ?>" name="<?php echo $this->get_field_name( 'show_date' ); ?>" />
-			<label for="<?php echo $this->get_field_id( 'show_date' ); ?>">
+			<input class="checkbox" type="checkbox"<?php checked( $show_date ); ?> id="<?php echo esc_attr( $this->get_field_id( 'show_date' ) ); ?>" name="<?php echo esc_attr( $this->get_field_name( 'show_date' ) ); ?>" />
+			<label for="<?php echo esc_attr( $this->get_field_id( 'show_date' ) ); ?>">
 				<?php esc_html_e( 'Display post date?', 'sof-utilities' ); ?>
 			</label>
 			</p>

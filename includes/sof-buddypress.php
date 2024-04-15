@@ -68,12 +68,12 @@ class Spirit_Of_Football_BuddyPress {
 
 		// Check if SOF CIC can handle this.
 		$sofcic = false;
-		if ( 'sofcic' != sof_get_site() && function_exists( 'bp_core_get_user_domain' ) ) {
+		if ( 'sofcic' !== sof_get_site() && function_exists( 'bp_core_get_user_domain' ) ) {
 			$sofcic = true;
 		}
 
 		// Include only on SOF eV and maybe on SOF CIC.
-		if ( 'sofev' == sof_get_site() || $sofcic === true ) {
+		if ( 'sofev' === sof_get_site() || true === $sofcic ) {
 
 			// Redirect to calling page after login.
 			add_filter( 'login_redirect', [ $this, 'login_redirect' ], 20, 3 );
@@ -154,7 +154,7 @@ class Spirit_Of_Football_BuddyPress {
 
 		// Add link to password recovery page.
 		echo '<span class="bp-login-widget-password-link">';
-		echo '<a href="' . $url . '">' . __( 'Lost your password?', 'sof-utilities' ) . '</a>';
+		echo '<a href="' . esc_url( $url ) . '">' . esc_html__( 'Lost your password?', 'sof-utilities' ) . '</a>';
 		echo '</span>';
 
 	}
