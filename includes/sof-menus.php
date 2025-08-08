@@ -483,19 +483,24 @@ class Spirit_Of_Football_Menus {
 			return;
 		}
 
-		// Target BuddyPress dropdown parent.
-		$args = [
-			'id'   => 'my-account',
-			'href' => trailingslashit( bp_loggedin_user_domain() ),
-		];
-		$wp_admin_bar->add_node( $args );
+		// BuddyPress-only modifications.
+		if ( function_exists( 'bp_loggedin_user_domain' ) ) {
 
-		// Target BuddyPress dropdown user info.
-		$args = [
-			'id'   => 'user-info',
-			'href' => trailingslashit( bp_loggedin_user_domain() ),
-		];
-		$wp_admin_bar->add_node( $args );
+			// Target BuddyPress dropdown parent.
+			$args = [
+				'id'   => 'my-account',
+				'href' => trailingslashit( bp_loggedin_user_domain() ),
+			];
+			$wp_admin_bar->add_node( $args );
+
+			// Target BuddyPress dropdown user info.
+			$args = [
+				'id'   => 'user-info',
+				'href' => trailingslashit( bp_loggedin_user_domain() ),
+			];
+			$wp_admin_bar->add_node( $args );
+
+		}
 
 		// Target anyone less than "editor".
 		if ( ! current_user_can( 'edit_posts' ) ) {
