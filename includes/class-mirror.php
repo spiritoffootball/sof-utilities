@@ -29,7 +29,7 @@ class Spirit_Of_Football_Mirror {
 	 *
 	 * @since 0.3
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var Spirit_Of_Football_Utilities
 	 */
 	public $plugin;
 
@@ -85,7 +85,7 @@ class Spirit_Of_Football_Mirror {
 	 *
 	 * @since 0.2.3
 	 *
-	 * @param object $plugin The plugin object.
+	 * @param Spirit_Of_Football_Utilities $plugin The plugin object.
 	 */
 	public function __construct( $plugin ) {
 

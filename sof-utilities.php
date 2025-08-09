@@ -161,16 +161,9 @@ class Spirit_Of_Football_Utilities {
 			return;
 		}
 
-		// Init translation.
-		$this->translation();
-
-		// Include files.
+		// Bootstrap plugin.
 		$this->include_files();
-
-		// Setup globals.
 		$this->setup_globals();
-
-		// Register hooks.
 		$this->register_hooks();
 
 		/**
@@ -190,18 +183,18 @@ class Spirit_Of_Football_Utilities {
 	 *
 	 * @since 0.1
 	 */
-	public function include_files() {
+	private function include_files() {
 
 		// Include class files.
-		include_once SOF_UTILITIES_PATH . 'includes/sof-buddypress.php';
-		include_once SOF_UTILITIES_PATH . 'includes/sof-civicrm.php';
-		include_once SOF_UTILITIES_PATH . 'includes/sof-cpts.php';
-		include_once SOF_UTILITIES_PATH . 'includes/sof-metaboxes.php';
-		include_once SOF_UTILITIES_PATH . 'includes/sof-menus.php';
-		include_once SOF_UTILITIES_PATH . 'includes/sof-membership.php';
-		include_once SOF_UTILITIES_PATH . 'includes/sof-mirror.php';
-		include_once SOF_UTILITIES_PATH . 'includes/sof-shortcodes.php';
-		include_once SOF_UTILITIES_PATH . 'includes/sof-widgets.php';
+		require SOF_UTILITIES_PATH . 'includes/class-buddypress.php';
+		require SOF_UTILITIES_PATH . 'includes/class-civicrm.php';
+		require SOF_UTILITIES_PATH . 'includes/class-cpts.php';
+		require SOF_UTILITIES_PATH . 'includes/class-metaboxes.php';
+		require SOF_UTILITIES_PATH . 'includes/class-menus.php';
+		require SOF_UTILITIES_PATH . 'includes/class-membership.php';
+		require SOF_UTILITIES_PATH . 'includes/class-mirror.php';
+		require SOF_UTILITIES_PATH . 'includes/class-shortcodes.php';
+		require SOF_UTILITIES_PATH . 'includes/class-widgets.php';
 
 	}
 
@@ -210,7 +203,7 @@ class Spirit_Of_Football_Utilities {
 	 *
 	 * @since 0.1
 	 */
-	public function setup_globals() {
+	private function setup_globals() {
 
 		// Init objects.
 		$this->buddypress = new Spirit_Of_Football_BuddyPress( $this );
@@ -230,7 +223,10 @@ class Spirit_Of_Football_Utilities {
 	 *
 	 * @since 0.1
 	 */
-	public function register_hooks() {
+	private function register_hooks() {
+
+		// Use translation.
+		add_action( 'init', [ $this, 'translation' ] );
 
 		// Maintenance mode.
 		if ( $this->maintenance_mode ) {
@@ -246,8 +242,19 @@ class Spirit_Of_Football_Utilities {
 	 */
 	public function activate() {
 
-		// Pass through.
-		$this->cpts->activate();
+		// Make sure plugin is bootstrapped.
+		$this->initialise();
+
+		/**
+		 * Fires when this plugin has been activated.
+		 *
+		 * Used internally by:
+		 *
+		 * * Spirit_Of_Football_CPTs::activate() (Priority: 10)
+		 *
+		 * @since 0.4.1
+		 */
+		do_action( 'sof_videos/activated' );
 
 	}
 
@@ -258,8 +265,19 @@ class Spirit_Of_Football_Utilities {
 	 */
 	public function deactivate() {
 
-		// Pass through.
-		$this->cpts->deactivate();
+		// Make sure plugin is bootstrapped.
+		$this->initialise();
+
+		/**
+		 * Fires when this plugin has been deactivated.
+		 *
+		 * Used internally by:
+		 *
+		 * * Spirit_Of_Football_CPTs::deactivate() (Priority: 10)
+		 *
+		 * @since 0.4.1
+		 */
+		do_action( 'sof_videos/deactivated' );
 
 	}
 
@@ -310,7 +328,7 @@ class Spirit_Of_Football_Utilities {
 	public function log_error( $data = [] ) {
 
 		// Skip if not debugging.
-		if ( SOF_PLEDGEBALL_DEBUG === false ) {
+		if ( WP_DEBUG === false ) {
 			return;
 		}
 

@@ -26,7 +26,7 @@ class Spirit_Of_Football_BuddyPress {
 	 *
 	 * @since 0.3
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var Spirit_Of_Football_Utilities
 	 */
 	public $plugin;
 
@@ -35,7 +35,7 @@ class Spirit_Of_Football_BuddyPress {
 	 *
 	 * @since 0.2.3
 	 *
-	 * @param object $plugin The plugin object.
+	 * @param Spirit_Of_Football_Utilities $plugin The plugin object.
 	 */
 	public function __construct( $plugin ) {
 
@@ -92,9 +92,9 @@ class Spirit_Of_Football_BuddyPress {
 	 *
 	 * @since 0.2.3
 	 *
-	 * @param string $redirect_to URL to redirect to.
-	 * @param string $request URL the user is coming from.
-	 * @param object $user Logged-in user's data.
+	 * @param string  $redirect_to URL to redirect to.
+	 * @param string  $request URL the user is coming from.
+	 * @param WP_User $user Logged-in user's data.
 	 * @return string $redirect_to Modified URL to redirect to.
 	 */
 	public function login_redirect( $redirect_to, $request, $user ) {
@@ -114,11 +114,6 @@ class Spirit_Of_Football_BuddyPress {
 		if ( ! is_main_site() && user_can( $user, 'manage_options' ) ) {
 			return $redirect_to;
 		}
-
-		// Is our hidden input set?
-		if ( isset( $_REQUEST['pcp-current-page'] ) && ! empty( $_REQUEST['pcp-current-page'] ) ) {
-			$redirect_to = $_REQUEST['pcp-current-page'];
-		}
 		*/
 
 		// Is this user held in moderation queue?
@@ -133,7 +128,9 @@ class Spirit_Of_Football_BuddyPress {
 		} else {
 
 			// Redirect to member home.
-			$redirect_to = trailingslashit( bp_core_get_user_domain( $user->ID ) );
+			if ( function_exists( 'bp_core_get_user_domain' ) ) {
+				$redirect_to = trailingslashit( bp_core_get_user_domain( $user->ID ) );
+			}
 
 		}
 

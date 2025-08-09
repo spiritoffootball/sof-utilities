@@ -26,7 +26,7 @@ class Spirit_Of_Football_CPTs {
 	 *
 	 * @since 0.3
 	 * @access public
-	 * @var object $plugin The plugin object.
+	 * @var Spirit_Of_Football_Utilities
 	 */
 	public $plugin;
 
@@ -35,7 +35,7 @@ class Spirit_Of_Football_CPTs {
 	 *
 	 * @since 0.2.3
 	 *
-	 * @param object $plugin The plugin object.
+	 * @param Spirit_Of_Football_Utilities $plugin The plugin object.
 	 */
 	public function __construct( $plugin ) {
 
@@ -54,8 +54,10 @@ class Spirit_Of_Football_CPTs {
 	 */
 	public function initialise() {
 
+		/*
 		// Register hooks.
 		$this->register_hooks();
+		*/
 
 	}
 
@@ -66,10 +68,12 @@ class Spirit_Of_Football_CPTs {
 	 */
 	public function register_hooks() {
 
-		/*
+		// Activation and deactivation.
+		add_action( 'sof_utilities/activated', [ $this, 'activate' ] );
+		add_action( 'sof_utilities/deactivated', [ $this, 'deactivate' ] );
+
 		// Always create post types.
 		add_action( 'init', [ $this, 'create_post_types' ] );
-		*/
 
 	}
 
