@@ -92,7 +92,7 @@ class Spirit_Of_Football_Membership {
 	}
 
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * Actions to perform when a capability is added via CiviCRM Membership.

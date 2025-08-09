@@ -71,7 +71,7 @@ class Spirit_Of_Football_CiviCRM {
 
 	}
 
-	// -------------------------------------------------------------------------
+	// -----------------------------------------------------------------------------------
 
 	/**
 	 * CiviCRM Admin Utilities is prettifying CiviCRM - add our style overrides.
