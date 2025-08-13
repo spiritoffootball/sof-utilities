@@ -63,8 +63,10 @@ class Spirit_Of_Football_Membership {
 	 */
 	public function initialise() {
 
-		// Register hooks.
+		/*
+		// Register hooks. Disabled.
 		$this->register_hooks();
+		*/
 
 	}
 
