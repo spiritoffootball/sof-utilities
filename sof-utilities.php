@@ -254,7 +254,7 @@ class Spirit_Of_Football_Utilities {
 		 *
 		 * @since 0.4.1
 		 */
-		do_action( 'sof_videos/activated' );
+		do_action( 'sof_utilities/activated' );
 
 	}
 
@@ -277,7 +277,7 @@ class Spirit_Of_Football_Utilities {
 		 *
 		 * @since 0.4.1
 		 */
-		do_action( 'sof_videos/deactivated' );
+		do_action( 'sof_utilities/deactivated' );
 
 	}
 
