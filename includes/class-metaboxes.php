@@ -31,6 +31,15 @@ class Spirit_Of_Football_Metaboxes {
 	public $plugin;
 
 	/**
+	 * The meta key for the "Title Visibility" setting.
+	 *
+	 * @since 0.4.1
+	 * @access public
+	 * @var string
+	 */
+	public $title_meta_key = 'show_heading';
+
+	/**
 	 * Constructor.
 	 *
 	 * @since 0.2.3
@@ -98,8 +107,6 @@ class Spirit_Of_Football_Metaboxes {
 
 	}
 
-	// -----------------------------------------------------------------------------------
-
 	/**
 	 * Adds meta boxes to admin screens.
 	 *
@@ -130,21 +137,14 @@ class Spirit_Of_Football_Metaboxes {
 		// Use nonce for verification.
 		wp_nonce_field( 'sof_page_settings', 'sof_nonce' );
 
-		// ---------------------------------------------------------------------
-		// Set "Title Visibility" Status
-		// ---------------------------------------------------------------------
-
 		// Show a title.
 		echo '<p><strong><label for="show_heading">' . esc_html__( 'Make title hidden', 'sof-utilities' ) . '</label></strong>';
-
-		// Set key.
-		$db_key = 'show_heading';
 
 		// Default to "not checked".
 		$checked = 0;
 
 		// Override if the custom field has a value and it's the checked value.
-		$existing = get_post_meta( $post->ID, $db_key, true );
+		$existing = get_post_meta( $post->ID, $this->title_meta_key, true );
 		if ( false !== $existing && '1' === (string) $existing ) {
 			$checked = 1;
 		}
@@ -162,85 +162,48 @@ class Spirit_Of_Football_Metaboxes {
 	 *
 	 * @since 0.1
 	 *
-	 * @param integer $post_id the ID of the post (or revision).
-	 * @param integer $post the post object.
+	 * @param int     $post_id The ID of the WordPress Post or revision.
+	 * @param WP_Post $post The WordPress Post object.
 	 */
 	public function save_post( $post_id, $post ) {
 
-		// We don't use post_id because we're not interested in revisions.
-
-		// Store our page meta data.
-		$result = $this->save_page_meta( $post );
-
-	}
-
-	// -----------------------------------------------------------------------------------
-
-	/**
-	 * When a page is saved, this also saves the options.
-	 *
-	 * @since 0.1
-	 *
-	 * @param WP_Post $post_obj The object for the post (or revision).
-	 */
-	private function save_page_meta( $post_obj ) {
-
-		// If no post, kick out.
-		if ( ! $post_obj ) {
+		// Bail if there's no Post object.
+		if ( ! $post ) {
 			return;
 		}
 
-		// Authenticate.
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-		$_nonce = isset( $_POST['sof_nonce'] ) ? wp_unslash( $_POST['sof_nonce'] ) : '';
-		if ( ! wp_verify_nonce( $_nonce, 'sof_page_settings' ) ) {
-			return;
-		}
-
-		// Is this an auto save routine?
-		if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-			return;
-		}
-
-		// Check permissions.
-		if ( ! current_user_can( 'edit_page', $post_obj->ID ) ) {
+		// Bail if this is an autosave.
+		if ( wp_is_post_autosave( $post ) ) {
 			return;
 		}
 
 		// Check for revision.
-		if ( 'revision' === $post_obj->post_type ) {
-
-			// Get parent.
-			if ( 0 !== (int) $post_obj->post_parent ) {
-				$post = get_post( $post_obj->post_parent );
-			} else {
-				$post = $post_obj;
-			}
-
-		} else {
-			$post = $post_obj;
+		$parent_id = wp_is_post_revision( $post );
+		if ( $parent_id ) {
+			$post = get_post( $parent_id );
 		}
 
-		// ---------------------------------------------------------------------
-		// Okay, we're through...
-		// ---------------------------------------------------------------------
-
-		global $wpdb;
-
-		// If default page type.
-		if ( 'page' === $post->post_type ) {
-
-			// Set key.
-			$key = 'show_heading';
-
-			// Find the data.
-			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
-			$_data = isset( $_POST[ $key ] ) ? (int) wp_unslash( $_POST[ $key ] ) : '0';
-
-			// Attached Quote.
-			$this->save_meta( $post, 'show_heading', $_data );
-
+		// Bail if not the post type we want.
+		if ( 'page' !== $post->post_type ) {
+			return;
 		}
+
+		// Check permissions.
+		if ( ! current_user_can( 'edit_page', $post->ID ) ) {
+			return;
+		}
+
+		// Authenticate.
+		$nonce = isset( $_POST['sof_nonce'] ) ? sanitize_text_field( wp_unslash( $_POST['sof_nonce'] ) ) : '';
+		if ( ! wp_verify_nonce( $nonce, 'sof_page_settings' ) ) {
+			return;
+		}
+
+		// Find the data.
+		$data = isset( $_POST[ $this->title_meta_key ] ) ? (int) sanitize_text_field( wp_unslash( $_POST[ $this->title_meta_key ] ) ) : '0';
+
+		// Attached Quote.
+		$this->save_meta( $post, $this->title_meta_key, $data );
 
 	}
 
@@ -249,7 +212,7 @@ class Spirit_Of_Football_Metaboxes {
 	 *
 	 * @since 0.1
 	 *
-	 * @param WP_Post $post The WordPress post object.
+	 * @param WP_Post $post The WordPress Post object.
 	 * @param string  $key The meta key.
 	 * @param mixed   $data The data to be saved.
 	 * @return mixed $data The data that was saved.
