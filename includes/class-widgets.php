@@ -82,10 +82,10 @@ class Spirit_Of_Football_Widgets {
 	public function register_widgets() {
 
 		// Include widgets.
-		require_once SOF_UTILITIES_PATH . 'assets/widgets/sof-docs-widget.php';
-		require_once SOF_UTILITIES_PATH . 'assets/widgets/sof-journey-teaser-widget.php';
-		require_once SOF_UTILITIES_PATH . 'assets/widgets/sof-featured-page-widget.php';
-		require_once SOF_UTILITIES_PATH . 'assets/widgets/sof-child-pages-widget.php';
+		require_once SOF_UTILITIES_PATH . 'assets/widgets/class-widget-docs.php';
+		require_once SOF_UTILITIES_PATH . 'assets/widgets/class-widget-journey-teaser.php';
+		require_once SOF_UTILITIES_PATH . 'assets/widgets/class-widget-featured-page.php';
+		require_once SOF_UTILITIES_PATH . 'assets/widgets/class-widget-child-pages.php';
 
 		// Register widgets.
 		register_widget( 'SOF_Docs_Widget_Recent_Docs' );
