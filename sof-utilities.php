@@ -143,13 +143,13 @@ class Spirit_Of_Football_Utilities {
 	 */
 	public function __construct() {
 
-		// Initialise once plugins are loaded.
+		// Initialise when all plugins are loaded.
 		add_action( 'plugins_loaded', [ $this, 'initialise' ] );
 
 	}
 
 	/**
-	 * Initialise.
+	 * Initialises this plugin.
 	 *
 	 * @since 0.1
 	 */
@@ -219,7 +219,7 @@ class Spirit_Of_Football_Utilities {
 	}
 
 	/**
-	 * Register WordPress hooks.
+	 * Registers hook callbacks.
 	 *
 	 * @since 0.1
 	 */
