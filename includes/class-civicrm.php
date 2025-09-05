@@ -69,6 +69,9 @@ class Spirit_Of_Football_CiviCRM {
 		// Maybe add our style overrides.
 		add_action( 'civicrm_admin_utilities_admin_overridden', [ $this, 'enqueue_admin_css' ], 10 );
 
+		// Maybe allow access to "Manage Groups" shortcut.
+		add_action( 'civicrm_admin_utilities_manage_groups_menu_item', [ $this, 'manage_groups_menu_item' ], 20 );
+
 	}
 
 	// -----------------------------------------------------------------------------------
@@ -88,6 +91,26 @@ class Spirit_Of_Football_CiviCRM {
 			CIVICRM_ADMIN_UTILITIES_VERSION, // Version.
 			'all' // Media.
 		);
+
+	}
+
+	/**
+	 * Allow or deny access to the "Manage Groups" menu item.
+	 *
+	 * @since 1.0.0
+	 *
+	 * @param bool $allow True by default, which allows access.
+	 * @return bool $allow True allows access to the "Manage Groups" menu item, false does not.
+	 */
+	public function manage_groups_menu_item( $allow ) {
+
+		// Network admins can see it.
+		if ( is_super_admin() ) {
+			return true;
+		}
+
+		// Pass for all others.
+		return $allow;
 
 	}
 
