@@ -188,7 +188,7 @@ class Spirit_Of_Football_Utilities {
 		// Include class files.
 		require SOF_UTILITIES_PATH . 'includes/class-buddypress.php';
 		require SOF_UTILITIES_PATH . 'includes/class-civicrm.php';
-		require SOF_UTILITIES_PATH . 'includes/class-cpts.php';
+		require SOF_UTILITIES_PATH . 'includes/class-cpt-loader.php';
 		require SOF_UTILITIES_PATH . 'includes/class-metaboxes.php';
 		require SOF_UTILITIES_PATH . 'includes/class-menus.php';
 		require SOF_UTILITIES_PATH . 'includes/class-membership.php';
