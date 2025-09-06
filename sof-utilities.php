@@ -248,10 +248,6 @@ class Spirit_Of_Football_Utilities {
 		/**
 		 * Fires when this plugin has been activated.
 		 *
-		 * Used internally by:
-		 *
-		 * * Spirit_Of_Football_CPTs::activate() (Priority: 10)
-		 *
 		 * @since 0.4.1
 		 */
 		do_action( 'sof_utilities/activated' );
@@ -270,10 +266,6 @@ class Spirit_Of_Football_Utilities {
 
 		/**
 		 * Fires when this plugin has been deactivated.
-		 *
-		 * Used internally by:
-		 *
-		 * * Spirit_Of_Football_CPTs::deactivate() (Priority: 10)
 		 *
 		 * @since 0.4.1
 		 */
