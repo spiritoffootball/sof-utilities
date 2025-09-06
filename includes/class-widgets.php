@@ -64,7 +64,7 @@ class Spirit_Of_Football_Widgets {
 	 *
 	 * @since 0.2.1
 	 */
-	public function register_hooks() {
+	private function register_hooks() {
 
 		// Register widgets.
 		add_action( 'widgets_init', [ $this, 'register_widgets' ] );
@@ -81,17 +81,30 @@ class Spirit_Of_Football_Widgets {
 	 */
 	public function register_widgets() {
 
+		// Only do this once.
+		static $done;
+		if ( isset( $done ) && true === $done ) {
+			return;
+		}
+
 		// Include widgets.
-		require_once SOF_UTILITIES_PATH . 'assets/widgets/class-widget-docs.php';
-		require_once SOF_UTILITIES_PATH . 'assets/widgets/class-widget-journey-teaser.php';
-		require_once SOF_UTILITIES_PATH . 'assets/widgets/class-widget-featured-page.php';
-		require_once SOF_UTILITIES_PATH . 'assets/widgets/class-widget-child-pages.php';
+		require SOF_UTILITIES_PATH . 'assets/widgets/class-widget-journey-teaser.php';
+		require SOF_UTILITIES_PATH . 'assets/widgets/class-widget-featured-page.php';
+		require SOF_UTILITIES_PATH . 'assets/widgets/class-widget-child-pages.php';
 
 		// Register widgets.
-		register_widget( 'SOF_Docs_Widget_Recent_Docs' );
 		register_widget( 'SOF_Widget_Journey_Teaser' );
 		register_widget( 'SOF_Widget_Featured_Page' );
 		register_widget( 'SOF_Widget_Child_Pages' );
+
+		// Optionally register BuddyPress Docs widget.
+		if ( defined( 'BP_DOCS_VERSION' ) ) {
+			require SOF_UTILITIES_PATH . 'assets/widgets/class-widget-docs.php';
+			register_widget( 'SOF_Docs_Widget_Recent_Docs' );
+		}
+
+		// We're done.
+		$done = true;
 
 	}
 
