@@ -64,7 +64,7 @@ class Spirit_Of_Football_Menus {
 	 *
 	 * @since 0.1
 	 */
-	public function register_hooks() {
+	private function register_hooks() {
 
 		// Sort Sites by Network for all Users.
 		add_filter( 'get_blogs_of_user', [ $this, 'sort_sites' ] );

@@ -64,7 +64,7 @@ class Spirit_Of_Football_CiviCRM {
 	 *
 	 * @since 0.3
 	 */
-	public function register_hooks() {
+	private function register_hooks() {
 
 		// Maybe add our style overrides.
 		add_action( 'civicrm_admin_utilities_admin_overridden', [ $this, 'enqueue_admin_css' ], 10 );

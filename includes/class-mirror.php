@@ -114,7 +114,7 @@ class Spirit_Of_Football_Mirror {
 	 *
 	 * @since 0.2.1
 	 */
-	public function register_hooks() {
+	private function register_hooks() {
 
 		// On The Ball 2018.
 		if ( get_current_blog_id() === $this->site_id_en ) {

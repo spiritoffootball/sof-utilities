@@ -62,7 +62,7 @@ class Spirit_Of_Football_Co_Authors {
 	 *
 	 * @since 0.2.3
 	 */
-	public function register_hooks() {
+	private function register_hooks() {
 
 	}
 

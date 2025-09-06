@@ -73,7 +73,7 @@ class Spirit_Of_Football_Metaboxes {
 	 *
 	 * @since 0.1
 	 */
-	public function register_hooks() {
+	private function register_hooks() {
 
 		// Exclude from SOF eV for now.
 		if ( 'sofev' === sof_get_site() ) {

@@ -75,7 +75,7 @@ class Spirit_Of_Football_Membership {
 	 *
 	 * @since 0.2
 	 */
-	public function register_hooks() {
+	private function register_hooks() {
 
 		// Include only on SOF eV for now.
 		if ( sof_get_site() !== 'sofev' ) {

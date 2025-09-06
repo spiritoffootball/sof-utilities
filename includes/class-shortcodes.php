@@ -64,7 +64,7 @@ class Spirit_Of_Football_Shortcodes {
 	 *
 	 * @since 0.1
 	 */
-	public function register_hooks() {
+	private function register_hooks() {
 
 		// Register shortcodes.
 		add_shortcode( 'team', [ $this, 'team_render' ] );

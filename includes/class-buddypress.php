@@ -64,7 +64,7 @@ class Spirit_Of_Football_BuddyPress {
 	 *
 	 * @since 0.2.3
 	 */
-	public function register_hooks() {
+	private function register_hooks() {
 
 		// Check if SOF CIC can handle this.
 		$sofcic = false;
