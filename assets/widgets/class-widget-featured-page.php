@@ -95,8 +95,8 @@ class SOF_Widget_Featured_Page extends WP_Widget {
 			 * @since 0.3
 			 *
 			 * @param string $link_text The default link text.
-			 * @param array $instance Settings for the current widget instance.
-			 * @param array $args The display arguments.
+			 * @param array  $instance Settings for the current widget instance.
+			 * @param array  $args The display arguments.
 			 * @return string $link_text The modified default link text.
 			 */
 			$link_text = apply_filters( 'sof_utilities_featured_page_link_text', $link_text, $instance, $args );
