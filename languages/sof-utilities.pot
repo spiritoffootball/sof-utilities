@@ -2,14 +2,14 @@
 # This file is distributed under the same license as the SOF Utilities plugin.
 msgid ""
 msgstr ""
-"Project-Id-Version: SOF Utilities 0.4.1\n"
+"Project-Id-Version: SOF Utilities 1.0.0a\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/sof-utilities\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2025-08-14T09:36:43+00:00\n"
+"POT-Creation-Date: 2025-09-07T11:50:42+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: sof-utilities\n"
@@ -47,141 +47,149 @@ msgstr ""
 msgid "Edit this content"
 msgstr ""
 
-#: assets/widgets/sof-child-pages-widget.php:35
+#: assets/widgets/class-widget-child-pages.php:35
 msgid "Display a list of child pages for a given page."
 msgstr ""
 
-#: assets/widgets/sof-child-pages-widget.php:40
+#: assets/widgets/class-widget-child-pages.php:40
 msgctxt "widget name"
 msgid "SOF Child Pages Widget"
 msgstr ""
 
-#: assets/widgets/sof-child-pages-widget.php:131
-#: assets/widgets/sof-docs-widget.php:165
-#: assets/widgets/sof-featured-page-widget.php:229
-#: assets/widgets/sof-journey-teaser-widget.php:248
+#: assets/widgets/class-widget-child-pages.php:131
+#: assets/widgets/class-widget-docs.php:165
+#: assets/widgets/class-widget-featured-page.php:229
+#: assets/widgets/class-widget-journey-teaser.php:248
 msgid "Title:"
 msgstr ""
 
-#: assets/widgets/sof-docs-widget.php:37
+#: assets/widgets/class-widget-docs.php:37
 msgid "Displays the most recent Docs that the visitor can read. Used on SOF Member Homepage."
 msgstr ""
 
-#: assets/widgets/sof-docs-widget.php:42
+#: assets/widgets/class-widget-docs.php:42
 msgctxt "widget name"
 msgid "(BuddyPress Docs) Recent SOF Docs"
 msgstr ""
 
-#: assets/widgets/sof-docs-widget.php:71
+#: assets/widgets/class-widget-docs.php:71
 msgid "Recent Documents"
 msgstr ""
 
-#: assets/widgets/sof-docs-widget.php:172
+#: assets/widgets/class-widget-docs.php:172
 msgid "Number of docs to show:"
 msgstr ""
 
-#: assets/widgets/sof-docs-widget.php:180
+#: assets/widgets/class-widget-docs.php:180
 msgid "Display post date?"
 msgstr ""
 
-#: assets/widgets/sof-featured-page-widget.php:42
+#: assets/widgets/class-widget-featured-page.php:42
 msgid "Do not show a Link"
 msgstr ""
 
-#: assets/widgets/sof-featured-page-widget.php:43
+#: assets/widgets/class-widget-featured-page.php:43
 msgid "Read More"
 msgstr ""
 
-#: assets/widgets/sof-featured-page-widget.php:44
+#: assets/widgets/class-widget-featured-page.php:44
 msgid "Find Out More"
 msgstr ""
 
-#: assets/widgets/sof-featured-page-widget.php:45
+#: assets/widgets/class-widget-featured-page.php:45
 msgid "Continue Reading"
 msgstr ""
 
-#: assets/widgets/sof-featured-page-widget.php:51
+#: assets/widgets/class-widget-featured-page.php:51
 msgid "Display a page title, excerpt and featured image."
 msgstr ""
 
-#: assets/widgets/sof-featured-page-widget.php:56
+#: assets/widgets/class-widget-featured-page.php:56
 msgctxt "widget name"
 msgid "SOF Page Widget"
 msgstr ""
 
-#: assets/widgets/sof-featured-page-widget.php:234
+#: assets/widgets/class-widget-featured-page.php:234
 msgid "Page:"
 msgstr ""
 
-#: assets/widgets/sof-featured-page-widget.php:237
+#: assets/widgets/class-widget-featured-page.php:237
 msgid "Choose a page"
 msgstr ""
 
-#: assets/widgets/sof-featured-page-widget.php:245
+#: assets/widgets/class-widget-featured-page.php:245
 msgid "Feature Image size:"
 msgstr ""
 
-#: assets/widgets/sof-featured-page-widget.php:247
+#: assets/widgets/class-widget-featured-page.php:247
 msgid "Do not use a Feature Image"
 msgstr ""
 
 #. translators: 1: Numeric width of the image, 2: Numeric height of the image.
-#: assets/widgets/sof-featured-page-widget.php:250
+#: assets/widgets/class-widget-featured-page.php:250
 #, php-format
 msgid "%1$dx%2$d"
 msgstr ""
 
-#: assets/widgets/sof-featured-page-widget.php:256
+#: assets/widgets/class-widget-featured-page.php:256
 msgid "Show Page Title:"
 msgstr ""
 
-#: assets/widgets/sof-featured-page-widget.php:258
+#: assets/widgets/class-widget-featured-page.php:258
 msgid "Yes"
 msgstr ""
 
-#: assets/widgets/sof-featured-page-widget.php:259
+#: assets/widgets/class-widget-featured-page.php:259
 msgid "No"
 msgstr ""
 
-#: assets/widgets/sof-featured-page-widget.php:264
+#: assets/widgets/class-widget-featured-page.php:264
 msgid "Link text:"
 msgstr ""
 
-#: assets/widgets/sof-journey-teaser-widget.php:34
+#: assets/widgets/class-widget-journey-teaser.php:34
 msgid "Displays a \"Journey Teaser\" to guide visitors to the current blog."
 msgstr ""
 
-#: assets/widgets/sof-journey-teaser-widget.php:39
+#: assets/widgets/class-widget-journey-teaser.php:39
 msgctxt "widget name"
 msgid "Journey Teaser"
 msgstr ""
 
-#: assets/widgets/sof-journey-teaser-widget.php:192
+#: assets/widgets/class-widget-journey-teaser.php:192
 msgid "Article"
 msgstr ""
 
-#: assets/widgets/sof-journey-teaser-widget.php:192
+#: assets/widgets/class-widget-journey-teaser.php:192
 msgid "Blog"
 msgstr ""
 
-#: assets/widgets/sof-journey-teaser-widget.php:192
+#: assets/widgets/class-widget-journey-teaser.php:192
 msgid "Website"
 msgstr ""
 
-#: assets/widgets/sof-journey-teaser-widget.php:228
+#: assets/widgets/class-widget-journey-teaser.php:228
 msgid "Follow the Journey"
 msgstr ""
 
-#: assets/widgets/sof-journey-teaser-widget.php:253
+#: assets/widgets/class-widget-journey-teaser.php:253
 msgid "Latest Ball Journey Site"
 msgstr ""
 
-#: assets/widgets/sof-journey-teaser-widget.php:255
+#: assets/widgets/class-widget-journey-teaser.php:255
 msgid "None"
 msgstr ""
 
 #: includes/class-buddypress.php:154
 msgid "Lost your password?"
+msgstr ""
+
+#: includes/class-cpt-terms.php:296
+msgid "Die Supporter"
+msgstr ""
+
+#: includes/class-cpt-terms.php:368
+msgid "Supporters"
 msgstr ""
 
 #: includes/class-membership.php:136
