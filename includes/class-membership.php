@@ -133,7 +133,7 @@ class Spirit_Of_Football_Membership {
 			$trace = $e->getTraceAsString();
 			$log   = [
 				'method'    => __METHOD__,
-				'procedure' => __( 'Could not add user to group', 'sof-utilities' ),
+				'procedure' => 'Could not add user to group',
 				'user'      => $user,
 				'group_id'  => $this->group_id,
 				'backtrace' => $trace,
@@ -177,7 +177,7 @@ class Spirit_Of_Football_Membership {
 			$trace = $e->getTraceAsString();
 			$log   = [
 				'method'    => __METHOD__,
-				'procedure' => __( 'Could not remove user from group', 'sof-utilities' ),
+				'procedure' => 'Could not remove user from group',
 				'user'      => $user,
 				'group_id'  => $this->group_id,
 				'backtrace' => $trace,

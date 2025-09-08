@@ -293,8 +293,8 @@ class Spirit_Of_Football_CPT_Terms {
 
 		// Default Term setup.
 		$args['default_term'] = [
-			'name' => __( 'Die Supporter', 'sof-utilities' ),
-			'slug' => 'die-supporter',
+			'name' => __( 'Supporters', 'sof-utilities' ),
+			'slug' => 'supporter',
 		];
 
 		// --<
