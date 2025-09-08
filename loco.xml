@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<bundle name="SOF Utilities">
+	<domain name="sof-utilities">
+		<project name="SOF Utilities" slug="sof-utilities">
+			<source>
+				<directory>.</directory>
+			</source>
+			<target>
+				<directory>languages</directory>
+			</target>
+			<template>
+				<file>languages/sof-utilities.pot</file>
+			</template>
+		</project>
+	</domain>
+</bundle>
