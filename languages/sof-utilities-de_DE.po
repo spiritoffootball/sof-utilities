@@ -8,122 +8,260 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"PO-Revision-Date: 2018-04-17 10:07+0000\n"
-"Last-Translator: Site Admin <needle@haystack.co.uk>\n"
-"Language-Team: Deutsch\n"
+"PO-Revision-Date: 2025-09-08 10:14+0000\n"
+"Last-Translator: Christian Wach\n"
+"Language-Team: German\n"
 "Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Loco https://localise.biz/"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.8.0; wp-6.8.2; php-8.2.4"
 
-#: assets/widgets/sof-docs-widget.php:44
+#. translators: 1: Numeric width of the image, 2: Numeric height of the image.
+#: assets/widgets/class-widget-featured-page.php:250
+#, php-format
+msgid "%1$dx%2$d"
+msgstr "%1$dx%2$d"
+
+#: assets/widgets/class-widget-journey-teaser.php:192
+msgid "Article"
+msgstr "Artikel"
+
+#: assets/widgets/class-widget-journey-teaser.php:192
+msgid "Blog"
+msgstr "Blog"
+
+#: assets/widgets/class-widget-featured-page.php:237
+msgid "Choose a page"
+msgstr "Wählen Sie eine Seite"
+
+#. Author of the plugin
+#: sof-utilities.php
+msgid "Christian Wach"
+msgstr "Christian Wach"
+
+#: assets/widgets/class-widget-featured-page.php:45
+msgid "Continue Reading"
+msgstr "Weiterlesen"
+
+#: includes/class-mirror.php:438
+msgid "Create an English version"
+msgstr "Erstellen Sie eine englische Version"
+
+#: assets/widgets/class-widget-child-pages.php:35
+msgid "Display a list of child pages for a given page."
+msgstr "Zeige eine Liste der Unterseiten für eine bestimmte Seite an."
+
+#: assets/widgets/class-widget-featured-page.php:51
+msgid "Display a page title, excerpt and featured image."
+msgstr "Zeige Seitentitel, Auszug und Vorschaubild an."
+
+#: assets/widgets/class-widget-docs.php:180
+msgid "Display post date?"
+msgstr "Datum des Beitrags anzeigen?"
+
+#: assets/widgets/class-widget-journey-teaser.php:34
+msgid "Displays a \"Journey Teaser\" to guide visitors to the current blog."
+msgstr ""
+
+#: assets/widgets/class-widget-docs.php:37
 msgid ""
 "Displays the most recent Docs that the visitor can read. Used on SOF Member "
 "Homepage."
 msgstr ""
 
-#: assets/widgets/sof-docs-widget.php:49
+#: assets/widgets/class-widget-featured-page.php:42
+msgid "Do not show a Link"
+msgstr "Keinen Link anzeigen"
+
+#: assets/widgets/class-widget-featured-page.php:247
+msgid "Do not use a Feature Image"
+msgstr "Verwenden Sie kein Vorschaubild."
+
+#: includes/class-mirror.php:415
+msgid "Edit English version"
+msgstr "Englische Version bearbeiten"
+
+#: includes/class-mirror.php:349
+msgid "Edit German version"
+msgstr "Deutsche Version bearbeiten"
+
+#: assets/templates/sof-featured-page-template.php:83
+msgid "Edit this content"
+msgstr "Diesen Inhalt bearbeiten"
+
+#: includes/class-shortcodes.php:149
+msgid "Edit this profile"
+msgstr "Dieses Profil bearbeiten"
+
+#: includes/class-mirror.php:368
+msgid "English version"
+msgstr "Englische Version"
+
+#: assets/widgets/class-widget-featured-page.php:245
+msgid "Feature Image size:"
+msgstr "Bildgröße des Hauptbildes:"
+
+#: assets/widgets/class-widget-featured-page.php:44
+msgid "Find Out More"
+msgstr "Mehr erfahren"
+
+#: assets/widgets/class-widget-journey-teaser.php:228
+msgid "Follow the Journey"
+msgstr "Folgen Sie der Reise"
+
+#: includes/class-mirror.php:296
+msgid "German version"
+msgstr "Deutsche Version"
+
+#. Plugin URI of the plugin
+#: sof-utilities.php
+msgid "https://github.com/spiritoffootball/sof-utilities"
+msgstr "https://github.com/spiritoffootball/sof-utilities"
+
+#. Author URI of the plugin
+#: sof-utilities.php
+msgid "https://haystack.co.uk"
+msgstr "https://haystack.co.uk"
+
+#: assets/widgets/class-widget-journey-teaser.php:253
+msgid "Latest Ball Journey Site"
+msgstr "Neueste Ball Reise Website"
+
+#: assets/widgets/class-widget-featured-page.php:264
+msgid "Link text:"
+msgstr "Link-Text:"
+
+#: includes/class-buddypress.php:154
+msgid "Lost your password?"
+msgstr "Passwort vergessen?"
+
+#: includes/class-metaboxes.php:141
+msgid "Make title hidden"
+msgstr "Mach den Titel versteckt"
+
+#. Description of the plugin
+#: sof-utilities.php
+msgid "Network-wide utilities for the SOF sites."
+msgstr "Netzwerkweite Dienstprogramme für die SOF-Websites."
+
+#: assets/widgets/class-widget-featured-page.php:259
+msgid "No"
+msgstr "Nein"
+
+#: assets/widgets/class-widget-journey-teaser.php:255
+msgid "None"
+msgstr "None"
+
+#: assets/widgets/class-widget-docs.php:172
+msgid "Number of docs to show:"
+msgstr "Anzahl der Dokumente zu zeigen:"
+
+#: assets/widgets/class-widget-featured-page.php:234
+msgid "Page:"
+msgstr "Seite:"
+
+#: assets/templates/sof-featured-page-template.php:16
+msgid "Permanent Link to: "
+msgstr "Dauerhafter Link zu: "
+
+#: assets/widgets/class-widget-featured-page.php:43
+msgid "Read More"
+msgstr "Weiterlesen"
+
+#: includes/class-mirror.php:226
+msgid "Read this post in English"
+msgstr "Lesen Sie diesen Beitrag auf Englisch"
+
+#: includes/class-mirror.php:273
+msgid "Read this post in German"
+msgstr "Auf Deutsch lesen"
+
+#: assets/widgets/class-widget-docs.php:71
+msgid "Recent Documents"
+msgstr "Neueste Dokumente"
+
+#: assets/widgets/class-widget-featured-page.php:256
+msgid "Show Page Title:"
+msgstr "Seitentitel anzeigen:"
+
+#. Plugin Name of the plugin
+#: sof-utilities.php
+msgid "SOF Utilities"
+msgstr "SOF Werkzeuge"
+
+#: includes/class-cpt-terms.php:296 includes/class-cpt-terms.php:368
+msgid "Supporters"
+msgstr "Unterstützer*innen"
+
+#: includes/class-mirror.php:327
+msgid "This post does not have a German version."
+msgstr "Dieser Beitrag ist nicht in Deutsch verfügbar."
+
+#: includes/class-mirror.php:337
+msgid "This post has a German version."
+msgstr "Dieser Beitrag ist auch auf Deutsch verfügbar."
+
+#: includes/class-mirror.php:403
+msgid "This post has an English version."
+msgstr "Dieser Beitrag hat eine Englische Übersetzung"
+
+#: includes/class-metaboxes.php:120
+msgid "Title Visibility"
+msgstr "Titel Sichtbarkeit"
+
+#: assets/widgets/class-widget-child-pages.php:131
+#: assets/widgets/class-widget-docs.php:165
+#: assets/widgets/class-widget-featured-page.php:229
+#: assets/widgets/class-widget-journey-teaser.php:248
+msgid "Title:"
+msgstr "Titel:"
+
+#: assets/widgets/class-widget-journey-teaser.php:192
+msgid "Website"
+msgstr "Website"
+
+#: assets/widgets/class-widget-docs.php:42
 msgctxt "widget name"
 msgid "(BuddyPress Docs) Recent SOF Docs"
 msgstr ""
 
-#: assets/widgets/sof-docs-widget.php:80
-msgid "Recent Documents"
-msgstr "Neueste Dokumente"
+#: assets/widgets/class-widget-journey-teaser.php:39
+msgctxt "widget name"
+msgid "Journey Teaser"
+msgstr "Reise-Teaser"
 
-#: assets/widgets/sof-docs-widget.php:170
-msgid "Title:"
-msgstr "Titel:"
+#: assets/widgets/class-widget-child-pages.php:40
+msgctxt "widget name"
+msgid "SOF Child Pages Widget"
+msgstr "SOF-Unterseiten-Widget"
 
-#: assets/widgets/sof-docs-widget.php:173
-msgid "Number of docs to show:"
-msgstr "Anzahl der Dokumente zu zeigen:"
+#: assets/widgets/class-widget-featured-page.php:56
+msgctxt "widget name"
+msgid "SOF Page Widget"
+msgstr "SOF-Seiten-Widget"
 
-#: assets/widgets/sof-docs-widget.php:177
-msgid "Display post date?"
-msgstr ""
+#: assets/widgets/class-widget-featured-page.php:258
+msgid "Yes"
+msgstr "Ja"
 
-#: includes/sof-membership.php:97
-msgid "Could not add user to group"
-msgstr ""
-
-#: includes/sof-membership.php:135
-msgid "Could not remove user from group"
-msgstr ""
-
-#: includes/sof-metaboxes.php:87
-msgid "Title Visibility"
-msgstr "Titel Sichtbarkeit"
-
-#: includes/sof-metaboxes.php:114
-msgid "Make title hidden"
-msgstr "Mach den Titel versteckt"
-
-#: includes/sof-mirror.php:185
-msgid "Read this post in English"
-msgstr ""
-
-#: includes/sof-mirror.php:234
-msgid "Read this post in German"
-msgstr "Auf Deutsch lesen"
-
-#: includes/sof-mirror.php:269
-msgid "German version"
-msgstr ""
-
-#: includes/sof-mirror.php:306
-msgid "This post has a German version."
-msgstr ""
-
-#: includes/sof-mirror.php:318
-msgid "Edit German version"
-msgstr ""
-
-#: includes/sof-mirror.php:341
-msgid "English version"
-msgstr ""
-
-#: includes/sof-mirror.php:378
-msgid "This post has an English version."
-msgstr "Dieser Beitrag hat eine Englische Übersetzung"
-
-#: includes/sof-mirror.php:402
-msgid "Edit English version"
-msgstr ""
-
-#: includes/sof-mirror.php:413
-msgid ""
-"You will be able to create an English version of this post on The Ball 2018 "
-"when you have added it to the \"Daily Ballblog\" category. You do not have "
-"to publish this post first - it can still be in draft mode."
-msgstr ""
-
-#: includes/sof-mirror.php:422
+#: includes/class-mirror.php:435
 msgid ""
 "You can now create a copy of this post on The Ball 2018. When you have done "
 "so, you can translate it into English. It is best to make a copy when this "
 "post is finished and published."
 msgstr ""
+"Sie können nun eine Kopie dieses Beitrags für „The Ball 2018“ erstellen. "
+"Anschließend können Sie den Beitrag ins Englische übersetzen. Am besten "
+"erstellen Sie die Kopie, nachdem der Beitrag fertiggestellt und "
+"veröffentlicht wurde."
 
-#: includes/sof-mirror.php:425
-msgid "Create an English version"
+#: includes/class-mirror.php:426
+msgid ""
+"You will be able to create an English version of this post on The Ball 2018 "
+"when you have added it to the \"Daily Ballblog\" category. You do not have "
+"to publish this post first - it can still be in draft mode."
 msgstr ""
-
-#. Plugin Name of the plugin/theme
-msgid "SOF Utilities"
-msgstr "SOF Werkzeuge"
-
-#. Plugin URI of the plugin/theme
-msgid "http://spiritoffootball.com"
-msgstr ""
-
-#. Description of the plugin/theme
-msgid "Network-wide Utilities for the SOF sites"
-msgstr ""
-
-#. Author of the plugin/theme
-msgid "Christian Wach"
-msgstr ""
-
-#. Author URI of the plugin/theme
-msgid "http://haystack.co.uk"
-msgstr ""
+"Sie können die englische Version dieses Beitrags für „The Ball 2018“ "
+"erstellen, sobald Sie ihn in der Kategorie „Daily Ballblog“ hinzugefügt "
+"haben. Sie müssen den Beitrag nicht sofort veröffentlichen – er kann auch "
+"weiterhin als Entwurf gespeichert werden."
