@@ -50,9 +50,9 @@ class Spirit_Of_Football_CPT_Terms {
 	 */
 	private $slugs_ind_type_sofev = [
 		'vorstand',
-		'backoffice',
-		'projektmanagerinnen',
-		'die-supporter',
+		'team',
+		'staff',
+		'alumni',
 	];
 
 	/**
@@ -83,7 +83,7 @@ class Spirit_Of_Football_CPT_Terms {
 	private $slugs_org_type_sofev = [
 		'partner',
 		'spirit-of-football',
-		'unterstuetzer',
+		'foerderpartner',
 	];
 
 	/**
