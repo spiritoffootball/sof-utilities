@@ -161,6 +161,11 @@ class Spirit_Of_Football_Utilities {
 			return;
 		}
 
+		// Determine maintenance mode.
+		if ( defined( 'SOF_UTILITIES_MAINTENANCE_MODE' ) && true === SOF_UTILITIES_MAINTENANCE_MODE ) {
+			$this->maintenance_mode = true;
+		}
+
 		// Bootstrap plugin.
 		$this->include_files();
 		$this->setup_globals();
@@ -297,15 +302,27 @@ class Spirit_Of_Football_Utilities {
 	 */
 	public function maintenance_mode() {
 
-		// Allow back-end and network admins access.
-		if ( ! is_admin() && ! current_user_can( 'manage_network_plugins' ) ) {
+		// Allow network admins access.
+		if ( current_user_can( 'manage_network_plugins' ) ) {
+			return;
+		}
 
-			// Invoke maintenance.
-			if ( file_exists( WP_CONTENT_DIR . '/maintenance.php' ) ) {
-				require_once WP_CONTENT_DIR . '/maintenance.php';
-				die();
+		// Allow back-end access.
+		if ( is_admin() ) {
+			return;
+		}
+
+		// Maybe restrict to specific sites.
+		if ( defined( 'SOF_UTILITIES_MAINTENANCE_SITES' ) ) {
+			if ( ! in_array( (int) get_current_blog_id(), SOF_UTILITIES_MAINTENANCE_SITES, true ) ) {
+				return;
 			}
+		}
 
+		// Invoke maintenance.
+		if ( file_exists( WP_CONTENT_DIR . '/maintenance.php' ) ) {
+			require_once WP_CONTENT_DIR . '/maintenance.php';
+			die();
 		}
 
 	}
