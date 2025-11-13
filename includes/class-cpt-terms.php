@@ -51,7 +51,6 @@ class Spirit_Of_Football_CPT_Terms {
 	private $slugs_ind_type_sofev = [
 		'vorstand',
 		'team',
-		'staff',
 		'alumni',
 	];
 
@@ -132,7 +131,7 @@ class Spirit_Of_Football_CPT_Terms {
 	 *
 	 * @since 1.0.0
 	 *
-	 * @param Spirit_Of_Football_CPTs $plugin The plugin object.
+	 * @param Spirit_Of_Football_CPTs $parent The parent object.
 	 */
 	public function __construct( $parent ) {
 
@@ -186,8 +185,10 @@ class Spirit_Of_Football_CPT_Terms {
 			return;
 		}
 
+		/*
 		// Add default Term to the "Individual Type" Custom Taxonomy.
-		//add_filter( 'sof_people/cpt/individual/args', [ $this, 'sofev_term_default' ] );
+		add_filter( 'sof_people/cpt/individual/args', [ $this, 'sofev_term_default' ] );
+		*/
 
 		// Protect Terms in the "Individual Type" Custom Taxonomy.
 		add_filter( 'user_has_cap', [ $this, 'sofev_term_caps' ], 10, 4 );
@@ -206,8 +207,10 @@ class Spirit_Of_Football_CPT_Terms {
 			return;
 		}
 
+		/*
 		// Add default Term to the "Individual Type" Custom Taxonomy.
-		//add_filter( 'sof_people/cpt/individual/args', [ $this, 'theball_term_default' ] );
+		add_filter( 'sof_people/cpt/individual/args', [ $this, 'theball_term_default' ] );
+		*/
 
 		// Protect Terms in the "Individual Type" Custom Taxonomy.
 		add_filter( 'user_has_cap', [ $this, 'theball_term_caps' ], 10, 4 );
@@ -236,7 +239,7 @@ class Spirit_Of_Football_CPT_Terms {
 	public function sofev_term_caps( $allcaps, $caps, $args, $user ) {
 
 		// Bail if not the "edit_term" or "delete_term" capability.
-		if ( 'edit_term' !== $args[0] && 'delete_term' !== $args[0]  ) {
+		if ( 'edit_term' !== $args[0] && 'delete_term' !== $args[0] ) {
 			return $allcaps;
 		}
 
@@ -250,28 +253,28 @@ class Spirit_Of_Football_CPT_Terms {
 
 		// Disable editing or deleting Terms in the "Award Type" Custom Taxonomy.
 		if ( 'award-type' === $term->taxonomy ) {
-			if ( in_array( $term->slug, $this->slugs_award_type_sofev ) ) {
+			if ( in_array( $term->slug, $this->slugs_award_type_sofev, true ) ) {
 				$allcaps['manage_categories'] = false;
 			}
 		}
 
 		// Disable editing or deleting Terms in the "Organisation Type" Custom Taxonomy.
 		if ( 'organisation-type' === $term->taxonomy ) {
-			if ( in_array( $term->slug, $this->slugs_org_type_sofev ) ) {
+			if ( in_array( $term->slug, $this->slugs_org_type_sofev, true ) ) {
 				$allcaps['manage_categories'] = false;
 			}
 		}
 
 		// Disable editing or deleting Terms in the "Organisation Tags" Custom Taxonomy.
 		if ( 'organisation-tag' === $term->taxonomy ) {
-			if ( in_array( $term->slug, $this->slugs_org_tag_sofev ) ) {
+			if ( in_array( $term->slug, $this->slugs_org_tag_sofev, true ) ) {
 				$allcaps['manage_categories'] = false;
 			}
 		}
 
 		// Disable editing or deleting Terms in the "Individual Type" Custom Taxonomy.
 		if ( 'individual-type' === $term->taxonomy ) {
-			if ( in_array( $term->slug, $this->slugs_ind_type_sofev ) ) {
+			if ( in_array( $term->slug, $this->slugs_ind_type_sofev, true ) ) {
 				$allcaps['manage_categories'] = false;
 			}
 		}
@@ -322,7 +325,7 @@ class Spirit_Of_Football_CPT_Terms {
 	public function theball_term_caps( $allcaps, $caps, $args, $user ) {
 
 		// Bail if not the "edit_term" or "delete_term" capability.
-		if ( 'edit_term' !== $args[0] && 'delete_term' !== $args[0]  ) {
+		if ( 'edit_term' !== $args[0] && 'delete_term' !== $args[0] ) {
 			return $allcaps;
 		}
 
@@ -336,14 +339,14 @@ class Spirit_Of_Football_CPT_Terms {
 
 		// Disable editing or deleting Terms in the "Partner Type" Custom Taxonomy.
 		if ( 'partner-type' === $term->taxonomy ) {
-			if ( in_array( $term->slug, $this->slugs_partner_type_ball2022 ) ) {
+			if ( in_array( $term->slug, $this->slugs_partner_type_ball2022, true ) ) {
 				$allcaps['manage_categories'] = false;
 			}
 		}
 
 		// Disable editing or deleting Terms in the "Individual Type" Custom Taxonomy.
 		if ( 'individual-type' === $term->taxonomy ) {
-			if ( in_array( $term->slug, $this->slugs_ind_type_ball2022 ) ) {
+			if ( in_array( $term->slug, $this->slugs_ind_type_ball2022, true ) ) {
 				$allcaps['manage_categories'] = false;
 			}
 		}
