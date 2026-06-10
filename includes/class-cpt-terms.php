@@ -81,8 +81,8 @@ class Spirit_Of_Football_CPT_Terms {
 	 */
 	private $slugs_org_type_sofev = [
 		'partner',
-		'spirit-of-football',
 		'foerderpartner',
+		'spirit-of-football',
 	];
 
 	/**
